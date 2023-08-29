@@ -64,3 +64,4 @@ const viewAuthor = async (req, res) => {
 }
 
 export default { createAuthor, viewAuthor }
+
