@@ -21,12 +21,10 @@ const createAuthor = async (req, res) => {
       message: constants.errorMessage.VALIDATION_ERROR,
       details: error.details,
     }
-  }
-  else {
+  } else {
     const newAuthor = await authorService.createAuthor(value)
 
     if (newAuthor instanceof Error) {
-      
       response.developerMessage = newAuthor.message
     } else {
       response.isSuccess = true
@@ -39,4 +37,30 @@ const createAuthor = async (req, res) => {
   res.status(response.statusCode).json(response)
 }
 
-export default { createAuthor }
+// 1. create author
+const viewAuthor = async (req, res) => {
+  const response = {
+    isSuccess: false,
+    statusCode: 400,
+    message: 'Author not viewed',
+    developerMessage: '',
+    isReadOnly: false,
+    data: {},
+  }
+
+  console.log(req.params.id)
+  const author = await authorService.viewAuthor(req.params.id)
+
+  if (author instanceof Error) {
+    response.developerMessage = author.message
+  } else {
+    response.isSuccess = true
+    response.statusCode = 200
+    response.message = 'Author Viwed'
+    response.data = author
+  }
+
+  res.status(response.statusCode).json(response)
+}
+
+export default { createAuthor, viewAuthor }

@@ -27,4 +27,29 @@ const authorDuplicateMail = async (authorEmail) => {
     return false
 }
 
-export default { createAuthor, authorDuplicateMail }
+const viewSingleAuthorById = async (authorId) => {
+  try {
+    console.log(authorId)
+    const AuthorModel = db.db.authors
+    const author = await AuthorModel.findOne({ where: { id: authorId } })
+
+    return author
+  } catch (error) {
+    logQueryError('viewSingleAuthorById', FILENAME, JSON.stringify(error.errors))
+    throw new Error(error)
+  }
+}
+
+const viewAuthors = async () => {
+  try {
+    const AuthorModel = db.db.authors
+    const authors = await AuthorModel.findAll()
+
+    return authors
+  } catch (error) {
+    logQueryError('viewAuthors', FILENAME, JSON.stringify(error.errors))
+    throw new Error(error)
+  }
+}
+
+export default { createAuthor, authorDuplicateMail,viewSingleAuthorById, viewAuthors }

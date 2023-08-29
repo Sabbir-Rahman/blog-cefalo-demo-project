@@ -13,7 +13,7 @@ const createAuthor = async (inputData) => {
     const uniqueId = uuidv4()
     const hashPass = await bcryptUtils.hashPassword(inputData.password)
 
-    if(authorQuery.authorDuplicateMail(inputData.email)){
+    if (authorQuery.authorDuplicateMail(inputData.email)) {
       logServiceError('createAuthor', FILENAME, constants.errorMessage.DUPLICATE_EMAIL)
       return new Error(constants.errorMessage.DUPLICATE_EMAIL)
     }
@@ -24,13 +24,26 @@ const createAuthor = async (inputData) => {
     }
 
     const author = await authorQuery.createAuthor(newAuthor)
-    
+
     return author
   } catch (error) {
-   
     logServiceError('createAuthor', FILENAME, error)
     return new Error(error.message)
   }
 }
 
-export default { createAuthor }
+const viewAuthor = async (inputData) => {
+  try {
+    let author
+
+    if (inputData) author = await authorQuery.viewSingleAuthorById(inputData)
+    else author = await authorQuery.viewAuthors()
+
+    return author
+  } catch (error) {
+    logServiceError('viewAuthor', FILENAME, error)
+    return new Error(error.message)
+  }
+}
+
+export default { createAuthor, viewAuthor }
