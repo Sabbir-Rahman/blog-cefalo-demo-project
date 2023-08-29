@@ -17,21 +17,23 @@ const createAuthor = async (queryData) => {
 }
 
 const authorDuplicateMail = async (authorEmail) => {
-  
-    const AuthorModel = db.db.authors
-    const newAuthor = await AuthorModel.findOne({ where: { email: authorEmail } })
+  const AuthorModel = db.db.authors
+  const newAuthor = await AuthorModel.findOne({ where: { email: authorEmail } })
 
-    if (newAuthor){
-      return true
-    }
-    return false
+  if (newAuthor) {
+    return true
+  }
+  return false
 }
 
 const viewSingleAuthorById = async (authorId) => {
   try {
     console.log(authorId)
     const AuthorModel = db.db.authors
-    const author = await AuthorModel.findOne({ where: { id: authorId } })
+    const author = await AuthorModel.findOne({
+      where: { id: authorId },
+      attributes: ['id', 'name', 'email'],
+    })
 
     return author
   } catch (error) {
@@ -43,7 +45,7 @@ const viewSingleAuthorById = async (authorId) => {
 const viewAuthors = async () => {
   try {
     const AuthorModel = db.db.authors
-    const authors = await AuthorModel.findAll()
+    const authors = await AuthorModel.findAll({ attributes: ['id', 'name', 'email'] })
 
     return authors
   } catch (error) {
@@ -52,4 +54,4 @@ const viewAuthors = async () => {
   }
 }
 
-export default { createAuthor, authorDuplicateMail,viewSingleAuthorById, viewAuthors }
+export default { createAuthor, authorDuplicateMail, viewSingleAuthorById, viewAuthors }
