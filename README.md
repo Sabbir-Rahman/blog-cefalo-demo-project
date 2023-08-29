@@ -4,6 +4,8 @@ This project focuses on creating a newspaper application using Node.js, Express,
 
 ## API Endpoints
 
+### Postman Api Documentation link: https://documenter.getpostman.com/view/28564197/2s9Y5Zvh1A
+
 The project features some main endpoints:
 
 1. `/api/v1/authors`: This endpoint is used for authors. When making a `POST` request to this endpoint, the following parameters are required:
