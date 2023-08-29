@@ -1,13 +1,11 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { createLogger, format, transports } from 'winston'
 
-const { combine, timestamp, printf } = format
-
-const myFormat = printf(({ level, message }) => `${timestamp} [${level}] ${message}`)
+const { combine, timestamp } = format
 
 const logger = createLogger({
   level: 'debug',
-  format: combine(format.colorize(), timestamp({ format: 'HH:mm:ss' }), myFormat),
+  format: combine(format.colorize(), timestamp({ format: 'HH:mm:ss' }), format.simple()),
   transports: [new transports.Console()],
 })
 

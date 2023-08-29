@@ -5,6 +5,8 @@ import defaultConfig from './config/default.js'
 
 import v1Router from './src/api/v1/v1Router.js'
 import logger from './logger/defaultLogger.js'
+import connectDb from './src/helpers/mysql.js'
+import dbModel from './src/api/v1/models/index.js'
 
 const app = express()
 const { PORT } = defaultConfig.generalConfig
@@ -23,6 +25,8 @@ app.get('/', (req, res) => {
   res.json({ message: 'Hello' })
 })
 
-app.listen(PORT, () => {
+app.listen(PORT, async() => {
   logger.info(`Server running on ${PORT}`)
+  const sequlizeInstance = await connectDb()
+  await dbModel.initiateSchema(sequlizeInstance)
 })
