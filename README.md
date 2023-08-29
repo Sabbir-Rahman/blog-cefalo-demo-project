@@ -34,7 +34,7 @@ Before running the project, ensure that you have the following tools installed:
 
 To install `pnpm`, run the following command:
 
-`npm install -g pnpm`
+```npm install -g pnpm```
 
 
 # Getting Started with Newspaper Project
@@ -43,7 +43,7 @@ To begin working with the Newspaper Project, follow these steps:
 
 1. Clone the project repository to your local machine using Git or download the source code directly:
 
-``git clone https://github.com/your-username/newspaper-project.git``
+```git clone https://github.com/your-username/newspaper-project.git```
 
 
 2. Create a `.env` file based on the provided `.envexample` file. Configure your database connection and any other environment variables required for the project.
