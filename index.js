@@ -25,7 +25,7 @@ app.get('/', (req, res) => {
   res.json({ message: 'Hello' })
 })
 
-app.listen(PORT, async() => {
+app.listen(PORT, async () => {
   logger.info(`Server running on ${PORT}`)
   const sequlizeInstance = await connectDb()
   await dbModel.initiateSchema(sequlizeInstance)

@@ -3,7 +3,7 @@ import { Sequelize } from 'sequelize'
 import defaultConfig from '../../config/default.js'
 import logger from '../../logger/defaultLogger.js'
 
-const connectDb = async() => {
+const connectDb = async () => {
   const sequelize = new Sequelize(
     defaultConfig.DBCONFIG.DB,
     defaultConfig.DBCONFIG.USER,

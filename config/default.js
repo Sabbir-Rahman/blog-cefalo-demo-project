@@ -6,6 +6,10 @@ const generalConfig = {
   PORT: process.env.PORT,
 }
 
+const bcryptConfig = {
+  setWorkFactor: Number(process.env.SET_WORK_FACTOR),
+}
+
 const DBCONFIG = {
   HOST: process.env.HOST,
   USER: process.env.DBUSER,
@@ -21,4 +25,4 @@ const DBCONFIG = {
   },
 }
 
-export default { generalConfig, DBCONFIG }
+export default { generalConfig, DBCONFIG, bcryptConfig }
