@@ -1,5 +1,5 @@
 /* eslint-disable import/extensions */
-import db from '../model/index.js'
+import db from '../models/index.js'
 
 // create man models
 const Product = db.products

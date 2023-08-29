@@ -1,21 +1,21 @@
 /* eslint-disable import/extensions */
 import { Sequelize, DataTypes } from 'sequelize'
-import dbConfig from '../../../../config/dbConfig.js'
+import defaultConfig from '../../../../config/default.js'
 import productSchema from './productModel.js'
 
 const sequelize = new Sequelize(
-  dbConfig.DBCONFIG.DB,
-  dbConfig.DBCONFIG.USER,
-  dbConfig.DBCONFIG.PASSWORD,
+  defaultConfig.DBCONFIG.DB,
+  defaultConfig.DBCONFIG.USER,
+  defaultConfig.DBCONFIG.PASSWORD,
   {
-    host: dbConfig.DBCONFIG.HOST,
-    dialect: dbConfig.DBCONFIG.dialect,
+    host: defaultConfig.DBCONFIG.HOST,
+    dialect: defaultConfig.DBCONFIG.dialect,
     operatorsAliases: false,
     pool: {
-      max: dbConfig.DBCONFIG.pool.max,
-      min: dbConfig.DBCONFIG.pool.min,
-      acquire: dbConfig.DBCONFIG.pool.acquire,
-      idle: dbConfig.DBCONFIG.pool.idle,
+      max: defaultConfig.DBCONFIG.pool.max,
+      min: defaultConfig.DBCONFIG.pool.min,
+      acquire: defaultConfig.DBCONFIG.pool.acquire,
+      idle: defaultConfig.DBCONFIG.pool.idle,
     },
   },
 )
