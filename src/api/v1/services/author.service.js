@@ -13,10 +13,11 @@ const createAuthor = async (inputData) => {
     const uniqueId = uuidv4()
     const hashPass = await bcryptUtils.hashPassword(inputData.password)
 
-    if (authorQuery.authorDuplicateMail(inputData.email)) {
+    if (await authorQuery.authorDuplicateMail(inputData.email)) {
       logServiceError('createAuthor', FILENAME, constants.errorMessage.DUPLICATE_EMAIL)
       return new Error(constants.errorMessage.DUPLICATE_EMAIL)
     }
+
     const newAuthor = {
       ...inputData,
       password: hashPass,

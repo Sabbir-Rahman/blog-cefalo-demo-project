@@ -19,8 +19,9 @@ const createAuthor = async (queryData) => {
 const authorDuplicateMail = async (authorEmail) => {
   const AuthorModel = db.db.authors
   const newAuthor = await AuthorModel.findOne({ where: { email: authorEmail } })
-
+  
   if (newAuthor) {
+    console.log(newAuthor)
     return true
   }
   return false

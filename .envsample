@@ -1,8 +1,8 @@
-PORT=5000
-HOST=localhost
-DBUSER=root
+PORT=XXX
+HOST=XXX
+DBUSER=XXX
 PASSWORD=
-DB=sequelize_test
-DIALECT=mysql
+DB=XXX
+DIALECT=XXXX
 
 
