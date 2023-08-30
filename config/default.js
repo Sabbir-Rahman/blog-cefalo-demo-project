@@ -6,6 +6,13 @@ const generalConfig = {
   PORT: process.env.PORT,
 }
 
+const jwtConfig = {
+  PRIVATE_KEY: process.env.RSA_PRIVATE_KEY,
+  PUBLIC_KEY: process.env.RSA_PUBLIC_KEY,
+  ACCESS_TOKEN_TTL: '20m',
+  REFRESH_TOKEN_TTL: '60m',
+}
+
 const bcryptConfig = {
   setWorkFactor: Number(process.env.SET_WORK_FACTOR),
 }
@@ -25,4 +32,4 @@ const DBCONFIG = {
   },
 }
 
-export default { generalConfig, DBCONFIG, bcryptConfig }
+export default { generalConfig, DBCONFIG, bcryptConfig, jwtConfig }

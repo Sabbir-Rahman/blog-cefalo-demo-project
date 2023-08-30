@@ -1,7 +1,10 @@
 /* eslint-disable import/extensions */
 import validation from '../validators/author.js'
+import defaultconfig from '../../../../config/default.js'
+
 import constants from '../../../../constants/default.js'
 import { authorService } from '../services/index.js'
+import { jwtUtils } from '../utils/index.js'
 
 // 1. create author
 const createAuthor = async (req, res) => {
@@ -27,10 +30,26 @@ const createAuthor = async (req, res) => {
     if (newAuthor instanceof Error) {
       response.developerMessage = newAuthor.message
     } else {
+      const jwtObject = {
+        userId: newAuthor.id,
+        name: newAuthor.name,
+        role: ['author'],
+      }
+
+      // new access token
+      const accessToken = jwtUtils.signJwt(jwtObject, {
+        expiresIn: defaultconfig.jwtConfig.ACCESS_TOKEN_TTL,
+      })
+
+      // new refresh token
+      const refreshToken = jwtUtils.signJwt(jwtObject, {
+        expiresIn: defaultconfig.jwtConfig.REFRESH_TOKEN_TTL,
+      })
+
       response.isSuccess = true
       response.statusCode = 201
       response.message = 'Author created'
-      response.data = newAuthor
+      response.data = { newAuthor, accessToken, refreshToken }
     }
   }
 
@@ -64,4 +83,3 @@ const viewAuthor = async (req, res) => {
 }
 
 export default { createAuthor, viewAuthor }
-
