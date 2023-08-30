@@ -17,10 +17,6 @@ const initiateSchema = async (sequelize) => {
 
   db.authors.hasMany(db.blogs, {
     onDelete: 'CASCADE',
-    foreignKey: {
-      allowNull: false,
-      field: 'authorId',
-    },
   })
 
   db.blogs.belongsTo(db.authors)

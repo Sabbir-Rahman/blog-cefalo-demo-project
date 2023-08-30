@@ -12,4 +12,9 @@ const loginSchemaValidator = Joi.object({
   password: Joi.string().required(),
 })
 
-export default { authorSchemaValidator, loginSchemaValidator }
+const blogSchemaValidator = Joi.object({
+  title: Joi.string().required(),
+  body: Joi.string(),
+})
+
+export default { authorSchemaValidator, loginSchemaValidator, blogSchemaValidator }
