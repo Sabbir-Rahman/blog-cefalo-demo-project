@@ -72,7 +72,6 @@ const viewAuthor = async (req, res) => {
     data: {},
   }
 
-  console.log(req.params.id)
   const author = await authorService.viewAuthor(req.params.id)
 
   if (author instanceof Error) {

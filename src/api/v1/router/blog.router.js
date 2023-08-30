@@ -6,5 +6,7 @@ import auth from '../middlewares/auth.js'
 const router = Router()
 
 router.post('/', auth(), blogController.createBlog)
+router.get('/', blogController.viewBlog)
+router.get('/:id', blogController.viewBlog)
 
 export default router

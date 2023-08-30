@@ -45,4 +45,30 @@ const createBlog = async (req, res) => {
   }
 }
 
-export default { createBlog }
+// 1. craete blog
+const viewBlog = async (req, res) => {
+  const response = {
+    isSuccess: false,
+    statusCode: 400,
+    message: 'Blogs not viewed',
+    developerMessage: '',
+    isReadOnly: false,
+    data: {},
+  }
+
+  const blogId = req.params.id
+  const blogs = await blogService.viewBlog(blogId)
+
+  if (blogs instanceof Error) {
+    response.developerMessage = blogs.message
+  }
+
+  response.isSuccess = true
+  response.statusCode = 200
+  response.message = 'Blogs Viewed Successfully'
+  response.data = blogs
+
+  res.status(response.statusCode).json(response)
+}
+
+export default { createBlog, viewBlog }

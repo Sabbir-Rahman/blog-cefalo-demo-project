@@ -18,9 +18,17 @@ const createBlog = async (queryData) => {
 
 const getSingleBlogById = async (blogId) => {
   try {
+    const AuthorModel = db.db.authors
     const BlogModel = db.db.blogs
     const blog = await BlogModel.findOne({
       where: { blogId },
+      attributes: ['blogId', 'title', 'body', 'authorId', 'createdAt', 'updatedAt'],
+      include: [
+        {
+          model: AuthorModel,
+          attributes: ['name', 'email'],
+        },
+      ],
     })
 
     return blog
@@ -33,7 +41,16 @@ const getSingleBlogById = async (blogId) => {
 const viewBlogs = async () => {
   try {
     const BlogModel = db.db.blogs
-    const blogs = await BlogModel.findAll({ attributes: ['authorId', 'name', 'email'] })
+    const AuthorModel = db.db.authors
+    const blogs = await BlogModel.findAll({
+      attributes: ['blogId', 'title', 'body', 'authorId', 'createdAt', 'updatedAt'],
+      include: [
+        {
+          model: AuthorModel,
+          attributes: ['name', 'email'],
+        },
+      ],
+    })
 
     return blogs
   } catch (error) {

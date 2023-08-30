@@ -9,7 +9,6 @@ const FILENAME = 'src/api/v1/services/author.service.js'
 const createBlog = async (inputData, authorId) => {
   try {
     const uniqueId = uuidv4()
-    console.log(authorId)
     const newBlog = {
       ...inputData,
       authorId,
