@@ -32,4 +32,6 @@ const DBCONFIG = {
   },
 }
 
-export default { generalConfig, DBCONFIG, bcryptConfig, jwtConfig }
+export default {
+  generalConfig, DBCONFIG, bcryptConfig, jwtConfig,
+}

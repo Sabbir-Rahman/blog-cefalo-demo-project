@@ -50,9 +50,9 @@ const createAuthor = async (req, res) => {
       response.statusCode = 201
       response.message = 'Author created'
       response.data = { newAuthor, accessToken, refreshToken }
-    } catch (error) {
+    } catch (err) {
       response.developerMessage = {
-        message: error.message || constants.errorMessage.SOMETHING_WRONG,
+        message: err.message || constants.errorMessage.SOMETHING_WRONG,
         details: [],
       }
     }
@@ -61,7 +61,7 @@ const createAuthor = async (req, res) => {
   res.status(response.statusCode).json(response)
 }
 
-// 1. create author
+// 1. view author
 const viewAuthor = async (req, res) => {
   const response = {
     isSuccess: false,

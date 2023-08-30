@@ -29,7 +29,6 @@
     "no-trailing-spaces": "error",
     "eol-last": ["error", "always"],
     "arrow-spacing": "error",
-    "space-before-function-paren": ["error", "off"],
     "object-curly-spacing": ["error", "always"],
     "array-bracket-spacing": ["error", "never"],
     "no-var": "error",

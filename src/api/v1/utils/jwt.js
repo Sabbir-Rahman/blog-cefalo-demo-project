@@ -1,16 +1,14 @@
+/* eslint-disable import/extensions */
 import jwt from 'jsonwebtoken'
 
 import defaultConfig from '../../../../config/default.js'
+
 const privateKey = defaultConfig.jwtConfig.PRIVATE_KEY
 const publicKey = defaultConfig.jwtConfig.PUBLIC_KEY
 
 // type JwtUserTokenObject = { userId: string; username: string; role: [string] }
 
-function signJwt(
-  object,
-  options
-) {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+function signJwt(object, options) {
   return jwt.sign(object, privateKey, {
     ...(options && options),
     algorithm: 'RS256',

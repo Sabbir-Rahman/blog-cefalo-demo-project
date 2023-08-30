@@ -7,4 +7,9 @@ const authorSchemaValidator = Joi.object({
   password: Joi.string().min(8).required(),
 })
 
-export default { authorSchemaValidator }
+const loginSchemaValidator = Joi.object({
+  email: Joi.string().email().required(),
+  password: Joi.string().required(),
+})
+
+export default { authorSchemaValidator, loginSchemaValidator }
