@@ -21,7 +21,7 @@ const createAuthor = async (inputData) => {
     const newAuthor = {
       ...inputData,
       password: hashPass,
-      id: uniqueId,
+      userId: uniqueId,
     }
 
     const author = await authorQuery.createAuthor(newAuthor)

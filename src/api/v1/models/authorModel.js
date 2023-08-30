@@ -1,6 +1,6 @@
 const authorSchema = (sequelize, DataTypes) => {
   const Author = sequelize.define('author', {
-    id: {
+    userId: {
       type: DataTypes.STRING,
       allowNull: false,
       primaryKey: true,

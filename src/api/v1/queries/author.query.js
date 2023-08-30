@@ -30,8 +30,8 @@ const getSingleAuthorById = async (authorId) => {
   try {
     const AuthorModel = db.db.authors
     const author = await AuthorModel.findOne({
-      where: { id: authorId },
-      attributes: ['id', 'name', 'email'],
+      where: { userId: authorId },
+      attributes: ['userId', 'name', 'email'],
     })
 
     return author
@@ -46,7 +46,7 @@ const getSingleAuthorByEmail = async (authorEmail) => {
     const AuthorModel = db.db.authors
     const author = await AuthorModel.findOne({
       where: { email: authorEmail },
-      attributes: ['id', 'name', 'email', 'password'],
+      attributes: ['userId', 'name', 'email', 'password'],
     })
 
     return author
@@ -59,7 +59,7 @@ const getSingleAuthorByEmail = async (authorEmail) => {
 const viewAuthors = async () => {
   try {
     const AuthorModel = db.db.authors
-    const authors = await AuthorModel.findAll({ attributes: ['id', 'name', 'email'] })
+    const authors = await AuthorModel.findAll({ attributes: ['userId', 'name', 'email'] })
 
     return authors
   } catch (error) {
