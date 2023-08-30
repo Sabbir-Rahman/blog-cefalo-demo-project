@@ -19,17 +19,15 @@ const createAuthor = async (queryData) => {
 const authorDuplicateMail = async (authorEmail) => {
   const AuthorModel = db.db.authors
   const newAuthor = await AuthorModel.findOne({ where: { email: authorEmail } })
-  
+
   if (newAuthor) {
-    console.log(newAuthor)
     return true
   }
   return false
 }
 
-const viewSingleAuthorById = async (authorId) => {
+const getSingleAuthorById = async (authorId) => {
   try {
-    console.log(authorId)
     const AuthorModel = db.db.authors
     const author = await AuthorModel.findOne({
       where: { id: authorId },
@@ -38,7 +36,22 @@ const viewSingleAuthorById = async (authorId) => {
 
     return author
   } catch (error) {
-    logQueryError('viewSingleAuthorById', FILENAME, JSON.stringify(error.errors))
+    logQueryError('getSingleAuthorById', FILENAME, JSON.stringify(error.errors))
+    throw new Error(error)
+  }
+}
+
+const getSingleAuthorByEmail = async (authorEmail) => {
+  try {
+    const AuthorModel = db.db.authors
+    const author = await AuthorModel.findOne({
+      where: { email: authorEmail },
+      attributes: ['id', 'name', 'email', 'password'],
+    })
+
+    return author
+  } catch (error) {
+    logQueryError('getSingleAuthorByEmail', FILENAME, JSON.stringify(error.errors))
     throw new Error(error)
   }
 }
@@ -55,4 +68,10 @@ const viewAuthors = async () => {
   }
 }
 
-export default { createAuthor, authorDuplicateMail, viewSingleAuthorById, viewAuthors }
+export default {
+  createAuthor,
+  authorDuplicateMail,
+  getSingleAuthorById,
+  viewAuthors,
+  getSingleAuthorByEmail,
+}

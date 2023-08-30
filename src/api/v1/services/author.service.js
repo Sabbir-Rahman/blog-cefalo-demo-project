@@ -37,7 +37,7 @@ const viewAuthor = async (inputData) => {
   try {
     let author
 
-    if (inputData) author = await authorQuery.viewSingleAuthorById(inputData)
+    if (inputData) author = await authorQuery.getSingleAuthorById(inputData)
     else author = await authorQuery.viewAuthors()
 
     return author

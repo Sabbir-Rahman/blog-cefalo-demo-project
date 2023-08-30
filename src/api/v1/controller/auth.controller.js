@@ -3,7 +3,7 @@ import validation from '../validators/author.js'
 import defaultconfig from '../../../../config/default.js'
 
 import constants from '../../../../constants/default.js'
-import { authorService } from '../services/index.js'
+import { authService } from '../services/index.js'
 import { jwtUtils } from '../utils/index.js'
 
 // 1. create author
@@ -26,7 +26,7 @@ const userLogin = async (req, res) => {
     }
   } else {
     try {
-      const user = await authorService.createAuthor(value)
+      const user = await authService.userLogin(value)
 
       if (user instanceof Error) {
         throw user
@@ -47,8 +47,8 @@ const userLogin = async (req, res) => {
       })
 
       response.isSuccess = true
-      response.statusCode = 201
-      response.message = 'Author created'
+      response.statusCode = 200
+      response.message = 'User login successfull'
       response.data = { user, accessToken, refreshToken }
     } catch (err) {
       response.developerMessage = {
@@ -60,3 +60,5 @@ const userLogin = async (req, res) => {
 
   res.status(response.statusCode).json(response)
 }
+
+export default { userLogin }
