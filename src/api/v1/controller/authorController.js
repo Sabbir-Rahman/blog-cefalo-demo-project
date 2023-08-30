@@ -33,7 +33,7 @@ const createAuthor = async (req, res) => {
       }
 
       const jwtPayload = {
-        userId: newAuthor.id,
+        userId: newAuthor.authorId,
         name: newAuthor.name,
         role: ['author'],
       }

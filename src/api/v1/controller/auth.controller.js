@@ -33,7 +33,7 @@ const userLogin = async (req, res) => {
       }
 
       const jwtPayload = {
-        userId: user.userId,
+        userId: user.authorId,
         name: user.name,
         role: ['author'],
       }
