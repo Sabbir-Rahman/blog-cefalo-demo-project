@@ -25,24 +25,24 @@ const createAuthor = async (req, res) => {
       details: error.details,
     }
   } else {
-    const newAuthor = await authorService.createAuthor(value)
+    try {
+      const newAuthor = await authorService.createAuthor(value)
 
-    if (newAuthor instanceof Error) {
-      response.developerMessage = newAuthor.message
-    } else {
-      const jwtObject = {
+      if (newAuthor instanceof Error) {
+        throw newAuthor
+      }
+
+      const jwtPayload = {
         userId: newAuthor.id,
         name: newAuthor.name,
         role: ['author'],
       }
 
-      // new access token
-      const accessToken = jwtUtils.signJwt(jwtObject, {
+      const accessToken = jwtUtils.signJwt(jwtPayload, {
         expiresIn: defaultconfig.jwtConfig.ACCESS_TOKEN_TTL,
       })
 
-      // new refresh token
-      const refreshToken = jwtUtils.signJwt(jwtObject, {
+      const refreshToken = jwtUtils.signJwt(jwtPayload, {
         expiresIn: defaultconfig.jwtConfig.REFRESH_TOKEN_TTL,
       })
 
@@ -50,6 +50,11 @@ const createAuthor = async (req, res) => {
       response.statusCode = 201
       response.message = 'Author created'
       response.data = { newAuthor, accessToken, refreshToken }
+    } catch (error) {
+      response.developerMessage = {
+        message: error.message || constants.errorMessage.SOMETHING_WRONG,
+        details: [],
+      }
     }
   }
 
