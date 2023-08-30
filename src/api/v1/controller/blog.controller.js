@@ -57,7 +57,7 @@ const viewBlog = async (req, res) => {
   }
 
   const blogId = req.params.id
-  const blogs = await blogService.viewBlog(blogId)
+  const blogs = await blogService.viewBlog(blogId, req.query)
 
   if (blogs instanceof Error) {
     response.developerMessage = blogs.message

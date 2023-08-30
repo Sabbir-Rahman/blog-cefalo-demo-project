@@ -38,11 +38,12 @@ const getSingleBlogById = async (blogId) => {
   }
 }
 
-const viewBlogs = async () => {
+const viewBlogs = async (queryData) => {
   try {
     const BlogModel = db.db.blogs
     const AuthorModel = db.db.authors
     const blogs = await BlogModel.findAll({
+      where: queryData,
       attributes: ['blogId', 'title', 'body', 'authorId', 'createdAt', 'updatedAt'],
       include: [
         {

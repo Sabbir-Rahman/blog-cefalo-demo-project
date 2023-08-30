@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable import/extensions */
 import { v4 as uuidv4 } from 'uuid'
 
@@ -24,12 +25,12 @@ const createBlog = async (inputData, authorId) => {
   }
 }
 
-const viewBlog = async (inputData) => {
+const viewBlog = async (inputData, queryData) => {
   try {
     let blog
-
+    console.log(queryData)
     if (inputData) blog = await blogQuery.getSingleBlogById(inputData)
-    else blog = await blogQuery.viewBlogs()
+    else blog = await blogQuery.viewBlogs(queryData)
 
     return blog
   } catch (error) {
