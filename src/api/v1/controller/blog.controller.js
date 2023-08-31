@@ -102,7 +102,7 @@ const editBlog = async (req, res) => {
       }
 
       response.isSuccess = true
-      response.statusCode = 201
+      response.statusCode = 200
       response.message = 'Blog Edited'
       response.data = blog
     } catch (err) {
