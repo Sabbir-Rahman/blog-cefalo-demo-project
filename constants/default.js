@@ -4,6 +4,7 @@ const errorMessage = {
   DUPLICATE_EMAIL: 'This email is already registered, please try with different mail',
   EMAIL_USER_NOT_FOUND: 'No user found for this email, Please create an account or try again',
   PASSWORD_NOT_MATCH: 'Password not match for this user, Please try again with correct password',
+  DENIED_EDIT_BLOG: 'User is not allowed to edit the blog',
 }
 
 export default { errorMessage }

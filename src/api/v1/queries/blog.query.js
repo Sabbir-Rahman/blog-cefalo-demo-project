@@ -60,8 +60,31 @@ const viewBlogs = async (queryData) => {
   }
 }
 
+const editBlog = async (updateData, blogId) => {
+  try {
+    const BlogModel = db.db.blogs
+    const blog = await BlogModel.update(updateData, { where: { blogId } })
+
+    return blog
+  } catch (error) {
+    logQueryError('viewBlogs', FILENAME, JSON.stringify(error.errors))
+    throw new Error(error)
+  }
+}
+
+const isAuthorizedToEditBlog = async (authorId, blogId) => {
+  const BlogModel = db.db.blogs
+  const blog = await BlogModel.findOne({ where: { authorId, blogId } })
+
+  if (blog) return true
+
+  return false
+}
+
 export default {
   createBlog,
   viewBlogs,
   getSingleBlogById,
+  isAuthorizedToEditBlog,
+  editBlog,
 }
