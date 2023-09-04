@@ -37,18 +37,13 @@ const getSingleAuthorById = async (authorId) => {
 }
 
 const getSingleAuthorByEmail = async (authorEmail) => {
-  try {
-    const AuthorModel = db.db.authors
-    const author = await AuthorModel.findOne({
-      where: { email: authorEmail },
-      attributes: ['authorId', 'name', 'email', 'password'],
-    })
+  const AuthorModel = db.db.authors
+  const author = await AuthorModel.findOne({
+    where: { email: authorEmail },
+    attributes: ['authorId', 'name', 'email', 'password'],
+  })
 
-    return author
-  } catch (error) {
-    logQueryError('getSingleAuthorByEmail', FILENAME, JSON.stringify(error.errors))
-    throw new Error(error)
-  }
+  return author
 }
 
 export default {

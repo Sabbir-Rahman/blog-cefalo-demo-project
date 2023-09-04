@@ -6,7 +6,7 @@ import defaultconfig from '../../../../config/default.js'
 import { bcryptUtils, jwtUtils } from '../utils/index.js'
 import constants from '../../../../constants/default.js'
 import { BadRequestError } from '../errors/index.js'
-import { CreateAuthorDto } from '../dto/authors/index.js'
+import { AuthorGeneralViewDto } from '../dto/authors/index.js'
 
 const createAuthor = async (inputData) => {
   const uniqueId = uuidv4()
@@ -37,7 +37,7 @@ const createAuthor = async (inputData) => {
     expiresIn: defaultconfig.jwtConfig.REFRESH_TOKEN_TTL,
   })
 
-  const authorObj = new CreateAuthorDto(author)
+  const authorObj = new AuthorGeneralViewDto(author)
   return { authorObj, accessToken, refreshToken }
 }
 

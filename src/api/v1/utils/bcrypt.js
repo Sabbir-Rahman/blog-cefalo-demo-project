@@ -20,7 +20,8 @@ async function hashPassword(password) {
 
 async function comparePassword(userPassword, inputPassword) {
   try {
-    return await bcrypt.compare(inputPassword, userPassword)
+    const comparePass = await bcrypt.compare(inputPassword, userPassword)
+    return comparePass
   } catch (error) {
     logger.error(error)
 
