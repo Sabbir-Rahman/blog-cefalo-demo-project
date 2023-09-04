@@ -8,45 +8,25 @@ import { jwtUtils } from '../utils/index.js'
 import { logControllerError } from '../../../../logger/customLogger.js'
 import { BadRequestError } from '../errors/index.js'
 
-// 1. create author
 const createAuthor = async (req, res, next) => {
   const { error, value } = validation.authorSchemaValidator.validate(req.body)
-  let data = {}
   try {
     if (error) {
-      const developerMessage = {
-        message: constants.errorMessage.VALIDATION_ERROR,
-        details: error.details,
-      }
-
       throw new BadRequestError('Validation Error', error.details)
     }
 
-    const newAuthor = await authorService.createAuthor(value)
+    const { authorObj, accessToken, refreshToken } = await authorService.createAuthor(value)
 
-    const jwtPayload = {
-      userId: newAuthor.authorId,
-      name: newAuthor.name,
-      role: ['author'],
-    }
-
-    const accessToken = jwtUtils.signJwt(jwtPayload, {
-      expiresIn: defaultconfig.jwtConfig.ACCESS_TOKEN_TTL,
-    })
-
-    const refreshToken = jwtUtils.signJwt(jwtPayload, {
-      expiresIn: defaultconfig.jwtConfig.REFRESH_TOKEN_TTL,
-    })
-
-    data = { newAuthor, accessToken, refreshToken }
+    return new CustomResponse(res, constants.HTTP_STATUS_CODE.CREATED, '', 'Author Created', {
+      authorObj,
+      accessToken,
+      refreshToken,
+    }).sendResponse()
   } catch (err) {
     return next(err)
   }
-
-  return new CustomResponse(res, 201, '', 'Author Created', data).sendResponse()
 }
 
-// 1. view author
 const viewAuthor = async (req, res) => {
   const response = {
     isSuccess: false,
