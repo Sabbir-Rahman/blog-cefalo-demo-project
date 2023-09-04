@@ -6,7 +6,6 @@ import constants from '../../../../constants/default.js'
 import { authService } from '../services/index.js'
 import { jwtUtils } from '../utils/index.js'
 
-// 1. create author
 const userLogin = async (req, res) => {
   const response = {
     isSuccess: false,

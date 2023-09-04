@@ -2,7 +2,6 @@
 import { Sequelize, DataTypes } from 'sequelize'
 import authorSchema from './authorModel.js'
 import logger from '../../../../logger/defaultLogger.js'
-import blogSchema from './blogModel.js'
 
 const db = {}
 
@@ -13,22 +12,6 @@ const initiateSchema = async (sequelize) => {
   db.sequelize = sequelize
 
   db.authors = authorSchema(sequelize, DataTypes)
-  db.blogs = blogSchema(sequelize, DataTypes)
-
-  db.authors.hasMany(db.blogs, {
-    onDelete: 'CASCADE',
-    foreignKey: {
-      allowNull: false,
-      name: 'authorId',
-    },
-  })
-
-  db.blogs.belongsTo(db.authors, {
-    foreignKey: {
-      name: 'authorId',
-      allowNull: false,
-    },
-  })
 
   // true will erase all the data and create table again and again
   db.sequelize.sync({ force: false }).then(() => {

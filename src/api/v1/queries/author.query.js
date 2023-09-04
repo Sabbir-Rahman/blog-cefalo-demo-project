@@ -51,22 +51,9 @@ const getSingleAuthorByEmail = async (authorEmail) => {
   }
 }
 
-const viewAuthors = async () => {
-  try {
-    const AuthorModel = db.db.authors
-    const authors = await AuthorModel.findAll({ attributes: ['authorId', 'name', 'email'] })
-
-    return authors
-  } catch (error) {
-    logQueryError('viewAuthors', FILENAME, JSON.stringify(error.errors))
-    throw new Error(error)
-  }
-}
-
 export default {
   createAuthor,
   authorDuplicateMail,
   getSingleAuthorById,
-  viewAuthors,
   getSingleAuthorByEmail,
 }

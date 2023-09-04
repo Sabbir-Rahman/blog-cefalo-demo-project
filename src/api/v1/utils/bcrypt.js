@@ -1,7 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable import/extensions */
 import bcrypt from 'bcrypt'
-import defaultconfig from '../../../../config/default.js'
 
 import logger from '../../../../logger/defaultLogger.js'
 import constants from '../../../../constants/default.js'
