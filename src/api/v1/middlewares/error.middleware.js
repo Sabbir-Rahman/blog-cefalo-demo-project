@@ -1,9 +1,9 @@
 /* eslint-disable import/extensions */
 import logger from '../../../../logger/defaultLogger.js'
 
-const customErrorHandler = (err, req, res, next) => {
+const customErrorHandler = (err, req, res) => {
   const customErr = {
-    statusCode: err.statusCode,
+    statusCode: err.statusCode || 400,
     message: err.title,
     developerMessage: err.description,
   }
