@@ -19,7 +19,13 @@ const createAuthor = async (req, res, next) => {
       secure: true,
     })
 
-    return new CustomResponse(res, 201, '', 'Author Created', authorObj).sendResponse()
+    return new CustomResponse(
+      res,
+      constants.HTTP_STATUS_CODE.CREATED,
+      '',
+      'Author Created',
+      authorObj,
+    ).sendResponse()
   } catch (err) {
     return next(err)
   }

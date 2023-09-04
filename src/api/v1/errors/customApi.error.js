@@ -8,7 +8,6 @@ class CustomApiError extends Error {
     this.description = description
 
     Error.captureStackTrace(this)
-    console.log('=========================', title, description, statusCode)
   }
 }
 
