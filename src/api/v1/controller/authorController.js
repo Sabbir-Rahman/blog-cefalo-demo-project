@@ -6,26 +6,23 @@ import constants from '../../../../constants/default.js'
 import { authorService } from '../services/index.js'
 import { jwtUtils } from '../utils/index.js'
 import { logControllerError } from '../../../../logger/customLogger.js'
+import { BadRequestError } from '../errors/index.js'
 
 // 1. create author
-const createAuthor = async (req, res) => {
+const createAuthor = async (req, res, next) => {
   const { error, value } = validation.authorSchemaValidator.validate(req.body)
   let data = {}
-
-  if (error) {
-    const developerMessage = {
-      message: constants.errorMessage.VALIDATION_ERROR,
-      details: error.details,
-    }
-
-    return new CustomResponse(res, 400, developerMessage, 'Author Not Created', data).sendResponse()
-  }
   try {
-    const newAuthor = await authorService.createAuthor(value)
+    if (error) {
+      const developerMessage = {
+        message: constants.errorMessage.VALIDATION_ERROR,
+        details: error.details,
+      }
 
-    if (newAuthor instanceof Error) {
-      throw newAuthor
+      throw new BadRequestError('Validation Error', error.details)
     }
+
+    const newAuthor = await authorService.createAuthor(value)
 
     const jwtPayload = {
       userId: newAuthor.authorId,
@@ -43,12 +40,7 @@ const createAuthor = async (req, res) => {
 
     data = { newAuthor, accessToken, refreshToken }
   } catch (err) {
-    const developerMessage = {
-      message: err.message || constants.errorMessage.SOMETHING_WRONG,
-      details: [],
-    }
-    logControllerError('', '', err)
-    return new CustomResponse(res, 400, developerMessage, 'Author Not Created', {}).sendResponse()
+    return next(err)
   }
 
   return new CustomResponse(res, 201, '', 'Author Created', data).sendResponse()

@@ -7,6 +7,7 @@ import v1Router from './src/api/v1/v1Router.js'
 import logger from './logger/defaultLogger.js'
 import connectDb from './src/helpers/mysql.js'
 import dbModel from './src/api/v1/models/index.js'
+import v1CustomErrorHandler from './src/api/v1/middlewares/error.middleware.js'
 
 const app = express()
 const { PORT } = defaultConfig.generalConfig
@@ -20,6 +21,8 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 app.use('/api/v1/', v1Router)
+
+app.use(v1CustomErrorHandler)
 
 app.get('/', (req, res) => {
   res.json({ message: 'Hello' })

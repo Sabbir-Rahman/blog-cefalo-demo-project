@@ -5,6 +5,27 @@ const errorMessage = {
   EMAIL_USER_NOT_FOUND: 'No user found for this email, Please create an account or try again',
   PASSWORD_NOT_MATCH: 'Password not match for this user, Please try again with correct password',
   DENIED_EDIT_BLOG: 'User is not allowed to edit the blog',
+  NO_TOKEN: 'Access Token Not Given',
+  NOT_AUTHORIZED: 'Not Authorized for this permission',
 }
 
-export default { errorMessage }
+const HTTP_STATUS_CODE = {
+  OK: 200,
+  CREATED: 201,
+  ACCEPTED: 202,
+  NO_CONTENT: 204,
+  NOT_MODIFIED: 304,
+  BAD_REQUEST: 400,
+  UNAUTHORIZED: 401,
+  PAYMENT_REQUIRED: 402,
+  FORBIDDEN: 403,
+  NOT_FOUND: 404,
+  METHOD_NOT_ALLOWED: 405,
+  CONFLICT: 409,
+  INTERNAL_SERVER_ERROR: 500,
+  NOT_IMPLEMENTED: 501,
+  BAD_GATEWAY: 502,
+  SERVICE_UNAVAILABLE: 503,
+}
+
+export default { errorMessage, HTTP_STATUS_CODE }

@@ -5,32 +5,28 @@ import { logServiceError } from '../../../../logger/customLogger.js'
 import { authorQuery } from '../queries/index.js'
 import { bcryptUtils } from '../utils/index.js'
 import constants from '../../../../constants/default.js'
+import { BadRequestError } from '../errors/index.js'
 
 const FILENAME = 'src/api/v1/services/author.service.js'
 
 const createAuthor = async (inputData) => {
-  try {
-    const uniqueId = uuidv4()
-    const hashPass = await bcryptUtils.hashPassword(inputData.password)
+  const uniqueId = uuidv4()
+  const hashPass = await bcryptUtils.hashPassword(inputData.password)
 
-    if (await authorQuery.authorDuplicateMail(inputData.email)) {
-      logServiceError('createAuthor', FILENAME, constants.errorMessage.DUPLICATE_EMAIL)
-      return new Error(constants.errorMessage.DUPLICATE_EMAIL)
-    }
-
-    const newAuthor = {
-      ...inputData,
-      password: hashPass,
-      authorId: uniqueId,
-    }
-
-    const author = await authorQuery.createAuthor(newAuthor)
-
-    return author
-  } catch (error) {
-    logServiceError('createAuthor', FILENAME, error)
-    return new Error(error.message)
+  if (await authorQuery.authorDuplicateMail(inputData.email)) {
+    // logServiceError('createAuthor', FILENAME, constants.errorMessage.DUPLICATE_EMAIL)
+    throw new BadRequestError('Email Duplicate', 'This Email Already Exist try with another one')
   }
+
+  const newAuthor = {
+    ...inputData,
+    password: hashPass,
+    authorId: uniqueId,
+  }
+
+  const author = await authorQuery.createAuthor(newAuthor)
+
+  return author
 }
 
 const viewAuthor = async (inputData) => {
