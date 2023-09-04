@@ -35,20 +35,14 @@ class CustomResponse {
   }
 
   sendResponse() {
+    // first option application/json is choosen bydefault
     return this.res.format({
+      'application/json': this.sendJSONResponse.bind(this),
       'text/xml': this.sendXMLResponse.bind(this),
       'text/html': this.sendHTMLResponse.bind(this),
       'text/plain': this.sendTEXTResponse.bind(this),
-      'application/json': this.sendJSONResponse.bind(this),
-      default: this.sendJSONResponse.bind(this),
     })
   }
-
-  // sendResponse() {
-  //   return this.res
-  //     .status(this.statusCode)
-  //     .send({ message: this.message, developerMessage: this.developerMessage, data: this.data })
-  // }
 }
 
 export default CustomResponse

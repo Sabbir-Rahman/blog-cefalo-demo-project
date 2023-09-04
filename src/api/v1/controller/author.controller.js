@@ -12,20 +12,13 @@ const createAuthor = async (req, res, next) => {
       throw new BadRequestError('Validation Error', error.details)
     }
 
-    const { authorObj, accessToken } = await authorService.createAuthor(value)
+    const { authorObj, accessToken, refreshToken } = await authorService.createAuthor(value)
 
-    res.cookie('jwt-access-token', accessToken, {
-      sameSite: 'strict',
-      secure: true,
-    })
-
-    return new CustomResponse(
-      res,
-      constants.HTTP_STATUS_CODE.CREATED,
-      '',
-      'Author Created',
+    return new CustomResponse(res, constants.HTTP_STATUS_CODE.CREATED, '', 'Author Created', {
       authorObj,
-    ).sendResponse()
+      accessToken,
+      refreshToken,
+    }).sendResponse()
   } catch (err) {
     return next(err)
   }

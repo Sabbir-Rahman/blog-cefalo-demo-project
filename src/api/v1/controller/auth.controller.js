@@ -14,12 +14,11 @@ const userLogin = async (req, res, next) => {
 
     const { userObj, accessToken, refreshToken } = await authService.userLogin(value)
 
-    res.cookie('jwt-access-token', accessToken, {
-      sameSite: 'strict',
-      secure: true,
-    })
-
-    return new CustomResponse(res, 200, '', 'Login Successfull', userObj).sendResponse()
+    return new CustomResponse(res, 200, '', 'Login Successfull', {
+      userObj,
+      accessToken,
+      refreshToken,
+    }).sendResponse()
   } catch (err) {
     return next(err)
   }
