@@ -53,6 +53,7 @@ const editBlog = async (req, res, next) => {
       res,
       constants.HTTP_STATUS_CODE.ACCEPTED,
       'Blog Edited Successfull',
+      'Blog Edited Successfull',
       blog,
     ).sendResponse()
   } catch (err) {

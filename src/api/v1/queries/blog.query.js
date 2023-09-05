@@ -54,7 +54,11 @@ const editBlog = async (updateData, blogId) => {
 
 const isAuthorizedToEditBlog = async (authorId, blogId) => {
   const BlogModel = db.db.blogs
-  const blog = await BlogModel.findOne({ where: { authorId, blogId } })
+  const blog = await BlogModel.findOne({
+    where: { authorId, blogId },
+    returning: true,
+    plain: true,
+  })
 
   if (blog) return true
 

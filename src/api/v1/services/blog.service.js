@@ -44,9 +44,10 @@ const editBlog = async (inputData, blogId, authorId) => {
     throw new NoPermissionError('No Permission', defaultConstants.errorMessage.DENIED_EDIT_BLOG)
   }
 
-  const editedBlog = await blogQuery.editBlog(inputData, blogId)
+  await blogQuery.editBlog(inputData, blogId)
 
-  return 'Blog Edited Successfull'
+  const updatedBlog = await blogQuery.getSingleBlogById(blogId)
+  return new BlogGeneralViewDto(updatedBlog)
 }
 
 export default { createBlog, viewBlog, editBlog }
