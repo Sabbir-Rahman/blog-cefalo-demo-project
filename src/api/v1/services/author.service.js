@@ -26,21 +26,10 @@ const createAuthor = async (inputData) => {
   }
 
   const author = await authorQuery.createAuthor(newAuthor)
-  const jwtPayload = {
-    userId: author.authorId,
-    name: author.name,
-    role: ['author'],
-  }
-
-  const accessToken = jwtUtils.signJwt(jwtPayload, {
-    expiresIn: defaultconfig.jwtConfig.ACCESS_TOKEN_TTL,
-  })
-
-  const refreshToken = jwtUtils.signJwt(jwtPayload, {
-    expiresIn: defaultconfig.jwtConfig.REFRESH_TOKEN_TTL,
-  })
 
   const authorObj = new AuthorGeneralViewDto(author)
+  const { accessToken, refreshToken } = jwtUtils.generateAccessTokenRefreshTokenForUser(author)
+
   return { authorObj, accessToken, refreshToken }
 }
 

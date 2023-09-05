@@ -26,21 +26,9 @@ const userLogin = async (inputData) => {
     )
   }
 
-  const jwtPayload = {
-    userId: userExist.dataValues.authorId,
-    name: userExist.dataValues.name,
-    role: ['author'],
-  }
-
-  const accessToken = jwtUtils.signJwt(jwtPayload, {
-    expiresIn: defaultconfig.jwtConfig.ACCESS_TOKEN_TTL,
-  })
-
-  const refreshToken = jwtUtils.signJwt(jwtPayload, {
-    expiresIn: defaultconfig.jwtConfig.REFRESH_TOKEN_TTL,
-  })
-
   const userObj = new AuthorGeneralViewDto(userExist)
+  const { accessToken, refreshToken } = jwtUtils.generateAccessTokenRefreshTokenForUser(userExist)
+
   return { userObj, accessToken, refreshToken }
 }
 
