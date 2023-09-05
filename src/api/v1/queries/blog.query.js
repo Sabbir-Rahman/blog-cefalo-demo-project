@@ -46,15 +46,10 @@ const viewBlogs = async (queryData) => {
 }
 
 const editBlog = async (updateData, blogId) => {
-  try {
-    const BlogModel = db.db.blogs
-    const blog = await BlogModel.update(updateData, { where: { blogId } })
+  const BlogModel = db.db.blogs
+  const blog = await BlogModel.update(updateData, { where: { blogId } })
 
-    return blog
-  } catch (error) {
-    logQueryError('viewBlogs', FILENAME, JSON.stringify(error.errors))
-    throw new Error(error)
-  }
+  return blog
 }
 
 const isAuthorizedToEditBlog = async (authorId, blogId) => {

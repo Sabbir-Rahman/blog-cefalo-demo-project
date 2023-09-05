@@ -33,48 +33,30 @@ const viewBlog = async (req, res, next) => {
   }
 }
 
-// 1. edit blog
-const editBlog = async (req, res) => {
-  const response = {
-    isSuccess: false,
-    statusCode: 400,
-    message: 'Blog not edited',
-    developerMessage: '',
-    isReadOnly: false,
-    data: {},
-  }
-
+const editBlog = async (req, res, next) => {
+  // stripUnknown to cancel out any unwanted input
   const { error, value } = validation.editblogSchemaValidator.validate(req.body, {
     stripUnknown: true,
   })
-  if (error) {
-    response.developerMessage = {
-      message: constants.errorMessage.VALIDATION_ERROR,
-      details: error.details,
-    }
-  } else {
-    try {
-      const authorId = res.locals.user.userId
-      const blogId = req.params.id
 
-      const blog = await blogService.editBlog(value, blogId, authorId)
-
-      if (blog instanceof Error) {
-        throw blog
-      }
-
-      response.isSuccess = true
-      response.statusCode = 200
-      response.message = 'Blog Edited'
-      response.data = blog
-    } catch (err) {
-      response.developerMessage = {
-        message: err.message || constants.errorMessage.SOMETHING_WRONG,
-        details: [],
-      }
+  try {
+    if (error) {
+      throw new BadRequestError('Validation Error', error.details)
     }
 
-    res.status(response.statusCode).json(response)
+    const authorId = res.locals.user.userId
+    const blogId = req.params.id
+
+    const blog = await blogService.editBlog(value, blogId, authorId)
+
+    return new CustomResponse(
+      res,
+      constants.HTTP_STATUS_CODE.ACCEPTED,
+      'Blog Edited Successfull',
+      blog,
+    ).sendResponse()
+  } catch (err) {
+    return next(err)
   }
 }
 

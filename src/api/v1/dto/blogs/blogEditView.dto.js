@@ -1,4 +1,4 @@
-export default class BlogGeneralViewDto {
+export default class BlogEditViewDto {
   constructor(blog) {
     this.authorId = blog.authorId
     this.authorName = blog.author.name
