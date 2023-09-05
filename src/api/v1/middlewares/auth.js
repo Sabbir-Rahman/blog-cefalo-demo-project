@@ -25,7 +25,6 @@ const auth = () => (
 
   if (decoded) {
     res.locals.user = decoded
-
     return next()
   }
   return res.status(defaultConstant.HTTP_STATUS_CODE.UNAUTHORIZED).json({ message: defaultConstant.errorMessage.NOT_AUTHORIZED })

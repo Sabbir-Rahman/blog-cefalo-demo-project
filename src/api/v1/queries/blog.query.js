@@ -5,15 +5,10 @@ import db from '../models/index.js'
 const FILENAME = 'src/api/v1/queries/author.query.js'
 
 const createBlog = async (queryData) => {
-  try {
-    const BlogModel = db.db.blogs
-    const newBlog = await BlogModel.create(queryData)
+  const BlogModel = db.db.blogs
+  const newBlog = await BlogModel.create(queryData)
 
-    return newBlog
-  } catch (error) {
-    logQueryError('createBlog', FILENAME, JSON.stringify(error.errors))
-    throw new Error(error)
-  }
+  return newBlog
 }
 
 const getSingleBlogById = async (blogId) => {

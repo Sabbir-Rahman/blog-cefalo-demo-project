@@ -5,25 +5,21 @@ import { v4 as uuidv4 } from 'uuid'
 import { logServiceError } from '../../../../logger/customLogger.js'
 import { blogQuery } from '../queries/index.js'
 import defaultConstants from '../../../../constants/default.js'
+import BlogGeneralViewDto from '../dto/blogs/blogGeneralView.dto.js'
 
 const FILENAME = 'src/api/v1/services/author.service.js'
 
 const createBlog = async (inputData, authorId) => {
-  try {
-    const uniqueId = uuidv4()
-    const newBlog = {
-      ...inputData,
-      authorId,
-      blogId: uniqueId,
-    }
-
-    const blog = await blogQuery.createBlog(newBlog)
-
-    return blog
-  } catch (error) {
-    logServiceError('createBlog', FILENAME, error)
-    return new Error(error.message)
+  const uniqueId = uuidv4()
+  const newBlog = {
+    ...inputData,
+    authorId,
+    blogId: uniqueId,
   }
+
+  const blog = await blogQuery.createBlog(newBlog)
+
+  return new BlogGeneralViewDto(blog)
 }
 
 const viewBlog = async (inputData, queryData) => {
