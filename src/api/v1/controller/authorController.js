@@ -27,28 +27,20 @@ const createAuthor = async (req, res, next) => {
   }
 }
 
-const viewAuthor = async (req, res) => {
-  const response = {
-    isSuccess: false,
-    statusCode: 400,
-    message: 'Author not viewed',
-    developerMessage: '',
-    isReadOnly: false,
-    data: {},
+const viewAuthor = async (req, res, next) => {
+  try {
+    const author = await authorService.viewAuthor(req.params.id)
+
+    return new CustomResponse(
+      res,
+      constants.HTTP_STATUS_CODE.ACCEPTED,
+      '',
+      'Author View Successfull',
+      author,
+    ).sendResponse()
+  } catch (error) {
+    return next(error)
   }
-
-  const author = await authorService.viewAuthor(req.params.id)
-
-  if (author instanceof Error) {
-    response.developerMessage = author.message
-  } else {
-    response.isSuccess = true
-    response.statusCode = 200
-    response.message = 'Author Viwed'
-    response.data = author
-  }
-
-  res.status(response.statusCode).json(response)
 }
 
 export default { createAuthor, viewAuthor }

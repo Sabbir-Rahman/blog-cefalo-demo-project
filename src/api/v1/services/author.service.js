@@ -3,9 +3,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 import { logServiceError } from '../../../../logger/customLogger.js'
 import { authorQuery } from '../queries/index.js'
-import defaultconfig from '../../../../config/default.js'
 import { bcryptUtils, jwtUtils } from '../utils/index.js'
-import constants from '../../../../constants/default.js'
 import { BadRequestError } from '../errors/index.js'
 import { AuthorGeneralViewDto } from '../dto/authors/index.js'
 
@@ -34,17 +32,16 @@ const createAuthor = async (inputData) => {
 }
 
 const viewAuthor = async (inputData) => {
-  try {
-    let author
+  let author
 
-    if (inputData) author = await authorQuery.getSingleAuthorById(inputData)
-    else author = await authorQuery.viewAuthors()
-
-    return author
-  } catch (error) {
-    logServiceError('viewAuthor', FILENAME, error)
-    return new Error(error.message)
+  if (inputData) {
+    const singleAuthor = await authorQuery.getSingleAuthorById(inputData)
+    author = new AuthorGeneralViewDto(singleAuthor)
+  } else {
+    const authors = await authorQuery.viewAuthors()
+    author = authors.map((singleAuthor) => new AuthorGeneralViewDto(singleAuthor))
   }
+  return author
 }
 
 export default { createAuthor, viewAuthor }

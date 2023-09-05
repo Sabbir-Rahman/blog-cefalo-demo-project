@@ -6,7 +6,6 @@ import { bcryptUtils, jwtUtils } from '../utils/index.js'
 import { AuthorGeneralViewDto } from '../dto/authors/index.js'
 import Http404DataNotFoundError from '../errors/http404NotFound.error.js'
 import BadRequestError from '../errors/badRequest.error.js'
-import defaultconfig from '../../../../config/default.js'
 
 const userLogin = async (inputData) => {
   const userExist = await authorQuery.getSingleAuthorByEmail(inputData.email)

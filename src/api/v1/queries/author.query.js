@@ -22,18 +22,12 @@ const authorDuplicateMail = async (authorEmail) => {
 }
 
 const getSingleAuthorById = async (authorId) => {
-  try {
-    const AuthorModel = db.db.authors
-    const author = await AuthorModel.findOne({
-      where: { authorId },
-      attributes: ['authorId', 'name', 'email'],
-    })
+  const AuthorModel = db.db.authors
+  const author = await AuthorModel.findOne({
+    where: { authorId },
+  })
 
-    return author
-  } catch (error) {
-    logQueryError('getSingleAuthorById', FILENAME, JSON.stringify(error.errors))
-    throw new Error(error)
-  }
+  return author
 }
 
 const getSingleAuthorByEmail = async (authorEmail) => {
@@ -52,15 +46,10 @@ const getSingleAuthorByEmail = async (authorEmail) => {
 }
 
 const viewAuthors = async () => {
-  try {
-    const AuthorModel = db.db.authors
-    const authors = await AuthorModel.findAll({ attributes: ['authorId', 'name', 'email'] })
+  const AuthorModel = db.db.authors
+  const authors = await AuthorModel.findAll()
 
-    return authors
-  } catch (error) {
-    logQueryError('viewAuthors', FILENAME, JSON.stringify(error.errors))
-    throw new Error(error)
-  }
+  return authors
 }
 
 export default {
