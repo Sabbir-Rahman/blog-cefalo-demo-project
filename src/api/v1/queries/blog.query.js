@@ -12,47 +12,37 @@ const createBlog = async (queryData) => {
 }
 
 const getSingleBlogById = async (blogId) => {
-  try {
-    const AuthorModel = db.db.authors
-    const BlogModel = db.db.blogs
-    const blog = await BlogModel.findOne({
-      where: { blogId },
-      attributes: ['blogId', 'title', 'body', 'authorId', 'createdAt', 'updatedAt'],
-      include: [
-        {
-          model: AuthorModel,
-          attributes: ['name', 'email'],
-        },
-      ],
-    })
+  const AuthorModel = db.db.authors
+  const BlogModel = db.db.blogs
+  const blog = await BlogModel.findOne({
+    where: { blogId },
+    attributes: ['blogId', 'title', 'body', 'authorId', 'createdAt', 'updatedAt'],
+    include: [
+      {
+        model: AuthorModel,
+        attributes: ['name', 'email'],
+      },
+    ],
+  })
 
-    return blog
-  } catch (error) {
-    logQueryError('getSingleBlogById', FILENAME, JSON.stringify(error.errors))
-    throw new Error(error)
-  }
+  return blog
 }
 
 const viewBlogs = async (queryData) => {
-  try {
-    const BlogModel = db.db.blogs
-    const AuthorModel = db.db.authors
-    const blogs = await BlogModel.findAll({
-      where: queryData,
-      attributes: ['blogId', 'title', 'body', 'authorId', 'createdAt', 'updatedAt'],
-      include: [
-        {
-          model: AuthorModel,
-          attributes: ['name', 'email'],
-        },
-      ],
-    })
+  const BlogModel = db.db.blogs
+  const AuthorModel = db.db.authors
+  const blogs = await BlogModel.findAll({
+    where: queryData,
+    attributes: ['blogId', 'title', 'body', 'authorId', 'createdAt', 'updatedAt'],
+    include: [
+      {
+        model: AuthorModel,
+        attributes: ['name', 'email'],
+      },
+    ],
+  })
 
-    return blogs
-  } catch (error) {
-    logQueryError('viewBlogs', FILENAME, JSON.stringify(error.errors))
-    throw new Error(error)
-  }
+  return blogs
 }
 
 const editBlog = async (updateData, blogId) => {

@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { logServiceError } from '../../../../logger/customLogger.js'
 import { blogQuery } from '../queries/index.js'
 import defaultConstants from '../../../../constants/default.js'
-import BlogGeneralViewDto from '../dto/blogs/blogGeneralView.dto.js'
+import { BlogCreateViewDto, BlogGeneralViewDto } from '../dto/blogs/index.js'
 
 const FILENAME = 'src/api/v1/services/author.service.js'
 
@@ -19,21 +19,21 @@ const createBlog = async (inputData, authorId) => {
 
   const blog = await blogQuery.createBlog(newBlog)
 
-  return new BlogGeneralViewDto(blog)
+  return new BlogCreateViewDto(blog)
 }
 
 const viewBlog = async (inputData, queryData) => {
-  try {
-    let blog
-    console.log(queryData)
-    if (inputData) blog = await blogQuery.getSingleBlogById(inputData)
-    else blog = await blogQuery.viewBlogs(queryData)
+  let blog
 
-    return blog
-  } catch (error) {
-    logServiceError('viewBlog', FILENAME, error)
-    return new Error(error.message)
+  if (inputData) {
+    const singleBlog = await blogQuery.getSingleBlogById(inputData)
+    blog = new BlogGeneralViewDto(singleBlog)
+  } else {
+    const blogs = await blogQuery.viewBlogs(queryData)
+    blog = blogs.map((singleBlog) => new BlogGeneralViewDto(singleBlog))
   }
+
+  return blog
 }
 
 const editBlog = async (inputData, blogId, authorId) => {

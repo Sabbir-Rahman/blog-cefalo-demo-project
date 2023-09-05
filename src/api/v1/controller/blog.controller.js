@@ -22,29 +22,15 @@ const createBlog = async (req, res, next) => {
   }
 }
 
-const viewBlog = async (req, res) => {
-  const response = {
-    isSuccess: false,
-    statusCode: 400,
-    message: 'Blogs not viewed',
-    developerMessage: '',
-    isReadOnly: false,
-    data: {},
+const viewBlog = async (req, res, next) => {
+  try {
+    const blogId = req.params.id
+    const blogs = await blogService.viewBlog(blogId, req.query)
+
+    return new CustomResponse(res, constants.HTTP_STATUS_CODE.ACCEPTED, blogs).sendResponse()
+  } catch (error) {
+    return next(error)
   }
-
-  const blogId = req.params.id
-  const blogs = await blogService.viewBlog(blogId, req.query)
-
-  if (blogs instanceof Error) {
-    response.developerMessage = blogs.message
-  }
-
-  response.isSuccess = true
-  response.statusCode = 200
-  response.message = 'Blogs Viewed Successfully'
-  response.data = blogs
-
-  res.status(response.statusCode).json(response)
 }
 
 // 1. edit blog
