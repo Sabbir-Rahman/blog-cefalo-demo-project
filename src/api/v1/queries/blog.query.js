@@ -1,8 +1,8 @@
 /* eslint-disable import/extensions */
 import { logQueryError } from '../../../../logger/customLogger.js'
+import BlogQueryAllowDto from '../dto/blogs/blogQueryAllow.dto.js'
 import db from '../models/index.js'
-
-const FILENAME = 'src/api/v1/queries/author.query.js'
+import { paginationUtils } from '../utils/index.js'
 
 const createBlog = async (queryData) => {
   const BlogModel = db.db.blogs
@@ -31,8 +31,14 @@ const getSingleBlogById = async (blogId) => {
 const viewBlogs = async (queryData) => {
   const BlogModel = db.db.blogs
   const AuthorModel = db.db.authors
+
+  const { page, limit, offset } = paginationUtils.getPaginationInfo(queryData)
+  const queryObj = BlogQueryAllowDto.createQueryObject(queryData)
+
   const blogs = await BlogModel.findAll({
-    where: queryData,
+    limit,
+    offset,
+    where: queryObj,
     attributes: ['blogId', 'title', 'body', 'authorId', 'createdAt', 'updatedAt'],
     include: [
       {

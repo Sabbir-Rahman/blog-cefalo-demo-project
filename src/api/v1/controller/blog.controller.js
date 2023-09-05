@@ -27,7 +27,13 @@ const viewBlog = async (req, res, next) => {
     const blogId = req.params.id
     const blogs = await blogService.viewBlog(blogId, req.query)
 
-    return new CustomResponse(res, constants.HTTP_STATUS_CODE.ACCEPTED, blogs).sendResponse()
+    return new CustomResponse(
+      res,
+      constants.HTTP_STATUS_CODE.ACCEPTED,
+      'Blog View Successfull',
+      '',
+      blogs,
+    ).sendResponse()
   } catch (error) {
     return next(error)
   }
