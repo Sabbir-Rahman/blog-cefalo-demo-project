@@ -13,10 +13,16 @@ const createBlog = async (req, res, next) => {
       throw new BadRequestError('Validation Error', error.details)
     }
 
-    const authorId = res.locals.user.userId
+    const authorId = req.accessToken.userId
     const newBlog = await blogService.createBlog(value, authorId)
 
-    return new CustomResponse(res, constants.HTTP_STATUS_CODE.ACCEPTED, newBlog).sendResponse()
+    return new CustomResponse(
+      res,
+      constants.HTTP_STATUS_CODE.ACCEPTED,
+      {},
+      'Blog Created Successfully',
+      newBlog,
+    ).sendResponse()
   } catch (err) {
     return next(err)
   }
@@ -50,9 +56,8 @@ const editBlog = async (req, res, next) => {
       throw new BadRequestError('Validation Error', error.details)
     }
 
-    const authorId = res.locals.user.userId
+    const authorId = req.accessToken.userId
     const blogId = req.params.id
-
     const blog = await blogService.editBlog(value, blogId, authorId)
 
     return new CustomResponse(

@@ -24,7 +24,7 @@ const auth = () => (
   const { decoded } = jwtUtils.verifyJwt(accessToken)
 
   if (decoded) {
-    res.locals.user = decoded
+    req.accessToken = decoded
     return next()
   }
   return res.status(defaultConstant.HTTP_STATUS_CODE.UNAUTHORIZED).json({ message: defaultConstant.errorMessage.NOT_AUTHORIZED })
