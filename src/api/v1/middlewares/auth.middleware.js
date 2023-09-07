@@ -15,7 +15,7 @@ const auth = () => (
   const accessToken = get(req, 'headers.authorization', '').replace(/^Bearer\s/, '')
 
   if (!accessToken) {
-    res
+    return res
       .status(defaultConstant.HTTP_STATUS_CODE.FORBIDDEN)
       .json({ message: defaultConstant.errorMessage.NO_TOKEN })
   }
@@ -26,9 +26,10 @@ const auth = () => (
     req.accessToken = decoded
     return next()
   }
-  return res
-    .status(defaultConstant.HTTP_STATUS_CODE.UNAUTHORIZED)
-    .json({ message: defaultConstant.errorMessage.NOT_AUTHORIZED })
+  return res.status(defaultConstant.HTTP_STATUS_CODE.UNAUTHORIZED).json({
+    message: defaultConstant.errorMessage.NOT_AUTHORIZED,
+    developerMessage: defaultConstant.errorMessage.NOT_AUTHORIZED,
+  })
 }
 
 export default auth

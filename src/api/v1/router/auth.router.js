@@ -1,8 +1,8 @@
 /* eslint-disable import/extensions */
 import { Router } from 'express'
 import { authController } from '../controller/index.js'
-import auth from '../middlewares/auth.js'
-import authRefresh from '../middlewares/authRefresh.js'
+import auth from '../middlewares/auth.middleware.js'
+import authRefresh from '../middlewares/authRefresh.middleware.js'
 
 const router = Router()
 

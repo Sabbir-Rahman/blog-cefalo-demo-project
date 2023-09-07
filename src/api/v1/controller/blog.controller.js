@@ -56,9 +56,8 @@ const editBlog = async (req, res, next) => {
       throw new BadRequestError('Validation Error', error.details)
     }
 
-    const authorId = req.accessToken.userId
     const blogId = req.params.id
-    const blog = await blogService.editBlog(value, blogId, authorId)
+    const blog = await blogService.editBlog(value, blogId)
 
     return new CustomResponse(
       res,
@@ -72,4 +71,23 @@ const editBlog = async (req, res, next) => {
   }
 }
 
-export default { createBlog, viewBlog, editBlog }
+const deleteBlog = async (req, res, next) => {
+  try {
+    const blogId = req.params.id
+    const blog = await blogService.deleteBlog(blogId)
+
+    return new CustomResponse(
+      res,
+      constants.HTTP_STATUS_CODE.NO_CONTENT,
+      'Delete Successfull',
+      'Delete Successfull',
+      blog,
+    ).sendResponse()
+  } catch (err) {
+    return next(err)
+  }
+}
+
+export default {
+  createBlog, viewBlog, editBlog, deleteBlog,
+}
