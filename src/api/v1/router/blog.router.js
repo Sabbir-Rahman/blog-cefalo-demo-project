@@ -9,6 +9,7 @@ const router = Router()
 router.post('/', auth(), blogController.createBlog)
 router.get('/', blogController.viewBlog)
 router.get('/:id', blogController.viewBlog)
+router.get('/author/:id', blogController.viewBlogsOfAuthor)
 router.patch('/:id', [auth(), isOwnBlog()], blogController.editBlog)
 router.delete('/:id', [auth(), isOwnBlog()], blogController.deleteBlog)
 

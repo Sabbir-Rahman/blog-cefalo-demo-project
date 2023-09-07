@@ -1,11 +1,8 @@
 /* eslint-disable import/extensions */
 import validation from '../validators/author.js'
-import defaultconfig from '../../../../config/default.js'
 import CustomResponse from '../utils/customResponse.js'
 import constants from '../../../../constants/default.js'
 import { authorService } from '../services/index.js'
-import { jwtUtils } from '../utils/index.js'
-import { logControllerError } from '../../../../logger/customLogger.js'
 import { BadRequestError } from '../errors/index.js'
 
 const createAuthor = async (req, res, next) => {
@@ -33,7 +30,7 @@ const viewAuthor = async (req, res, next) => {
 
     return new CustomResponse(
       res,
-      constants.HTTP_STATUS_CODE.ACCEPTED,
+      constants.HTTP_STATUS_CODE.OK,
       '',
       'Author View Successfull',
       author,
