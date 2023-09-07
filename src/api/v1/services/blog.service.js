@@ -37,6 +37,12 @@ const viewBlog = async (inputData, queryData) => {
   return blog
 }
 
+const viewBlogsByAuthor = async (authorId, queryData) => {
+  const blogs = await blogQuery.viewBlogsByAuthor(authorId, queryData)
+  const authorBlogs = blogs.map((singleBlog) => new BlogGeneralViewDto(singleBlog))
+  return authorBlogs
+}
+
 const editBlog = async (inputData, blogId) => {
   await blogQuery.editBlog(inputData, blogId)
 
@@ -50,5 +56,9 @@ const deleteBlog = async (blogId) => {
   return {}
 }
 export default {
-  createBlog, viewBlog, editBlog, deleteBlog,
+  createBlog,
+  viewBlog,
+  editBlog,
+  deleteBlog,
+  viewBlogsByAuthor,
 }

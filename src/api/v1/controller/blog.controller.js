@@ -18,7 +18,7 @@ const createBlog = async (req, res, next) => {
 
     return new CustomResponse(
       res,
-      constants.HTTP_STATUS_CODE.ACCEPTED,
+      constants.HTTP_STATUS_CODE.CREATED,
       {},
       'Blog Created Successfully',
       newBlog,
@@ -35,7 +35,24 @@ const viewBlog = async (req, res, next) => {
 
     return new CustomResponse(
       res,
-      constants.HTTP_STATUS_CODE.ACCEPTED,
+      constants.HTTP_STATUS_CODE.OK,
+      'Blog View Successfull',
+      '',
+      blogs,
+    ).sendResponse()
+  } catch (error) {
+    return next(error)
+  }
+}
+
+const viewBlogsOfAuthor = async (req, res, next) => {
+  try {
+    const authorId = req.params.id
+    const blogs = await blogService.viewBlogsByAuthor(authorId, req.query)
+
+    return new CustomResponse(
+      res,
+      constants.HTTP_STATUS_CODE.OK,
       'Blog View Successfull',
       '',
       blogs,
@@ -61,7 +78,7 @@ const editBlog = async (req, res, next) => {
 
     return new CustomResponse(
       res,
-      constants.HTTP_STATUS_CODE.ACCEPTED,
+      constants.HTTP_STATUS_CODE.OK,
       'Blog Edited Successfull',
       'Blog Edited Successfull',
       blog,
@@ -89,5 +106,9 @@ const deleteBlog = async (req, res, next) => {
 }
 
 export default {
-  createBlog, viewBlog, editBlog, deleteBlog,
+  createBlog,
+  viewBlog,
+  editBlog,
+  deleteBlog,
+  viewBlogsOfAuthor,
 }

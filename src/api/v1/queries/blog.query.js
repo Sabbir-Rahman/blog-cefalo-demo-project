@@ -51,6 +51,28 @@ const viewBlogs = async (queryData) => {
   return blogs
 }
 
+const viewBlogsByAuthor = async (authorId, queryData) => {
+  const BlogModel = db.db.blogs
+  const AuthorModel = db.db.authors
+
+  const { page, limit, offset } = paginationUtils.getPaginationInfo(queryData)
+  const queryObj = BlogQueryAllowDto.createQueryObject(queryData)
+
+  const blogs = await BlogModel.findAll({
+    limit,
+    offset,
+    where: { authorId, ...queryObj },
+    attributes: ['blogId', 'title', 'body', 'authorId', 'createdAt', 'updatedAt'],
+    include: [
+      {
+        model: AuthorModel,
+        attributes: ['name', 'email'],
+      },
+    ],
+  })
+
+  return blogs
+}
 const editBlog = async (updateData, blogId) => {
   const BlogModel = db.db.blogs
   const blog = await BlogModel.update(updateData, { where: { blogId } })
@@ -85,4 +107,5 @@ export default {
   isAuthorizedToEditBlog,
   editBlog,
   deleteBlog,
+  viewBlogsByAuthor,
 }
