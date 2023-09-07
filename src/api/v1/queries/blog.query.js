@@ -71,10 +71,18 @@ const isAuthorizedToEditBlog = async (authorId, blogId) => {
   return false
 }
 
+const deleteBlog = async (blogId) => {
+  const BlogModel = db.db.blogs
+  const blog = await BlogModel.destroy({ where: { blogId } })
+
+  return blog
+}
+
 export default {
   createBlog,
   viewBlogs,
   getSingleBlogById,
   isAuthorizedToEditBlog,
   editBlog,
+  deleteBlog,
 }
