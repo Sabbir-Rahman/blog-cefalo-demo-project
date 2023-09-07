@@ -6,24 +6,24 @@ import { jwtUtils } from '../utils/index.js'
 import defaultConstant from '../../../../constants/default.js'
 
 const { get } = lodash
-const auth = () => (
+const authRefresh = () => (
   req,
   res,
   next,
   // eslint-disable-next-line consistent-return
 ) => {
-  const accessToken = get(req, 'headers.authorization', '').replace(/^Bearer\s/, '')
+  const refreshToken = get(req, 'headers.x-refresh')
 
-  if (!accessToken) {
+  if (!refreshToken) {
     res
       .status(defaultConstant.HTTP_STATUS_CODE.FORBIDDEN)
       .json({ message: defaultConstant.errorMessage.NO_TOKEN })
   }
 
-  const { decoded } = jwtUtils.verifyJwt(accessToken)
+  const { decoded } = jwtUtils.verifyJwt(refreshToken)
 
   if (decoded) {
-    req.accessToken = decoded
+    req.refreshToken = decoded
     return next()
   }
   return res
@@ -31,4 +31,4 @@ const auth = () => (
     .json({ message: defaultConstant.errorMessage.NOT_AUTHORIZED })
 }
 
-export default auth
+export default authRefresh

@@ -50,8 +50,23 @@ function generateAccessTokenRefreshTokenForUser(user) {
   return { accessToken, refreshToken }
 }
 
+function generateAccessTokenWithRefreshToken(user) {
+  const jwtPayload = {
+    userId: user.authorId,
+    name: user.name,
+    role: user.role,
+  }
+
+  const accessToken = signJwt(jwtPayload, {
+    expiresIn: defaultConfig.jwtConfig.ACCESS_TOKEN_TTL,
+  })
+
+  return { accessToken }
+}
+
 export default {
   signJwt,
   verifyJwt,
   generateAccessTokenRefreshTokenForUser,
+  generateAccessTokenWithRefreshToken,
 }
