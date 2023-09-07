@@ -31,4 +31,10 @@ const userLogin = async (inputData) => {
   return { userObj, accessToken, refreshToken }
 }
 
-export default { userLogin }
+const generateRefreshToken = async (inputData) => {
+  const { accessToken } = jwtUtils.generateAccessTokenWithRefreshToken(inputData)
+
+  return { accessToken }
+}
+
+export default { userLogin, generateRefreshToken }

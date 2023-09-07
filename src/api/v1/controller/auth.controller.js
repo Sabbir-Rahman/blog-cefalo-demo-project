@@ -22,4 +22,18 @@ const userLogin = async (req, res, next) => {
     return next(err)
   }
 }
-export default { userLogin }
+
+const generateAccesstokenWithRefreshToken = async (req, res, next) => {
+  try {
+    const { accessToken } = await authService.generateRefreshToken(
+      req.refreshToken,
+    )
+
+    return new CustomResponse(res, 200, '', 'Access Token Generation Successfull', {
+      accessToken,
+    }).sendResponse()
+  } catch (err) {
+    return next(err)
+  }
+}
+export default { userLogin, generateAccesstokenWithRefreshToken }
