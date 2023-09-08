@@ -1,9 +1,13 @@
 /* eslint-disable no-undef */
 /* eslint-disable import/extensions */
+import { v4 as uuidv4 } from 'uuid'
 import { authorService } from '../../api/v1/services/index.js'
 import { bcryptUtils, jwtUtils } from '../../api/v1/utils/index.js'
 import { authorQuery } from '../../api/v1/queries'
 import { BadRequestError } from '../../api/v1/errors'
+import AuthorGeneralViewDto from '../../api/v1/dto/authors/authorGeneralView.dto.js'
+
+jest.mock('uuid')
 
 describe('Auth Service Test', () => {
   describe('Testing Create Author Method', () => {
@@ -22,6 +26,42 @@ describe('Auth Service Test', () => {
 
       await expect(authorService.createAuthor(inputData)).rejects.toThrow(expectedError)
       expect(authorQuery.authorDuplicateMail).toHaveBeenCalledWith(inputData.email)
+    })
+    test('Should Create User and Return Access Token', async () => {
+      const inputData = {
+        authorId: 'dwqqd221',
+        name: 'some name',
+        email: 'name@gmail.com',
+        password: '12345678',
+      }
+      const expecteduserObj = {
+        authorId: 'dwqqd221',
+        name: 'some name',
+        email: 'name@gmail.com',
+      }
+
+      const expectedResponse = {
+        authorObj: new AuthorGeneralViewDto(expecteduserObj),
+        accessToken: 'Some Token',
+        refreshToken: 'Refresh Token',
+      }
+
+      uuidv4.mockReturnValue('dwqqd221')
+      jest.spyOn(bcryptUtils, 'hashPassword').mockResolvedValueOnce('12345678')
+      jest.spyOn(authorQuery, 'authorDuplicateMail').mockResolvedValueOnce(false)
+      jest.spyOn(authorQuery, 'createAuthor').mockResolvedValueOnce(inputData)
+      jest.spyOn(jwtUtils, 'generateAccessTokenRefreshTokenForUser').mockReturnValue({
+        accessToken: expectedResponse.accessToken,
+        refreshToken: expectedResponse.refreshToken,
+      })
+
+      const response = await authorService.createAuthor(inputData)
+
+      expect(bcryptUtils.hashPassword).toHaveBeenCalledWith(inputData.password)
+      expect(authorQuery.createAuthor).toHaveBeenCalledWith(inputData)
+      expect(jwtUtils.generateAccessTokenRefreshTokenForUser).toHaveBeenCalledWith(inputData)
+
+      expect(response).toStrictEqual(expectedResponse)
     })
   })
 })

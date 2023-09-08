@@ -48,10 +48,10 @@ describe('Auth Controllert Test', () => {
       jest.spyOn(CustomResponse.prototype, 'sendResponse').mockResolvedValueOnce(expectedResponse)
 
       // Assert
-      const result = await authorController.createAuthor(req, res, next)
+      const response = await authorController.createAuthor(req, res, next)
       expect(authorService.createAuthor).toHaveBeenCalledWith(req.body)
 
-      expect(result).toBe(expectedResponse)
+      expect(response).toBe(expectedResponse)
     })
     it('Author Create Error', async () => {
       const req = {
