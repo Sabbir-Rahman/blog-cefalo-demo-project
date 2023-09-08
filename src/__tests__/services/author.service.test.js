@@ -64,4 +64,29 @@ describe('Auth Service Test', () => {
       expect(response).toStrictEqual(expectedResponse)
     })
   })
+  describe('View Author Method', () => {
+    test('View All Authors', async () => {
+      const expectedResponse = [
+        {
+          authorId: '1d6464d8-2151-4147-810a-a3762a60aa3a',
+          name: 'sabbir',
+          email: 'sabbir2@gmail.com',
+        },
+        {
+          authorId: '39710083-88a2-4d6d-9c4a-1fd904f45369',
+          name: 'sabbir',
+          email: 'sabbir3@gmail.com',
+        },
+      ]
+      const expectedResponseWithDto = expectedResponse.map(
+        (response) => new AuthorGeneralViewDto(response),
+      )
+      // mocking query function
+      jest.spyOn(authorQuery, 'viewAuthors').mockResolvedValueOnce(expectedResponse)
+
+      const response = await authorService.viewAuthor()
+
+      expect(response).toStrictEqual(expectedResponseWithDto)
+    })
+  })
 })
