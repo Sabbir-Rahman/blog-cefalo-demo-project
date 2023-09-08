@@ -6,6 +6,7 @@ import { bcryptUtils, jwtUtils } from '../../api/v1/utils/index.js'
 import { authorQuery } from '../../api/v1/queries'
 import { BadRequestError } from '../../api/v1/errors'
 import AuthorGeneralViewDto from '../../api/v1/dto/authors/authorGeneralView.dto.js'
+import authorsDB from '../__mocks__/testDB.js'
 
 jest.mock('uuid')
 
@@ -66,18 +67,7 @@ describe('Auth Service Test', () => {
   })
   describe('View Author Method', () => {
     test('View All Authors', async () => {
-      const expectedResponse = [
-        {
-          authorId: '1d6464d8-2151-4147-810a-a3762a60aa3a',
-          name: 'sabbir',
-          email: 'sabbir2@gmail.com',
-        },
-        {
-          authorId: '39710083-88a2-4d6d-9c4a-1fd904f45369',
-          name: 'sabbir',
-          email: 'sabbir3@gmail.com',
-        },
-      ]
+      const expectedResponse = [authorsDB]
       const expectedResponseWithDto = expectedResponse.map(
         (response) => new AuthorGeneralViewDto(response),
       )
