@@ -16,7 +16,7 @@ const auth = () => (
 
   if (!accessToken) {
     return res
-      .status(defaultConstant.HTTP_STATUS_CODE.FORBIDDEN)
+      .status(defaultConstant.HTTP_STATUS_CODE.UNAUTHORIZED)
       .json({ message: defaultConstant.errorMessage.NO_TOKEN })
   }
 
