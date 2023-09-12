@@ -6,7 +6,7 @@ const errorMessage = {
   PASSWORD_NOT_MATCH: 'Password not match for this user, Please try again with correct password',
   DENIED_EDIT_BLOG: 'User is not allowed to edit the blog',
   NO_TOKEN: 'Access Token Not Given',
-  NOT_AUTHORIZED: 'Not Authorized for this permission',
+  NO_BLOG_FOUND_OR_NOT_FOUND: 'No blog is found where you are authorized to perform this action',
 }
 
 const HTTP_STATUS_CODE = {

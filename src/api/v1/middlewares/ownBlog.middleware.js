@@ -13,7 +13,7 @@ const isOwnBlog = () => async (req, res, next) => {
 
   return res
     .status(defaultConstant.HTTP_STATUS_CODE.FORBIDDEN)
-    .json({ message: defaultConstant.errorMessage.NOT_AUTHORIZED })
+    .json({ message: defaultConstant.errorMessage.NO_BLOG_FOUND_OR_NOT_FOUND })
 }
 
 export default isOwnBlog

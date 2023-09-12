@@ -72,6 +72,7 @@ describe('Blog controller test', () => {
 
       const response = await blogController.viewBlog(req, res, next)
       expect(blogService.viewBlog).toHaveBeenCalledWith(req.params.id, req.query)
+      expect(blogService.viewBlog).toHaveBeenCalledTimes(1)
 
       expect(response).toBe(expectedResponse)
     })
@@ -96,6 +97,8 @@ describe('Blog controller test', () => {
 
       const response = await blogController.viewBlog(req, res, next)
       expect(blogService.viewBlog).toHaveBeenCalledWith(req.params.id, req.query)
+      // 2 because same function is called in view all blogs
+      expect(blogService.viewBlog).toHaveBeenCalledTimes(2)
 
       expect(response).toBe(expectedResponse)
     })
@@ -147,6 +150,34 @@ describe('Blog controller test', () => {
       const response = await blogController.editBlog(req, res, next)
 
       expect(blogService.editBlog).toHaveBeenCalledWith(req.body, req.params.id)
+      expect(blogService.editBlog).toHaveBeenCalledTimes(1)
+
+      expect(response).toBe(expectedResponse)
+    })
+  })
+  describe('Delete blog test', () => {
+    it('Delete Blog Successfull', async () => {
+      const req = {
+        body: {},
+        params: {
+          id: '104303d0-0795-42aa-b7bb-31eab3671c26',
+        },
+      }
+      const res = {}
+      const next = jest.fn()
+      const expectedResponse = {
+        statusCode: 204,
+        message: 'Delete Successfull',
+        developerMessage: 'Delete Successfull',
+        data: {},
+      }
+      jest.spyOn(blogService, 'deleteBlog').mockResolvedValueOnce({})
+      jest.spyOn(CustomResponse.prototype, 'sendResponse').mockResolvedValueOnce(expectedResponse)
+
+      const response = await blogController.deleteBlog(req, res, next)
+
+      expect(blogService.deleteBlog).toHaveBeenCalledWith(req.params.id)
+      expect(blogService.deleteBlog).toHaveBeenCalledTimes(1)
 
       expect(response).toBe(expectedResponse)
     })

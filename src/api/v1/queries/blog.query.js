@@ -1,5 +1,4 @@
 /* eslint-disable import/extensions */
-import { logQueryError } from '../../../../logger/customLogger.js'
 import BlogQueryAllowDto from '../dto/blogs/blogQueryAllow.dto.js'
 import db from '../models/index.js'
 import { paginationUtils } from '../utils/index.js'
