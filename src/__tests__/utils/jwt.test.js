@@ -37,4 +37,40 @@ describe('jwt utils test', () => {
       })
     })
   })
+  describe('verify jwt', () => {
+    it('verify jwt successfull', () => {
+      const decodeObject = {
+        userId: '65411wd',
+        iat: '614634136',
+        exp: '714313211',
+      }
+      const expectedDecoded = {
+        valid: true,
+        expired: false,
+        decoded: decodeObject,
+      }
+      const mockToken = 'jasxerjhswdwefwefawefrgwafgweggweaeg'
+      jwt.verify.mockReturnValue(decodeObject)
+
+      const result = jwtUtils.verifyJwt(mockToken)
+
+      expect(jwt.verify).toHaveBeenCalledWith(mockToken, expect.anything())
+
+      expect(result).toStrictEqual(expectedDecoded)
+    })
+    it('verify jwt failed', () => {
+      const expectedDecoded = {
+        valid: false,
+        decoded: null,
+      }
+      const mockToken = 'jasxerjhswdwefwefawefrgwafgweggweaeg'
+      jwt.verify.mockReturnValue(null)
+
+      const result = jwtUtils.verifyJwt(mockToken)
+
+      expect(jwt.verify).toHaveBeenCalledWith(mockToken, expect.anything())
+
+      expect(result).toStrictEqual(expectedDecoded)
+    })
+  })
 })

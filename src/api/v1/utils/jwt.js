@@ -33,7 +33,7 @@ const verifyJwt = (token) => {
     }
   }
   return {
-    valid: true,
+    valid: false,
     decoded: null,
   }
 }
