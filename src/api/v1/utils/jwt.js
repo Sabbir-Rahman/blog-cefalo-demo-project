@@ -2,37 +2,43 @@
 import jwt from 'jsonwebtoken'
 
 import defaultConfig from '../../../../config/default.js'
+import InternalServerError from '../errors/internalServer.error.js'
+import constants from '../../../../constants/default.js'
 
 const privateKey = defaultConfig.jwtConfig.PRIVATE_KEY
 const publicKey = defaultConfig.jwtConfig.PUBLIC_KEY
 
 // type JwtUserTokenObject = { userId: string; username: string; role: [string] }
 
-function signJwt(object, options) {
-  return jwt.sign(object, privateKey, {
-    ...(options && options),
-    algorithm: 'RS256',
-  })
+const signJwt = (object, options) => {
+  try {
+    const signToken = jwt.sign(object, privateKey, {
+      ...(options && options),
+      algorithm: 'RS256',
+    })
+
+    return signToken
+  } catch (error) {
+    throw new InternalServerError(constants.errorMessage.SOMETHING_WRONG, error)
+  }
 }
 
-function verifyJwt(token) {
-  try {
-    const decoded = jwt.verify(token, publicKey)
+const verifyJwt = (token) => {
+  const decoded = jwt.verify(token, publicKey)
+  if (decoded) {
     return {
       valid: true,
       expired: false,
       decoded,
     }
-  } catch (e) {
-    return {
-      valid: false,
-      expired: e.message === 'jwt expired',
-      decoded: null,
-    }
+  }
+  return {
+    valid: false,
+    decoded: null,
   }
 }
 
-function generateAccessTokenRefreshTokenForUser(user) {
+const generateAccessTokenRefreshTokenForUser = (user) => {
   const jwtPayload = {
     userId: user.authorId,
     name: user.name,

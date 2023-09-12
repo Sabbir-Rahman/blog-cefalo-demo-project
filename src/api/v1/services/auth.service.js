@@ -17,7 +17,7 @@ const userLogin = async (inputData) => {
     )
   }
 
-  const userPass = await bcryptUtils.comparePassword(userExist.password, inputData.password)
+  const userPass = await bcryptUtils.comparePassword(inputData.password, userExist.password)
   if (!userPass) {
     throw new BadRequestError(
       'Wrong Password',
