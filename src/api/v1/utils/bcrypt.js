@@ -21,13 +21,16 @@ async function hashPassword(password) {
   }
 }
 
-async function comparePassword(userPassword, inputPassword) {
+async function comparePassword(inputPassword, userPassword) {
   try {
     return await bcrypt.compare(inputPassword, userPassword)
   } catch (error) {
     logger.error(error)
 
-    return constants.errorMessage.SOMETHING_WRONG
+    throw new InternalServerError(
+      constants.errorMessage.SOMETHING_WRONG,
+      'Password cannot be compared by bcrypt',
+    )
   }
 }
 
