@@ -1,10 +1,10 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable import/extensions */
 import bcrypt from 'bcrypt'
-import defaultconfig from '../../../../config/default.js'
 
 import logger from '../../../../logger/defaultLogger.js'
 import constants from '../../../../constants/default.js'
+import { InternalServerError } from '../errors/index.js'
 
 async function hashPassword(password) {
   try {
@@ -14,8 +14,10 @@ async function hashPassword(password) {
     return hashPass
   } catch (error) {
     logger.error(error)
-
-    return constants.errorMessage.SOMETHING_WRONG
+    throw new InternalServerError(
+      constants.errorMessage.SOMETHING_WRONG,
+      'Password Not Hashed by bcrypt',
+    )
   }
 }
 
