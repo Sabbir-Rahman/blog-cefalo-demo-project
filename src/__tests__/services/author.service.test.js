@@ -10,7 +10,7 @@ import authorsDB from '../__mocks__/testDB.js'
 
 jest.mock('uuid')
 
-describe('Auth Service Test', () => {
+describe('Author Service Test', () => {
   describe('Testing Create Author Method', () => {
     it('Duplicate Mail', async () => {
       const inputData = {
