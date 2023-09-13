@@ -81,4 +81,31 @@ const blogsWithAuthorDB = [
   },
 ]
 
-export default { authorsDB, blogsDB, blogsWithAuthorDB }
+const blogsQueryDB = [
+  {
+    author: {
+      id: '1d6464d8-2151-4147-810a-a3762a60aa3a',
+      name: 'sabbir',
+      email: 'sabbir2@gmail.com',
+    },
+    blogId: '104303d0-0795-42aa-b7bb-31eab3671c26',
+    title: 'Hello world',
+    body: 'This is body',
+    time: '2023-09-05T03:26:42.000Z',
+  },
+  {
+    author: {
+      id: '1d6464d8-2151-4147-810a-a3762a60aa3a',
+      name: 'sabbir',
+      email: 'sabbir2@gmail.com',
+    },
+    blogId: '104303d0-0795-42aa-b7bb-31eab3671c26',
+    title: 'Hello world 2',
+    body: 'This is body 2',
+    time: '2023-09-05T03:26:42.000Z',
+  },
+]
+
+export default {
+  authorsDB, blogsDB, blogsWithAuthorDB, blogsQueryDB,
+}
