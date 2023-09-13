@@ -10,9 +10,9 @@ import authorsDB from '../__mocks__/testDB.js'
 
 jest.mock('uuid')
 
-describe('Auth Service Test', () => {
+describe('Author Service Test', () => {
   describe('Testing Create Author Method', () => {
-    test('Duplicate Mail', async () => {
+    it('Duplicate Mail', async () => {
       const inputData = {
         name: 'some name',
         email: 'name@gmail.com',
@@ -28,7 +28,7 @@ describe('Auth Service Test', () => {
       await expect(authorService.createAuthor(inputData)).rejects.toThrow(expectedError)
       expect(authorQuery.authorDuplicateMail).toHaveBeenCalledWith(inputData.email)
     })
-    test('Should Create User and Return Access Token', async () => {
+    it('Should Create User and Return Access Token', async () => {
       const inputData = {
         authorId: 'dwqqd221',
         name: 'some name',
@@ -66,7 +66,7 @@ describe('Auth Service Test', () => {
     })
   })
   describe('View Author Method', () => {
-    test('View All Authors', async () => {
+    it('View All Authors', async () => {
       const expectedResponse = [authorsDB]
       const expectedResponseWithDto = expectedResponse.map(
         (response) => new AuthorGeneralViewDto(response),
@@ -75,6 +75,19 @@ describe('Auth Service Test', () => {
       jest.spyOn(authorQuery, 'viewAuthors').mockResolvedValueOnce(expectedResponse)
 
       const response = await authorService.viewAuthor()
+
+      expect(response).toStrictEqual(expectedResponseWithDto)
+    })
+
+    it('View Single Author', async () => {
+      const expectedResponse = authorsDB[0]
+      const authorId = '1d6464d8-2151-4147-810a-a3762a60aa3a'
+      const expectedResponseWithDto = new AuthorGeneralViewDto(expectedResponse)
+
+      // mocking query function
+      jest.spyOn(authorQuery, 'getSingleAuthorById').mockResolvedValueOnce(expectedResponse)
+
+      const response = await authorService.viewAuthor(authorId)
 
       expect(response).toStrictEqual(expectedResponseWithDto)
     })

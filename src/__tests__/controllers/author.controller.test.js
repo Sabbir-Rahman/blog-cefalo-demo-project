@@ -136,5 +136,21 @@ describe('Auth Controllert Test', () => {
 
       expect(result).toBe(expectedResponse)
     })
+    it('View Author Unsuccessfull', async () => {
+      const req = { params: { id: 'id' } }
+      const res = {}
+      const expectedResponse = new Error('Error')
+      const next = jest.fn()
+
+      // Assert
+
+      // mock service function
+      jest.spyOn(authorService, 'viewAuthor').mockRejectedValue(expectedResponse)
+
+      // Assert
+      await authorController.viewAuthor(req, res, next)
+
+      expect(next).toHaveBeenCalledWith(expectedResponse)
+    })
   })
 })
