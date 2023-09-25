@@ -1,8 +1,6 @@
 /* eslint-disable no-undef */
 /* eslint-disable import/extensions */
-import { object } from 'joi'
 import { authorController } from '../../api/v1/controller/index.js'
-import { BadRequestError } from '../../api/v1/errors/index.js'
 import { authorService } from '../../api/v1/services/index.js'
 import CustomResponse from '../../api/v1/utils/customResponse.js'
 
