@@ -8,15 +8,6 @@ import CustomResponse from '../../api/v1/utils/customResponse.js'
 
 describe('Auth Controllert Test', () => {
   describe('Testing Create Author Method', () => {
-    it('Should return a bad request for wrong input', async () => {
-      const req = { body: {} }
-      const res = {}
-      const next = jest.fn()
-
-      // Assert
-      await authorController.createAuthor(req, res, next)
-      expect(next).toHaveBeenCalledWith(new BadRequestError('Validation Error', [{}]))
-    })
     it('Author Create', async () => {
       const req = {
         body: {

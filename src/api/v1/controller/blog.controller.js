@@ -1,20 +1,13 @@
 /* eslint-disable import/extensions */
 import blogService from '../services/blog.service.js'
-import validation from '../validators/blog.js'
 import constants from '../../../../constants/default.js'
 import CustomResponse from '../utils/customResponse.js'
 import { BadRequestError } from '../errors/index.js'
 
 const createBlog = async (req, res, next) => {
-  const { error, value } = validation.blogSchemaValidator.validate(req.body)
-
   try {
-    if (error) {
-      throw new BadRequestError('Validation Error', error.details)
-    }
-
     const authorId = req.accessToken.userId
-    const newBlog = await blogService.createBlog(value, authorId)
+    const newBlog = await blogService.createBlog(req.body, authorId)
 
     return new CustomResponse(
       res,
@@ -63,18 +56,9 @@ const viewBlogsOfAuthor = async (req, res, next) => {
 }
 
 const editBlog = async (req, res, next) => {
-  // stripUnknown to cancel out any unwanted input
-  const { error, value } = validation.editblogSchemaValidator.validate(req.body, {
-    stripUnknown: true,
-  })
-
   try {
-    if (error) {
-      throw new BadRequestError('Validation Error', error.details)
-    }
-
     const blogId = req.params.id
-    const blog = await blogService.editBlog(value, blogId)
+    const blog = await blogService.editBlog(req.body, blogId)
 
     return new CustomResponse(
       res,
