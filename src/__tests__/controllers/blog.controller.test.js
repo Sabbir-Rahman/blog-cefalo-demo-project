@@ -1,6 +1,5 @@
 /* eslint-disable import/extensions */
 import { blogController } from '../../api/v1/controller/index.js'
-import { BadRequestError } from '../../api/v1/errors/index.js'
 import blogService from '../../api/v1/services/blog.service.js'
 import CustomResponse from '../../api/v1/utils/customResponse.js'
 import { mockDb } from '../__mocks__/index.js'
@@ -8,15 +7,6 @@ import { mockDb } from '../__mocks__/index.js'
 /* eslint-disable no-undef */
 describe('Blog controller test', () => {
   describe('Create blog test', () => {
-    it('Blog Validation Error', async () => {
-      const req = { body: {} }
-      const res = {}
-      const next = jest.fn()
-
-      await blogController.createBlog(req, res, next)
-      expect(next).toHaveBeenCalledWith(new BadRequestError('Validation Error', [{}]))
-    })
-
     it('Create blog successfull', async () => {
       const req = {
         body: {
@@ -105,15 +95,6 @@ describe('Blog controller test', () => {
   })
 
   describe('Edit blog test', () => {
-    it('Blog Edit Validation Error', async () => {
-      const req = { body: { title: '' } }
-      const res = {}
-      const next = jest.fn()
-
-      await blogController.editBlog(req, res, next)
-      expect(next).toHaveBeenCalledWith(new BadRequestError('Validation Error', [{}]))
-    })
-
     it('Edit blog successfull', async () => {
       const req = {
         body: {

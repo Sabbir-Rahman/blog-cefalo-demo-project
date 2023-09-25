@@ -22,7 +22,6 @@ const auth = () => (
 
   const { decoded } = jwtUtils.verifyJwt(accessToken)
   if (decoded) {
-    console.log('Hit decoded')
     req.accessToken = decoded
     return next()
   }
