@@ -13,7 +13,10 @@ const app = express()
 const { PORT } = defaultConfig.generalConfig
 
 const corsConfig = {
-  origin: 'https://localhost:8081',
+  origin: 'http://localhost:5173',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  optionsSuccessStatus: 204,
 }
 
 app.use(cors(corsConfig))
