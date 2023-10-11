@@ -7,6 +7,7 @@ const errorMessage = {
   DENIED_EDIT_BLOG: 'User is not allowed to edit the blog',
   NO_TOKEN: 'Access Token Not Given',
   NO_BLOG_FOUND_OR_NOT_FOUND: 'No blog is found where you are authorized to perform this action',
+  TOKEN_PROBLEM: 'Something wrong with your access token,Please login again',
 }
 
 const HTTP_STATUS_CODE = {

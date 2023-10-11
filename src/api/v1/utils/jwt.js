@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken'
 import defaultConfig from '../../../../config/default.js'
 import InternalServerError from '../errors/internalServer.error.js'
 import constants from '../../../../constants/default.js'
+import JwtTokenError from '../errors/jwtToken.error.js'
 
 const privateKey = defaultConfig.jwtConfig.PRIVATE_KEY
 const publicKey = defaultConfig.jwtConfig.PUBLIC_KEY
@@ -23,18 +24,20 @@ const signJwt = (object, options) => {
   }
 }
 
-const verifyJwt = (token) => {
-  const decoded = jwt.verify(token, publicKey)
-  if (decoded) {
-    return {
-      valid: true,
-      expired: false,
-      decoded,
+const verifyJwt = async (token) => {
+  try {
+    const decoded = await jwt.verify(token, publicKey)
+
+    if (decoded) {
+      return {
+        valid: true,
+        expired: false,
+        decoded,
+      }
     }
-  }
-  return {
-    valid: false,
-    decoded: null,
+    return decoded
+  } catch (error) {
+    return false
   }
 }
 

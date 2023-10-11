@@ -45,6 +45,7 @@ const viewBlogs = async (queryData) => {
         attributes: ['name', 'email'],
       },
     ],
+    order: [['createdAt', 'DESC']],
   })
 
   return blogs
