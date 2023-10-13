@@ -32,8 +32,8 @@ const viewBlog = async (inputData, queryData) => {
   return blog
 }
 
-const viewBlogsByAuthor = async (authorId, queryData) => {
-  const blogs = await blogQuery.viewBlogsByAuthor(authorId, queryData)
+const viewBlogsByAuthor = async (queryData) => {
+  const blogs = await blogQuery.viewBlogsByAuthor(queryData)
   const authorBlogs = blogs.map((singleBlog) => new BlogGeneralViewDto(singleBlog))
   return authorBlogs
 }

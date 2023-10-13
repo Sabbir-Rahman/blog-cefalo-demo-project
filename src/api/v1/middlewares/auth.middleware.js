@@ -26,8 +26,8 @@ const auth = () => async (
     return next()
   }
   return res.status(defaultConstant.HTTP_STATUS_CODE.UNAUTHORIZED).json({
-    message: defaultConstant.errorMessage.NOT_AUTHORIZED,
-    developerMessage: defaultConstant.errorMessage.NOT_AUTHORIZED,
+    message: defaultConstant.errorMessage.TOKEN_PROBLEM,
+    developerMessage: defaultConstant.errorMessage.TOKEN_PROBLEM,
   })
 }
 

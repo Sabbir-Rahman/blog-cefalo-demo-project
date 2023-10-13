@@ -45,12 +45,13 @@ const viewBlogs = async (queryData) => {
         attributes: ['name', 'email'],
       },
     ],
+    order: [['createdAt', 'DESC']],
   })
 
   return blogs
 }
 
-const viewBlogsByAuthor = async (authorId, queryData) => {
+const viewBlogsByAuthor = async (queryData) => {
   const BlogModel = db.db.blogs
   const AuthorModel = db.db.authors
 
@@ -60,7 +61,7 @@ const viewBlogsByAuthor = async (authorId, queryData) => {
   const blogs = await BlogModel.findAll({
     limit,
     offset,
-    where: { authorId, ...queryObj },
+    where: queryObj,
     attributes: ['blogId', 'title', 'body', 'authorId', 'createdAt', 'updatedAt'],
     include: [
       {
