@@ -23,18 +23,24 @@ const signJwt = (object, options) => {
   }
 }
 
-const verifyJwt = (token) => {
-  const decoded = jwt.verify(token, publicKey)
-  if (decoded) {
-    return {
-      valid: true,
-      expired: false,
-      decoded,
+const verifyJwt = async (token) => {
+  try {
+    const decoded = jwt.verify(token, publicKey)
+    if (decoded) {
+      return {
+        valid: true,
+        expired: false,
+        decoded,
+      }
     }
-  }
-  return {
-    valid: false,
-    decoded: null,
+
+    return {
+      decoded: null,
+    }
+  } catch (error) {
+    return {
+      decoded: null,
+    }
   }
 }
 
@@ -58,7 +64,7 @@ const generateAccessTokenRefreshTokenForUser = (user) => {
 
 function generateAccessTokenWithRefreshToken(user) {
   const jwtPayload = {
-    userId: user.authorId,
+    userId: user.userId,
     name: user.name,
     role: user.role,
   }

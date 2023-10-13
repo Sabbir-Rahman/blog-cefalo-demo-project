@@ -13,7 +13,8 @@ const app = express()
 const { PORT } = defaultConfig.generalConfig
 
 const corsConfig = {
-  origin: 'https://localhost:8081',
+  origin: 'http://localhost:5173',
+  credentials: true,
 }
 
 app.use(cors(corsConfig))

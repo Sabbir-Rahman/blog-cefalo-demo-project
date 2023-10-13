@@ -9,7 +9,7 @@ const generalConfig = {
 const jwtConfig = {
   PRIVATE_KEY: process.env.RSA_PRIVATE_KEY,
   PUBLIC_KEY: process.env.RSA_PUBLIC_KEY,
-  ACCESS_TOKEN_TTL: '20m',
+  ACCESS_TOKEN_TTL: '2m',
   REFRESH_TOKEN_TTL: '100m',
 }
 
