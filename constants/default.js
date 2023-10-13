@@ -8,6 +8,7 @@ const errorMessage = {
   NO_TOKEN: 'Access Token Not Given',
   NO_BLOG_FOUND_OR_NOT_FOUND: 'No blog is found where you are authorized to perform this action',
   TOKEN_PROBLEM: 'Something wrong with your access token,Please login again',
+  NOT_AUTHORIZED: 'You are not authorized, Please login',
 }
 
 const HTTP_STATUS_CODE = {

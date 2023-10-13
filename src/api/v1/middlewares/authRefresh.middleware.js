@@ -6,7 +6,7 @@ import { jwtUtils } from '../utils/index.js'
 import defaultConstant from '../../../../constants/default.js'
 
 const { get } = lodash
-const authRefresh = () => (
+const authRefresh = () => async (
   req,
   res,
   next,
@@ -20,7 +20,7 @@ const authRefresh = () => (
       .json({ message: defaultConstant.errorMessage.NO_TOKEN })
   }
 
-  const { decoded } = jwtUtils.verifyJwt(refreshToken)
+  const { decoded } = await jwtUtils.verifyJwt(refreshToken)
 
   if (decoded) {
     req.refreshToken = decoded
