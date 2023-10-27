@@ -26,20 +26,20 @@ const signJwt = (object, options) => {
 
 const verifyJwt = async (token) => {
   try {
-
     const decoded = await jwt.verify(token, publicKey)
-    
+
     if (decoded) {
       return {
         valid: true,
         expired: false,
         decoded,
       }
+    }
     return false
   } catch (error) {
     return false
   }
- }
+}
 
 const generateAccessTokenRefreshTokenForUser = (user) => {
   const jwtPayload = {

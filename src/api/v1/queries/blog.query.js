@@ -1,4 +1,5 @@
 /* eslint-disable import/extensions */
+import { Op } from 'sequelize'
 import BlogQueryAllowDto from '../dto/blogs/blogQueryAllow.dto.js'
 import db from '../models/index.js'
 import { paginationUtils } from '../utils/index.js'
@@ -31,13 +32,30 @@ const viewBlogs = async (queryData) => {
   const BlogModel = db.db.blogs
   const AuthorModel = db.db.authors
 
-  const { page, limit, offset } = paginationUtils.getPaginationInfo(queryData)
+  const { page, limit, offset, sortBy, sortOrder, searchText } =
+    paginationUtils.getPaginationSearchAndSortInfo(queryData)
   const queryObj = BlogQueryAllowDto.createQueryObject(queryData)
+
+  const whereCondition = {}
+  if (searchText !== 'undefined' && searchText !== '') {
+    whereCondition[Op.or] = [
+      {
+        title: {
+          [Op.like]: `%${searchText}%`,
+        },
+      },
+      {
+        body: {
+          [Op.like]: `%${searchText}%`,
+        },
+      },
+    ]
+  }
 
   const blogs = await BlogModel.findAll({
     limit,
     offset,
-    where: queryObj,
+    where: whereCondition,
     attributes: ['blogId', 'title', 'body', 'authorId', 'createdAt', 'updatedAt'],
     include: [
       {
@@ -45,7 +63,7 @@ const viewBlogs = async (queryData) => {
         attributes: ['name', 'email'],
       },
     ],
-    order: [['createdAt', 'DESC']],
+    order: [[sortBy, sortOrder]],
   })
 
   return blogs
@@ -55,7 +73,7 @@ const viewBlogsByAuthor = async (queryData) => {
   const BlogModel = db.db.blogs
   const AuthorModel = db.db.authors
 
-  const { page, limit, offset } = paginationUtils.getPaginationInfo(queryData)
+  const { page, limit, offset } = paginationUtils.getPaginationSearchAndSortInfo(queryData)
   const queryObj = BlogQueryAllowDto.createQueryObject(queryData)
 
   const blogs = await BlogModel.findAll({
