@@ -1,5 +1,4 @@
-/* eslint-disable import/extensions */
-import CustomApiError from './customApi.error.js'
+import CustomApiError from './customApi.error'
 
 class JwtTokenError extends CustomApiError {
   constructor(title = 'Not Authenticated', description = 'Please login again') {

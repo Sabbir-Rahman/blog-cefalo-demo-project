@@ -1,5 +1,4 @@
-/* eslint-disable import/extensions */
-import CustomApiError from './customApi.error.js'
+import CustomApiError from './customApi.error'
 
 class routeNotImplementedError extends CustomApiError {
   constructor(title = 'Route not implemented', description = 'Service or feature for this route not implemented in the server') {

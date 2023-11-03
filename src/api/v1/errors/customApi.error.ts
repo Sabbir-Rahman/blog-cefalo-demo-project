@@ -1,5 +1,9 @@
 class CustomApiError extends Error {
-  constructor(title, statusCode, description) {
+  title: string
+  statusCode: number
+  description: string
+  
+  constructor(title: string, statusCode: number, description: string) {
     super(description)
     Object.setPrototypeOf(this, new.target.prototype)
 

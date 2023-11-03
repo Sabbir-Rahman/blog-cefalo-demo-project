@@ -1,5 +1,5 @@
 /* eslint-disable import/extensions */
-import CustomApiError from './customApi.error.js'
+import CustomApiError from './customApi.error'
 
 class BadRequestError extends CustomApiError {
   constructor(title = 'Bad Request from client', description = 'Client Side Error') {

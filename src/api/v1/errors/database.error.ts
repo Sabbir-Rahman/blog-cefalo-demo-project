@@ -1,5 +1,5 @@
 /* eslint-disable import/extensions */
-import CustomApiError from './customApi.error.js'
+import CustomApiError from './customApi.error'
 
 class DatabaseError extends CustomApiError {
   constructor(title = 'Something wrong in the databse', description = 'Database Error') {

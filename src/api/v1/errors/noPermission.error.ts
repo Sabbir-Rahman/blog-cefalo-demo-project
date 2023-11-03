@@ -1,5 +1,4 @@
-/* eslint-disable import/extensions */
-import CustomApiError from './customApi.error.js'
+import CustomApiError from './customApi.error'
 
 class NoPermissionError extends CustomApiError {
   constructor(title = 'No Permission', description = 'User not have permission to do this') {
