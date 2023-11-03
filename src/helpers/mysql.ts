@@ -1,5 +1,5 @@
 /* eslint-disable import/extensions */
-import { Sequelize } from 'sequelize'
+import { Sequelize, Options } from 'sequelize'
 import defaultConfig from '../../config/default.js'
 import logger from '../../logger/defaultLogger.js'
 
@@ -17,7 +17,7 @@ const connectDb = async () => {
         acquire: defaultConfig.DBCONFIG.pool.acquire,
         idle: defaultConfig.DBCONFIG.pool.idle,
       },
-    },
+    } as Options
   )
 
   sequelize.authenticate().then(() => {

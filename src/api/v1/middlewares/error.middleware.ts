@@ -1,5 +1,5 @@
 /* eslint-disable import/extensions */
-import logger from '../../../../logger/defaultLogger.js'
+import logger from '../../../../logger/defaultLogger'
 
 const customErrorHandler = (err, req, res, next) => {
   const customErr = {

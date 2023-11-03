@@ -1,12 +1,12 @@
 /* eslint-disable import/extensions */
 import express from 'express'
 import cors from 'cors'
-import defaultConfig from './config/default.js'
+import defaultConfig from './config/default'
 
-import v1Router from './src/api/v1/v1Router.js'
-import logger from './logger/defaultLogger.js'
-import connectDb from './src/helpers/mysql.js'
-import dbModel from './src/api/v1/models/index.js'
+import v1Router from './src/api/v1/v1Router'
+import logger from './logger/defaultLogger'
+import connectDb from './src/helpers/mysql'
+import dbModel from './src/api/v1/models/index'
 import v1CustomErrorHandler from './src/api/v1/middlewares/error.middleware.js'
 
 const app = express()

@@ -4,7 +4,6 @@ import jwt from 'jsonwebtoken'
 import defaultConfig from '../../../../config/default.js'
 import InternalServerError from '../errors/internalServer.error.js'
 import constants from '../../../../constants/default.js'
-import JwtTokenError from '../errors/jwtToken.error.js'
 
 const privateKey = defaultConfig.jwtConfig.PRIVATE_KEY
 const publicKey = defaultConfig.jwtConfig.PUBLIC_KEY

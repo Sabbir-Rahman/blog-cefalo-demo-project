@@ -1,4 +1,6 @@
-const authorSchema = (sequelize, DataTypes) => {
+import { DataTypes, Sequelize } from 'sequelize'
+
+const authorSchema = (sequelize: Sequelize) => {
   const Author = sequelize.define('author', {
     authorId: {
       type: DataTypes.STRING,

@@ -1,4 +1,6 @@
-const blogSchema = (sequelize, DataTypes) => {
+import { DataTypes, Sequelize } from 'sequelize'
+
+const blogSchema = (sequelize: Sequelize) => {
   const Blog = sequelize.define('blog', {
     blogId: {
       type: DataTypes.STRING,

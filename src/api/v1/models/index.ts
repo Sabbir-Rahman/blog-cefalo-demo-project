@@ -1,19 +1,18 @@
 /* eslint-disable import/extensions */
-import { Sequelize, DataTypes } from 'sequelize'
-import authorSchema from './authorModel.js'
+import { Sequelize, DataTypes, Model, BuildOptions } from 'sequelize'
+import authorSchema from './authorModel'
 import logger from '../../../../logger/defaultLogger.js'
-import blogSchema from './blogModel.js'
+import blogSchema from './blogModel'
 
-const db = {}
+let db
 
-const initiateSchema = async (sequelize) => {
-  // constructor
-  db.Sequelize = Sequelize
-  // instance
-  db.sequelize = sequelize
-
-  db.authors = authorSchema(sequelize, DataTypes)
-  db.blogs = blogSchema(sequelize, DataTypes)
+const initiateSchema = async (sequelize: Sequelize) => {
+  db = {
+    Sequelize: Sequelize,
+    sequelize: sequelize,
+    authors : authorSchema(sequelize),
+    blogs : blogSchema(sequelize)
+  }
 
   db.authors.hasMany(db.blogs, {
     onDelete: 'CASCADE',

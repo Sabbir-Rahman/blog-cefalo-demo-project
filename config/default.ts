@@ -19,10 +19,10 @@ const bcryptConfig = {
 
 const DBCONFIG = {
   HOST: process.env.HOST,
-  USER: process.env.DBUSER,
+  USER: process.env.DBUSER || '',
   PASSWORD: process.env.PASSWORD,
-  DB: process.env.DB,
-  dialect: process.env.DIALECT,
+  DB: process.env.DB || 'blogs',
+  dialect: process.env.DIALECT || 'mysql',
 
   pool: {
     max: 5,
