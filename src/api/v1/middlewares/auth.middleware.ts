@@ -1,15 +1,16 @@
 /* eslint-disable max-len */
 /* eslint-disable import/extensions */
 import lodash from 'lodash'
+import { NextFunction, Request, Response } from 'express'
 
 import { jwtUtils } from '../utils/index.js'
 import defaultConstant from '../../../../constants/default.js'
 
 const { get } = lodash
 const auth = () => async (
-  req,
-  res,
-  next,
+  req: Request,
+  res: Response,
+  next: NextFunction,
   // eslint-disable-next-line consistent-return
 ) => {
   const accessToken = get(req, 'headers.authorization', '').replace(/^Bearer\s/, '')

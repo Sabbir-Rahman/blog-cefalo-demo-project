@@ -1,16 +1,16 @@
 /* eslint-disable import/extensions */
 import jwt from 'jsonwebtoken'
 
-import defaultConfig from '../../../../config/default.js'
-import InternalServerError from '../errors/internalServer.error.js'
-import constants from '../../../../constants/default.js'
+import defaultConfig from '../../../../config/default'
+import InternalServerError from '../errors/internalServer.error'
+import constants from "../../../../constants/default"
 
 const privateKey = defaultConfig.jwtConfig.PRIVATE_KEY
 const publicKey = defaultConfig.jwtConfig.PUBLIC_KEY
 
-// type JwtUserTokenObject = { userId: string; username: string; role: [string] }
+type JwtUserTokenObject = { userId: string; name: string; role: [string] }
 
-const signJwt = (object, options) => {
+const signJwt = (object:JwtUserTokenObject, options?: jwt.SignOptions) => {
   try {
     const signToken = jwt.sign(object, privateKey, {
       ...(options && options),
@@ -59,7 +59,7 @@ const generateAccessTokenRefreshTokenForUser = (user) => {
 }
 
 function generateAccessTokenWithRefreshToken(user) {
-  const jwtPayload = {
+  const jwtPayload:JwtUserTokenObject = {
     userId: user.userId,
     name: user.name,
     role: user.role,
