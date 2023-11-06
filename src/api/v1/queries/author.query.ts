@@ -1,17 +1,18 @@
 /* eslint-disable import/extensions */
-import { logQueryError } from '../../../../logger/customLogger.js'
-import db from '../models/index.js'
+import { logQueryError } from '../../../../logger/customLogger'
+import { AuthorInterface } from '../interfaces/modelInterfaces/author.interface'
+import db from '../models'
 
 const FILENAME = 'src/api/v1/queries/author.query.js'
 
-const createAuthor = async (queryData) => {
+const createAuthor = async (queryData: AuthorInterface) => {
   const AuthorModel = db.db.authors
-  const newAuthor = await AuthorModel.create(queryData)
+  const newAuthor = await AuthorModel.create({ queryData })
 
   return newAuthor
 }
 
-const authorDuplicateMail = async (authorEmail) => {
+const authorDuplicateMail = async (authorEmail: string) => {
   const AuthorModel = db.db.authors
   const newAuthor = await AuthorModel.findOne({ where: { email: authorEmail } })
 
@@ -21,7 +22,7 @@ const authorDuplicateMail = async (authorEmail) => {
   return false
 }
 
-const getSingleAuthorById = async (authorId) => {
+const getSingleAuthorById = async (authorId: string) => {
   const AuthorModel = db.db.authors
   const author = await AuthorModel.findOne({
     where: { authorId },
@@ -30,8 +31,7 @@ const getSingleAuthorById = async (authorId) => {
   return author
 }
 
-const getSingleAuthorByEmail = async (authorEmail) => {
-  try {
+const getSingleAuthorByEmail = async (authorEmail: string) => {
     const AuthorModel = db.db.authors
     const author = await AuthorModel.findOne({
       where: { email: authorEmail },
@@ -39,10 +39,7 @@ const getSingleAuthorByEmail = async (authorEmail) => {
     })
 
     return author
-  } catch (error) {
-    logQueryError('getSingleAuthorByEmail', FILENAME, JSON.stringify(error.errors))
-    throw new Error(error)
-  }
+  
 }
 
 const viewAuthors = async () => {

@@ -4,7 +4,12 @@ import authorSchema from './authorModel'
 import logger from '../../../../logger/defaultLogger.js'
 import blogSchema from './blogModel'
 
-let db
+let db = {
+  Sequelize: Sequelize,
+  sequelize: new Sequelize(),
+  authors: authorSchema(new Sequelize()),
+  blogs: blogSchema(new Sequelize()),
+}
 
 const initiateSchema = async (sequelize: Sequelize) => {
   db = {

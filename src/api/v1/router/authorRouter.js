@@ -1,8 +1,8 @@
 /* eslint-disable import/extensions */
 import { Router } from 'express'
 import { authorController } from '../controller/index.js'
-import validation from '../validators/author.js'
-import validate from '../middlewares/validate.middleware.js'
+import validation from '../validators/author'
+import validate from '../middlewares/validate.middleware'
 
 const router = Router()
 

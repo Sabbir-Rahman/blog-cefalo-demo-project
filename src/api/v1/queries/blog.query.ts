@@ -1,17 +1,18 @@
 /* eslint-disable import/extensions */
 import { Op } from 'sequelize'
-import BlogQueryAllowDto from '../dto/blogs/blogQueryAllow.dto.js'
+import BlogQueryAllowDto from '../dto/blogs/blogQueryAllow.dto'
 import db from '../models/index.js'
 import { paginationUtils } from '../utils/index.js'
+import { BlogInterface, BlogQueryDataInterface, BlogUpdateInterface } from '../interfaces/modelInterfaces/blog.interface'
 
-const createBlog = async (queryData) => {
+const createBlog = async (queryData: BlogInterface) => {
   const BlogModel = db.db.blogs
-  const newBlog = await BlogModel.create(queryData)
+  const newBlog = await BlogModel.create({ queryData })
 
   return newBlog
 }
 
-const getSingleBlogById = async (blogId) => {
+const getSingleBlogById = async (blogId: string) => {
   const AuthorModel = db.db.authors
   const BlogModel = db.db.blogs
   const blog = await BlogModel.findOne({
@@ -28,15 +29,14 @@ const getSingleBlogById = async (blogId) => {
   return blog
 }
 
-const viewBlogs = async (queryData) => {
+const viewBlogs = async (queryData: BlogQueryDataInterface) => {
   const BlogModel = db.db.blogs
   const AuthorModel = db.db.authors
 
   const { page, limit, offset, sortBy, sortOrder, searchText } =
     paginationUtils.getPaginationSearchAndSortInfo(queryData)
-  const queryObj = BlogQueryAllowDto.createQueryObject(queryData)
 
-  const whereCondition = {}
+  const whereCondition: any = {}
   if (searchText !== 'undefined' && searchText !== '') {
     whereCondition[Op.or] = [
       {
@@ -69,7 +69,7 @@ const viewBlogs = async (queryData) => {
   return blogs
 }
 
-const viewBlogsByAuthor = async (queryData) => {
+const viewBlogsByAuthor = async (queryData: BlogQueryDataInterface) => {
   const BlogModel = db.db.blogs
   const AuthorModel = db.db.authors
 
@@ -91,18 +91,17 @@ const viewBlogsByAuthor = async (queryData) => {
 
   return blogs
 }
-const editBlog = async (updateData, blogId) => {
+const editBlog = async (updateData: BlogUpdateInterface, blogId: string) => {
   const BlogModel = db.db.blogs
   const blog = await BlogModel.update(updateData, { where: { blogId } })
 
   return blog
 }
 
-const isAuthorizedToEditBlog = async (authorId, blogId) => {
+const isAuthorizedToEditBlog = async (authorId: string, blogId: string) => {
   const BlogModel = db.db.blogs
   const blog = await BlogModel.findOne({
     where: { authorId, blogId },
-    returning: true,
     plain: true,
   })
 
@@ -111,7 +110,7 @@ const isAuthorizedToEditBlog = async (authorId, blogId) => {
   return false
 }
 
-const deleteBlog = async (blogId) => {
+const deleteBlog = async (blogId: string) => {
   const BlogModel = db.db.blogs
   const blog = await BlogModel.destroy({ where: { blogId } })
 
