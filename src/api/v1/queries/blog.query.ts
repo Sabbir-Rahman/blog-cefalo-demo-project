@@ -89,7 +89,7 @@ const viewBlogsByAuthor = async (queryData: BlogQueryDataInterface) => {
   const { page, limit, offset } = paginationUtils.getPaginationSearchAndSortInfo(queryData)
   const queryObj = BlogQueryAllowDto.createQueryObject(queryData)
 
-  const blogs = await BlogModel.findAll({
+  const blogs: BlogGeneralViewInterface[] = await BlogModel.findAll({
     limit,
     offset,
     where: queryObj,
@@ -100,7 +100,7 @@ const viewBlogsByAuthor = async (queryData: BlogQueryDataInterface) => {
         attributes: ['name', 'email'],
       },
     ],
-  })
+  }) as unknown as Array<BlogGeneralViewInterface>
 
   return blogs
 }
