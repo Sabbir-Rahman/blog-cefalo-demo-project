@@ -1,6 +1,5 @@
-/* eslint-disable import/extensions */
 import { Router } from 'express'
-import { authorController } from '../controller/index.js'
+import { authorController } from '../controller'
 import validation from '../validators/author'
 import validate from '../middlewares/validate.middleware'
 

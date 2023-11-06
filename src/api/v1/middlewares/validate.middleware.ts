@@ -3,7 +3,7 @@ import Joi from 'joi'
 import { BadRequestError } from '../errors'
 import { Request, Response, NextFunction } from 'express'
 
-const validate = (validator: Joi.ObjectSchema) => (
+const validate = (validator: Joi.ObjectSchema<any>) => (
   req: Request,
   res: Response,
   next: NextFunction,

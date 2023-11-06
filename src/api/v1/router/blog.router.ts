@@ -1,10 +1,9 @@
-/* eslint-disable import/extensions */
 import { Router } from 'express'
-import { blogController } from '../controller/index.js'
-import auth from '../middlewares/auth.middleware.js'
-import isOwnBlog from '../middlewares/ownBlog.middleware.js'
-import validate from '../middlewares/validate.middleware.js'
-import validation from '../validators/blog.js'
+import { blogController } from '../controller'
+import auth from '../middlewares/auth.middleware'
+import isOwnBlog from '../middlewares/ownBlog.middleware'
+import validate from '../middlewares/validate.middleware'
+import validation from '../validators/blog'
 
 const router = Router()
 
