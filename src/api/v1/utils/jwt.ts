@@ -5,6 +5,7 @@ import defaultConfig from '../../../../config/default'
 import InternalServerError from '../errors/internalServer.error'
 import constants from '../../../../constants/default'
 import { JwtUserTokenObject, JwtUserType } from '../interfaces/typesInterfaces/utils'
+import { AuthorInterface } from '../interfaces/modelInterfaces/author.interface'
 
 const privateKey = defaultConfig.jwtConfig.PRIVATE_KEY || 'jkqwdlin8qweqdeqwqwqooqisdui'
 const publicKey = defaultConfig.jwtConfig.PUBLIC_KEY || 'wdwjkedjwoiedwokeiodwerfwe'
@@ -48,7 +49,7 @@ const verifyJwt = async (token: string) => {
   }
 }
 
-const generateAccessTokenRefreshTokenForUser = (user: JwtUserType) => {
+const generateAccessTokenRefreshTokenForUser = (user: AuthorInterface) => {
   const jwtPayload: JwtUserTokenObject = {
     userId: user.authorId,
     name: user.name,
