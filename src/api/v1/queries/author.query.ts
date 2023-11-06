@@ -22,7 +22,7 @@ const authorDuplicateMail = async (authorEmail: string) => {
   return false
 }
 
-const getSingleAuthorById = async (authorId: string) => {
+const getSingleAuthorById = async (authorId: string):Promise<AuthorInterface | null> => {
   const AuthorModel = db.db.authors
   const author = await AuthorModel.findOne({
     where: { authorId },
