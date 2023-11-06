@@ -1,9 +1,10 @@
-/* eslint-disable import/extensions */
-import { authService } from '../services/index.js'
+import { NextFunction, Request, Response } from 'express'
+
+import { authService } from '../services'
 import CustomResponse from '../utils/customResponse'
 import constants from '../../../../constants/default'
 
-const userLogin = async (req, res, next) => {
+const userLogin = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { userObj, accessToken, refreshToken } = await authService.userLogin(req.body)
 
@@ -17,7 +18,7 @@ const userLogin = async (req, res, next) => {
   }
 }
 
-const generateAccesstokenWithRefreshToken = async (req, res, next) => {
+const generateAccesstokenWithRefreshToken = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { accessToken } = await authService.generateRefreshToken(res.locals.user)
     return new CustomResponse(

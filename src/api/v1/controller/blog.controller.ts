@@ -1,18 +1,17 @@
-/* eslint-disable import/extensions */
-import blogService from '../services/blogService.js'
-import constants from '../../../../constants/default.js'
-import CustomResponse from '../utils/customResponse.js'
-import { BadRequestError } from '../errors/index.js'
+import blogService from '../services/blogService'
+import constants from '../../../../constants/default'
+import CustomResponse from '../utils/customResponse'
+import { NextFunction, Request, Response } from 'express'
 
-const createBlog = async (req, res, next) => {
+const createBlog = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const authorId = req.accessToken.userId
+    const authorId = res.locals.user.userId
     const newBlog = await blogService.createBlog({ ...req.body, authorId })
 
     return new CustomResponse(
       res,
       constants.HTTP_STATUS_CODE.CREATED,
-      {},
+      'Blog Created Successfully',,
       'Blog Created Successfully',
       newBlog,
     ).sendResponse()
@@ -21,7 +20,7 @@ const createBlog = async (req, res, next) => {
   }
 }
 
-const viewBlog = async (req, res, next) => {
+const viewBlog = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const blogId = req.params.id
     const blogs = await blogService.viewBlog(blogId, req.query)
@@ -38,7 +37,7 @@ const viewBlog = async (req, res, next) => {
   }
 }
 
-const viewBlogsOfAuthor = async (req, res, next) => {
+const viewBlogsOfAuthor = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const authorId = req.params.id
     const blogs = await blogService.viewBlogsByAuthor({ authorId, ...req.query })
@@ -55,7 +54,7 @@ const viewBlogsOfAuthor = async (req, res, next) => {
   }
 }
 
-const editBlog = async (req, res, next) => {
+const editBlog = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const blogId = req.params.id
     const blog = await blogService.editBlog(req.body, blogId)
@@ -72,7 +71,7 @@ const editBlog = async (req, res, next) => {
   }
 }
 
-const deleteBlog = async (req, res, next) => {
+const deleteBlog = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const blogId = req.params.id
     const blog = await blogService.deleteBlog(blogId)

@@ -1,10 +1,11 @@
-/* eslint-disable import/extensions */
-import { blogQuery } from '../queries/index.js'
-import defaultConstant from '../../../../constants/default.js'
+import { Request, Response, NextFunction } from 'express'
 
-const isOwnBlog = () => async (req, res, next) => {
+import { blogQuery } from '../queries'
+import defaultConstant from '../../../../constants/default'
+
+const isOwnBlog = () => async (req: Request, res: Response, next: NextFunction) => {
   const blogId = req.params.id
-  const authorId = req.accessToken.userId
+  const authorId = res.locals.user.userId
 
   const hasPermissionToEdit = await blogQuery.isAuthorizedToEditBlog(authorId, blogId)
   if (hasPermissionToEdit) {

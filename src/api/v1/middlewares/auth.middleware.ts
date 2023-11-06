@@ -23,7 +23,7 @@ const auth = () => async (
 
   const { decoded } = await jwtUtils.verifyJwt(accessToken)
   if (decoded) {
-    req.accessToken = decoded
+    res.locals.user = decoded
     return next()
   }
   return res.status(defaultConstant.HTTP_STATUS_CODE.UNAUTHORIZED).json({

@@ -1,9 +1,10 @@
-/* eslint-disable import/extensions */
-import CustomResponse from '../utils/customResponse.js'
-import constants from '../../../../constants/default.js'
-import { authorService } from '../services/index.js'
+import { Request, Response, NextFunction } from 'express'
 
-const createAuthor = async (req, res, next) => {
+import CustomResponse from '../utils/customResponse'
+import constants from '../../../../constants/default'
+import { authorService } from '../services'
+
+const createAuthor = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { authorObj, accessToken, refreshToken } = await authorService.createAuthor(req.body)
 
@@ -17,7 +18,7 @@ const createAuthor = async (req, res, next) => {
   }
 }
 
-const viewAuthor = async (req, res, next) => {
+const viewAuthor = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const author = await authorService.viewAuthor(req.params.id)
 
