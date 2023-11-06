@@ -45,16 +45,16 @@ export interface BlogQueryDataInterface {
   title?: string
 }
 
-export interface BlogGeneralViewDtoConstructor {
+export interface BlogGeneralViewInterface {
   authorId: string
-  author?:{
+  author:{
     name: string
   email: string
   }
   blogId: string
   title: string
   body: string | null
-  createdAt?: string
+  createdAt: string
 }
 
 

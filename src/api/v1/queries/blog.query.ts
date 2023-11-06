@@ -4,7 +4,7 @@ import BlogQueryAllowDto from '../dto/blogs/blogQueryAllow.dto'
 import db from '../models/index.js'
 import { paginationUtils } from '../utils/index.js'
 import {
-  BlogGeneralViewDtoConstructor,
+  BlogGeneralViewInterface,
   BlogInterface,
   BlogQueryDataInterface,
   BlogUpdateInterface,
@@ -16,8 +16,10 @@ const createBlog = async (queryData: BlogInterface): Promise<BlogInterface> => {
   const BlogModel = db.db.blogs
   const newBlog = await BlogModel.create({ queryData })
   if (!newBlog) {
-    throw new InternalServerError('Something wrong blog not created',
-      'Something wrong blog not created')
+    throw new InternalServerError(
+      'Something wrong blog not created',
+      'Something wrong blog not created',
+    )
   }
 
   return newBlog
@@ -26,7 +28,7 @@ const createBlog = async (queryData: BlogInterface): Promise<BlogInterface> => {
 const getSingleBlogById = async (blogId: string) => {
   const AuthorModel = db.db.authors
   const BlogModel = db.db.blogs
-  const blog: any = await BlogModel.findOne({
+  const blog: BlogGeneralViewInterface = await BlogModel.findOne({
     where: { blogId },
     attributes: ['blogId', 'title', 'body', 'authorId', 'createdAt', 'updatedAt'],
     include: [
@@ -35,7 +37,7 @@ const getSingleBlogById = async (blogId: string) => {
         attributes: ['name', 'email'],
       },
     ],
-  })
+  }) as unknown as BlogGeneralViewInterface
 
   return blog
 }
@@ -63,7 +65,7 @@ const viewBlogs = async (queryData: BlogQueryDataInterface) => {
     ]
   }
 
-  const blogs: any = await BlogModel.findAll({
+  const blogs: BlogGeneralViewInterface[] = await BlogModel.findAll({
     limit,
     offset,
     where: whereCondition,
@@ -75,7 +77,7 @@ const viewBlogs = async (queryData: BlogQueryDataInterface) => {
       },
     ],
     order: [[sortBy, sortOrder]],
-  })
+  }) as unknown as Array<BlogGeneralViewInterface>
 
   return blogs
 }

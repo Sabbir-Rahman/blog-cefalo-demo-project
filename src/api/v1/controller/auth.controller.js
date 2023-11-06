@@ -1,7 +1,7 @@
 /* eslint-disable import/extensions */
 import { authService } from '../services/index.js'
-import CustomResponse from '../utils/customResponse.js'
-import constants from '../../../../constants/default.js'
+import CustomResponse from '../utils/customResponse'
+import constants from '../../../../constants/default'
 
 const userLogin = async (req, res, next) => {
   try {

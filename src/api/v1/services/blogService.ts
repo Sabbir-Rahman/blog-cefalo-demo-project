@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 import { blogQuery } from '../queries/index.js'
 import { BlogCreateViewDto, BlogGeneralViewDto } from '../dto/blogs/index.js'
-import { BlogGeneralViewDtoConstructor, BlogInterface, BlogQueryDataInterface, BlogQueryInterface } from '../interfaces/modelInterfaces/blog.interface.js'
+import { BlogGeneralViewInterface, BlogInterface, BlogQueryDataInterface, BlogQueryInterface } from '../interfaces/modelInterfaces/blog.interface.js'
 
 const createBlog = async (inputData: BlogInterface) => {
   const uniqueId = uuidv4()
@@ -26,7 +26,7 @@ const viewBlog = async (blogId: string, queryData:BlogQueryDataInterface) => {
     blog = new BlogGeneralViewDto(singleBlog)
   } else {
     const blogs = await blogQuery.viewBlogs(queryData)
-    blog = blogs.map((singleBlog: BlogGeneralViewDtoConstructor) => new BlogGeneralViewDto(singleBlog))
+    blog = blogs.map((singleBlog: BlogGeneralViewInterface) => new BlogGeneralViewDto(singleBlog))
   }
 
   return blog
