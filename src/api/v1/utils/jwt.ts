@@ -3,15 +3,13 @@ import jwt from 'jsonwebtoken'
 
 import defaultConfig from '../../../../config/default'
 import InternalServerError from '../errors/internalServer.error'
-import constants from "../../../../constants/default"
+import constants from '../../../../constants/default'
+import { JwtUserTokenObject, JwtUserType } from '../interfaces/typesInterfaces/utils'
 
 const privateKey = defaultConfig.jwtConfig.PRIVATE_KEY || 'jkqwdlin8qweqdeqwqwqooqisdui'
 const publicKey = defaultConfig.jwtConfig.PUBLIC_KEY || 'wdwjkedjwoiedwokeiodwerfwe'
 
-type JwtUserTokenObject = { userId: string; name: string; role: [string] }
-type JwtUserType = { authorId: string; name: string; role: [string] }
-
-const signJwt = (object:JwtUserTokenObject, options?: jwt.SignOptions) => {
+const signJwt = (object: JwtUserTokenObject, options?: jwt.SignOptions) => {
   try {
     const signToken = jwt.sign(object, privateKey, {
       ...(options && options),
@@ -28,16 +26,25 @@ const verifyJwt = async (token: string) => {
   try {
     const decoded = await jwt.verify(token, publicKey)
 
-    if (decoded) {
+    if (decoded && (typeof(decoded)!=='string')) {
       return {
         valid: true,
         expired: false,
         decoded,
       }
     }
-    return false
+    return {
+      valid: false,
+      expired: false,
+      decoded: false,
+    }
   } catch (error) {
-    return false
+    console.log(error)
+    return {
+      valid: false,
+      expired: false,
+      decoded: false,
+    }
   }
 }
 
@@ -62,7 +69,7 @@ const generateAccessTokenRefreshTokenForUser = (user: JwtUserType) => {
 function generateAccessTokenWithRefreshToken(user: JwtUserType) {
   const userId = user.authorId
 
-  const jwtPayload:JwtUserTokenObject = {
+  const jwtPayload: JwtUserTokenObject = {
     userId,
     name: user.name,
     role: user.role,

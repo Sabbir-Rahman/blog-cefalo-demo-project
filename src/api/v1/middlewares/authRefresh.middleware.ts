@@ -4,6 +4,7 @@ import lodash from 'lodash'
 
 import { jwtUtils } from '../utils/index.js'
 import defaultConstant from '../../../../constants/default.js'
+import { JwtUserType } from '../interfaces/typesInterfaces/utils.js'
 import { Request, Response, NextFunction } from 'express'
 
 const { get } = lodash
@@ -11,22 +12,22 @@ const authRefresh =
   () =>
   async (
     req: Request,
-    res,
-    next,
+    res: Response,
+    next: NextFunction,
     // eslint-disable-next-line consistent-return
   ) => {
     const refreshToken = get(req, 'headers.x-refresh')
 
     if (!refreshToken) {
-      res
+      return res
         .status(defaultConstant.HTTP_STATUS_CODE.FORBIDDEN)
         .json({ message: defaultConstant.errorMessage.NO_TOKEN })
     }
 
-    const { decoded } = await jwtUtils.verifyJwt(refreshToken)
+    const { decoded } = await jwtUtils.verifyJwt(refreshToken[0])
 
     if (decoded) {
-      req.refreshToken = decoded
+      res.locals.user = decoded
       return next()
     }
     return res

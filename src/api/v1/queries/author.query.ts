@@ -31,7 +31,7 @@ const getSingleAuthorById = async (authorId: string) => {
   return author
 }
 
-const getSingleAuthorByEmail = async (authorEmail: string) => {
+const getSingleAuthorByEmail = async (authorEmail: string): Promise<AuthorInterface | null> => {
     const AuthorModel = db.db.authors
     const author = await AuthorModel.findOne({
       where: { email: authorEmail },

@@ -1,13 +1,15 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable import/extensions */
 
-import { authorQuery } from '../queries/index.js'
-import { bcryptUtils, jwtUtils } from '../utils/index.js'
-import { AuthorGeneralViewDto } from '../dto/authors/index.js'
-import Http404DataNotFoundError from '../errors/http404NotFound.error.js'
-import BadRequestError from '../errors/badRequest.error.js'
+import { authorQuery } from '../queries/index'
+import { bcryptUtils, jwtUtils } from '../utils/index'
+import { AuthorGeneralViewDto } from '../dto/authors'
+import Http404DataNotFoundError from '../errors/http404NotFound.error'
+import BadRequestError from '../errors/badRequest.error'
+import { LoginInterface } from '../interfaces/modelInterfaces/auth.interface'
+import { JwtUserType } from '../interfaces/typesInterfaces/utils'
 
-const userLogin = async (inputData) => {
+const userLogin = async (inputData: LoginInterface) => {
   const userExist = await authorQuery.getSingleAuthorByEmail(inputData.email)
 
   if (!userExist) {
@@ -31,7 +33,7 @@ const userLogin = async (inputData) => {
   return { userObj, accessToken, refreshToken }
 }
 
-const generateRefreshToken = async (inputData) => {
+const generateRefreshToken = async (inputData: JwtUserType) => {
   const { accessToken } = jwtUtils.generateAccessTokenWithRefreshToken(inputData)
 
   return { accessToken }

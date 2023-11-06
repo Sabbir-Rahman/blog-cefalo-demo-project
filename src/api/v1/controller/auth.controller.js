@@ -19,7 +19,7 @@ const userLogin = async (req, res, next) => {
 
 const generateAccesstokenWithRefreshToken = async (req, res, next) => {
   try {
-    const { accessToken } = await authService.generateRefreshToken(req.refreshToken)
+    const { accessToken } = await authService.generateRefreshToken(res.locals.user)
     return new CustomResponse(
       res,
       constants.HTTP_STATUS_CODE.OK,
