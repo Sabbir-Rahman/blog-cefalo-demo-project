@@ -2,11 +2,11 @@
 /* eslint-disable import/extensions */
 import bcrypt from 'bcrypt'
 
-import logger from '../../../../logger/defaultLogger.js'
-import constants from '../../../../constants/default.js'
-import { InternalServerError } from '../errors/index.js'
+import logger from '../../../../logger/defaultLogger'
+import constants from '../../../../constants/default'
+import { InternalServerError } from '../errors'
 
-async function hashPassword(password) {
+async function hashPassword(password: string) {
   try {
     const salt = await bcrypt.genSalt(10)
     const hashPass = await bcrypt.hash(password, salt)
@@ -21,7 +21,7 @@ async function hashPassword(password) {
   }
 }
 
-async function comparePassword(inputPassword, userPassword) {
+async function comparePassword(inputPassword: string, userPassword: string) {
   try {
     return await bcrypt.compare(inputPassword, userPassword)
   } catch (error) {

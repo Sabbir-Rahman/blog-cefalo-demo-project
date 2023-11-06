@@ -1,10 +1,23 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import json2xml from 'json2xml'
 import json2html from 'json2html'
-import { jsonToPlainText } from 'json-to-plain-text'
+import { jsonToPlainText, Options } from 'json-to-plain-text'
+import { Response, Request } from 'express'
 
 class CustomResponse {
-  constructor(res, statusCode, developerMessage, message, data) {
+  res: Response<any, Record<string, any>>
+  statusCode: number
+  developerMessage: string
+  message: string
+  data: Object
+  responseObj: { message: any; developerMessage: any; data: any }
+  constructor(
+    res: Response,
+    statusCode: number,
+    developerMessage: string,
+    message: string,
+    data: Object,
+  ) {
     this.res = res
     this.statusCode = statusCode
     this.developerMessage = developerMessage
@@ -23,7 +36,16 @@ class CustomResponse {
   }
 
   sendTEXTResponse() {
-    return this.res.status(this.statusCode).send(jsonToPlainText(JSON.stringify(this.responseObj)))
+    // This is optional
+    const options: Options = {
+      color: true, // Whether to apply colors to the output or not
+      spacing: true, // Whether to include spacing before colons or not
+      seperator: ':', // seperate keys and values.
+      squareBracketsForArray: false, // Whether to use square brackets for arrays or not
+      doubleQuotesForKeys: false, // Whether to use double quotes for object keys or not
+      doubleQuotesForValues: false, // Whether to use double quotes for string values or not
+    }
+    return this.res.status(this.statusCode).send(jsonToPlainText(JSON.stringify(this.responseObj), options))
   }
 
   sendJSONResponse() {

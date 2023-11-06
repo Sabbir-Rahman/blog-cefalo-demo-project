@@ -5,10 +5,11 @@ import defaultConfig from '../../../../config/default'
 import InternalServerError from '../errors/internalServer.error'
 import constants from "../../../../constants/default"
 
-const privateKey = defaultConfig.jwtConfig.PRIVATE_KEY
-const publicKey = defaultConfig.jwtConfig.PUBLIC_KEY
+const privateKey = defaultConfig.jwtConfig.PRIVATE_KEY || 'jkqwdlin8qweqdeqwqwqooqisdui'
+const publicKey = defaultConfig.jwtConfig.PUBLIC_KEY || 'wdwjkedjwoiedwokeiodwerfwe'
 
 type JwtUserTokenObject = { userId: string; name: string; role: [string] }
+type JwtUserType = { authorId: string; name: string; role: [string] }
 
 const signJwt = (object:JwtUserTokenObject, options?: jwt.SignOptions) => {
   try {
@@ -19,11 +20,11 @@ const signJwt = (object:JwtUserTokenObject, options?: jwt.SignOptions) => {
 
     return signToken
   } catch (error) {
-    throw new InternalServerError(constants.errorMessage.SOMETHING_WRONG, error)
+    throw new InternalServerError(constants.errorMessage.SOMETHING_WRONG, String(error))
   }
 }
 
-const verifyJwt = async (token) => {
+const verifyJwt = async (token: string) => {
   try {
     const decoded = await jwt.verify(token, publicKey)
 
@@ -40,8 +41,8 @@ const verifyJwt = async (token) => {
   }
 }
 
-const generateAccessTokenRefreshTokenForUser = (user) => {
-  const jwtPayload = {
+const generateAccessTokenRefreshTokenForUser = (user: JwtUserType) => {
+  const jwtPayload: JwtUserTokenObject = {
     userId: user.authorId,
     name: user.name,
     role: ['author'],
@@ -58,9 +59,11 @@ const generateAccessTokenRefreshTokenForUser = (user) => {
   return { accessToken, refreshToken }
 }
 
-function generateAccessTokenWithRefreshToken(user) {
+function generateAccessTokenWithRefreshToken(user: JwtUserType) {
+  const userId = user.authorId
+
   const jwtPayload:JwtUserTokenObject = {
-    userId: user.userId,
+    userId,
     name: user.name,
     role: user.role,
   }
