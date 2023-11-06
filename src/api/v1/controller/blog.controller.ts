@@ -11,7 +11,7 @@ const createBlog = async (req: Request, res: Response, next: NextFunction) => {
     return new CustomResponse(
       res,
       constants.HTTP_STATUS_CODE.CREATED,
-      'Blog Created Successfully',,
+      'Blog Created Successfully',
       'Blog Created Successfully',
       newBlog,
     ).sendResponse()
