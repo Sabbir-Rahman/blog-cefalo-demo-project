@@ -5,7 +5,7 @@ export default class BlogCreateViewDto {
   blogId: string
   title: string
   body: string | null
-  time: string
+  time?: string
   constructor(blog: BlogInterface) {
     this.authorId = blog.authorId
     this.blogId = blog.blogId

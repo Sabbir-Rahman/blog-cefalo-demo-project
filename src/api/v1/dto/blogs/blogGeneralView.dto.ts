@@ -1,4 +1,4 @@
-import { BlogGeneralViewDtoConstructor } from '../../interfaces/modelInterfaces/blog.interface'
+import { BlogGeneralViewInterface } from '../../interfaces/modelInterfaces/blog.interface'
 
 export default class BlogGeneralViewDto {
   authorId?: string  
@@ -8,7 +8,7 @@ export default class BlogGeneralViewDto {
   title?: string 
   body?: string | null
   time?: string 
-  constructor(blog: BlogGeneralViewDtoConstructor | null) {
+  constructor(blog: BlogGeneralViewInterface | null) {
     this.authorId = blog?.authorId
     this.authorName = blog?.author?.name
     this.authorEmail = blog?.author?.email
