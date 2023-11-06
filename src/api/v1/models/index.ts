@@ -12,11 +12,13 @@ let db = {
 }
 
 const initiateSchema = async (sequelize: Sequelize) => {
+  const Blog = blogSchema(sequelize) 
+  const Author = authorSchema(sequelize) 
   db = {
     Sequelize: Sequelize,
     sequelize: sequelize,
-    authors : authorSchema(sequelize),
-    blogs : blogSchema(sequelize)
+    authors : Author,
+    blogs : Blog
   }
 
   db.authors.hasMany(db.blogs, {

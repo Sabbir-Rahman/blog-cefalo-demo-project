@@ -38,8 +38,10 @@ const blogSchema = (sequelize: Sequelize) => {
       // Other model configurations can be added here
     },
   )
-
+  
   return Blog
 }
+
+export interface BlogInstance extends ReturnType<typeof blogSchema> {}
 
 export default blogSchema

@@ -4,12 +4,12 @@ import { v4 as uuidv4 } from 'uuid'
 
 import { blogQuery } from '../queries/index.js'
 import { BlogCreateViewDto, BlogGeneralViewDto } from '../dto/blogs/index.js'
+import { BlogGeneralViewDtoConstructor, BlogInterface, BlogQueryDataInterface, BlogQueryInterface } from '../interfaces/modelInterfaces/blog.interface.js'
 
-const createBlog = async (inputData, authorId) => {
+const createBlog = async (inputData: BlogInterface) => {
   const uniqueId = uuidv4()
   const newBlog = {
     ...inputData,
-    authorId,
     blogId: uniqueId,
   }
 
@@ -18,34 +18,34 @@ const createBlog = async (inputData, authorId) => {
   return new BlogCreateViewDto(blog)
 }
 
-const viewBlog = async (inputData, queryData) => {
+const viewBlog = async (blogId: string, queryData:BlogQueryDataInterface) => {
   let blog
 
-  if (inputData) {
-    const singleBlog = await blogQuery.getSingleBlogById(inputData)
+  if (blogId) {
+    const singleBlog = await blogQuery.getSingleBlogById(blogId)
     blog = new BlogGeneralViewDto(singleBlog)
   } else {
     const blogs = await blogQuery.viewBlogs(queryData)
-    blog = blogs.map((singleBlog) => new BlogGeneralViewDto(singleBlog))
+    blog = blogs.map((singleBlog: BlogGeneralViewDtoConstructor) => new BlogGeneralViewDto(singleBlog))
   }
 
   return blog
 }
 
-const viewBlogsByAuthor = async (queryData) => {
+const viewBlogsByAuthor = async (queryData: BlogQueryDataInterface) => {
   const blogs = await blogQuery.viewBlogsByAuthor(queryData)
   const authorBlogs = blogs.map((singleBlog) => new BlogGeneralViewDto(singleBlog))
   return authorBlogs
 }
 
-const editBlog = async (inputData, blogId) => {
+const editBlog = async (inputData: BlogQueryInterface, blogId: string) => {
   await blogQuery.editBlog(inputData, blogId)
   const updatedBlog = await blogQuery.getSingleBlogById(blogId)
 
   return new BlogGeneralViewDto(updatedBlog)
 }
 
-const deleteBlog = async (blogId) => {
+const deleteBlog = async (blogId: string) => {
   await blogQuery.deleteBlog(blogId)
 
   return {}

@@ -1,12 +1,12 @@
-import { BlogInterfaceModel } from "../../interfaces/modelInterfaces/blog.interface"
+import { BlogInterface } from "../../interfaces/modelInterfaces/blog.interface"
 
 export default class BlogCreateViewDto {
   authorId: string
   blogId: string
   title: string
-  body: string
+  body: string | null
   time: string
-  constructor(blog: BlogInterfaceModel) {
+  constructor(blog: BlogInterface) {
     this.authorId = blog.authorId
     this.blogId = blog.blogId
     this.title = blog.title

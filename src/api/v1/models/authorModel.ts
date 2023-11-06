@@ -44,4 +44,6 @@ const authorSchema = (sequelize: Sequelize) => {
   return Author
 }
 
+export interface AuthorInstance extends ReturnType<typeof authorSchema> {}
+
 export default authorSchema

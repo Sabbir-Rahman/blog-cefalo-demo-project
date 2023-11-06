@@ -1,5 +1,5 @@
 /* eslint-disable import/extensions */
-import blogService from '../services/blog.service.js'
+import blogService from '../services/blogService.js'
 import constants from '../../../../constants/default.js'
 import CustomResponse from '../utils/customResponse.js'
 import { BadRequestError } from '../errors/index.js'
@@ -7,7 +7,7 @@ import { BadRequestError } from '../errors/index.js'
 const createBlog = async (req, res, next) => {
   try {
     const authorId = req.accessToken.userId
-    const newBlog = await blogService.createBlog(req.body, authorId)
+    const newBlog = await blogService.createBlog({ ...req.body, authorId })
 
     return new CustomResponse(
       res,
@@ -41,7 +41,7 @@ const viewBlog = async (req, res, next) => {
 const viewBlogsOfAuthor = async (req, res, next) => {
   try {
     const authorId = req.params.id
-    const blogs = await blogService.viewBlogsByAuthor({authorId, ...req.query})
+    const blogs = await blogService.viewBlogsByAuthor({ authorId, ...req.query })
 
     return new CustomResponse(
       res,

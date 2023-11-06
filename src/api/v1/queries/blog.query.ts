@@ -3,11 +3,22 @@ import { Op } from 'sequelize'
 import BlogQueryAllowDto from '../dto/blogs/blogQueryAllow.dto'
 import db from '../models/index.js'
 import { paginationUtils } from '../utils/index.js'
-import { BlogInterface, BlogQueryDataInterface, BlogUpdateInterface } from '../interfaces/modelInterfaces/blog.interface'
+import {
+  BlogGeneralViewDtoConstructor,
+  BlogInterface,
+  BlogQueryDataInterface,
+  BlogUpdateInterface,
+  BlogsWithAuthor,
+} from '../interfaces/modelInterfaces/blog.interface'
+import { InternalServerError } from '../errors'
 
-const createBlog = async (queryData: BlogInterface) => {
+const createBlog = async (queryData: BlogInterface): Promise<BlogInterface> => {
   const BlogModel = db.db.blogs
   const newBlog = await BlogModel.create({ queryData })
+  if (!newBlog) {
+    throw new InternalServerError('Something wrong blog not created',
+      'Something wrong blog not created')
+  }
 
   return newBlog
 }
@@ -15,7 +26,7 @@ const createBlog = async (queryData: BlogInterface) => {
 const getSingleBlogById = async (blogId: string) => {
   const AuthorModel = db.db.authors
   const BlogModel = db.db.blogs
-  const blog = await BlogModel.findOne({
+  const blog: any = await BlogModel.findOne({
     where: { blogId },
     attributes: ['blogId', 'title', 'body', 'authorId', 'createdAt', 'updatedAt'],
     include: [
@@ -52,7 +63,7 @@ const viewBlogs = async (queryData: BlogQueryDataInterface) => {
     ]
   }
 
-  const blogs = await BlogModel.findAll({
+  const blogs: any = await BlogModel.findAll({
     limit,
     offset,
     where: whereCondition,
