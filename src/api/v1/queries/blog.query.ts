@@ -3,16 +3,16 @@ import { Blog } from '../models/blogModel'
 
 import { Op } from 'sequelize'
 import BlogQueryAllowDto from '../dto/blogs/blogQueryAllow.dto'
-import db from '../models'
+
 import { paginationUtils } from '../utils'
 import {
   BlogGeneralViewInterface,
   BlogInterface,
   BlogQueryDataInterface,
   BlogUpdateInterface,
-  BlogsWithAuthor,
 } from '../interfaces/modelInterfaces/blog.interface'
 import { InternalServerError } from '../errors'
+import { orderBy } from 'lodash'
 
 const createBlog = async (queryData: BlogInterface): Promise<BlogInterface> => {
   const newBlog = await Blog.create({ ...queryData })
@@ -42,6 +42,7 @@ const getSingleBlogById = async (blogId: string) => {
 }
 
 const viewBlogs = async (queryData: BlogQueryDataInterface) => {
+ 
   const { page, limit, offset, sortBy, sortOrder, searchText } =
     paginationUtils.getPaginationSearchAndSortInfo(queryData)
 

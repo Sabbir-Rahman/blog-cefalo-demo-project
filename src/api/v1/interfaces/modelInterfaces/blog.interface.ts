@@ -19,11 +19,11 @@ export interface BlogQueryInterface {
 }
 
 export interface BlogQueryDataInterface {
-  page?: number
-  limit?: number
-  sortBy?: string
-  sortOrder?: string
-  searchText?: string
+  page: number
+  limit: number
+  sortBy: string
+  sortOrder: string
+  searchText: string
   authorId?: string
   title?: string
 }
