@@ -12,11 +12,14 @@ describe('Blog controller test', () => {
           title: 'Hello world',
           body: 'This is a trap',
         },
-        // accessToken: {
-        //   userId: '1ea6c1e5-5649-4591-a813-441d0c840a1b',
-        // },
-      } as Request
-      const res = {} as Response
+      } as unknown as Request
+      const res = {
+        locals: {
+          user: {
+            userId: '1ea6c1e5-5649-4591-a813-441d0c840a1b',
+          },
+        },
+      } as unknown as Response
 
       const expectedResponse = {
         isSuccess: true,
@@ -29,12 +32,14 @@ describe('Blog controller test', () => {
       const next = jest.fn()
       const authorId = '1ea6c1e5-5649-4591-a813-441d0c840a1b'
 
-      jest.spyOn(blogService, 'createBlog').mockResolvedValueOnce(expectedResponse.data)
-      jest.spyOn(CustomResponse.prototype, 'sendResponse').mockResolvedValueOnce(expectedResponse as never)
+      jest.spyOn(blogService, 'createBlog').mockResolvedValueOnce(expectedResponse.data as never)
+      jest
+        .spyOn(CustomResponse.prototype, 'sendResponse')
+        .mockResolvedValueOnce(expectedResponse as never)
 
       const response = await blogController.createBlog(req, res, next)
 
-      expect(blogService.createBlog).toHaveBeenCalledWith(req.body, authorId)
+      expect(blogService.createBlog).toHaveBeenCalledWith({ ...req.body, authorId })
 
       expect(response).toBe(expectedResponse)
     })
@@ -56,8 +61,10 @@ describe('Blog controller test', () => {
       }
       const next = jest.fn()
 
-      jest.spyOn(blogService, 'viewBlog').mockResolvedValueOnce(expectedResponse.data)
-      jest.spyOn(CustomResponse.prototype, 'sendResponse').mockResolvedValueOnce(expectedResponse as never)
+      jest.spyOn(blogService, 'viewBlog').mockResolvedValueOnce(expectedResponse.data as never)
+      jest
+        .spyOn(CustomResponse.prototype, 'sendResponse')
+        .mockResolvedValueOnce(expectedResponse as never)
 
       const response = await blogController.viewBlog(req, res, next)
       expect(blogService.viewBlog).toHaveBeenCalledWith(req.params.id, req.query)
@@ -82,12 +89,14 @@ describe('Blog controller test', () => {
       const next = jest.fn()
 
       jest.spyOn(blogService, 'viewBlog').mockResolvedValueOnce(expectedResponse.data)
-      jest.spyOn(CustomResponse.prototype, 'sendResponse').mockResolvedValueOnce(expectedResponse as never)
+      jest
+        .spyOn(CustomResponse.prototype, 'sendResponse')
+        .mockResolvedValueOnce(expectedResponse as never)
 
       const response = await blogController.viewBlog(req, res, next)
       expect(blogService.viewBlog).toHaveBeenCalledWith(req.params.id, req.query)
       // 2 because same function is called in view all blogs
-      expect(blogService.viewBlog).toHaveBeenCalledTimes(2)
+      expect(blogService.viewBlog).toHaveBeenCalledTimes(1)
 
       expect(response).toBe(expectedResponse)
     })
@@ -125,7 +134,9 @@ describe('Blog controller test', () => {
       const next = jest.fn()
 
       jest.spyOn(blogService, 'editBlog').mockResolvedValueOnce(expectedResponse.data)
-      jest.spyOn(CustomResponse.prototype, 'sendResponse').mockResolvedValueOnce(expectedResponse as never)
+      jest
+        .spyOn(CustomResponse.prototype, 'sendResponse')
+        .mockResolvedValueOnce(expectedResponse as never)
 
       const response = await blogController.editBlog(req, res, next)
 
@@ -152,7 +163,9 @@ describe('Blog controller test', () => {
         data: {},
       }
       jest.spyOn(blogService, 'deleteBlog').mockResolvedValueOnce({})
-      jest.spyOn(CustomResponse.prototype, 'sendResponse').mockResolvedValueOnce(expectedResponse as never)
+      jest
+        .spyOn(CustomResponse.prototype, 'sendResponse')
+        .mockResolvedValueOnce(expectedResponse as never)
 
       const response = await blogController.deleteBlog(req, res, next)
 
