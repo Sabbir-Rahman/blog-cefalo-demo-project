@@ -69,7 +69,11 @@ describe('Auth controller test', () => {
         body: {},
       } as Request
       
-      const res = {} as Response
+      const res = {
+        locals: {
+          refreshTokenUser: 'Some refresh token'
+        }
+      } as unknown as Response
       const refreshToken= 'Some refresh token'
 
       const expectedResponse = {
@@ -97,7 +101,11 @@ describe('Auth controller test', () => {
       const req = {
         body: {},
       } as Request
-      const res = {} as Response
+      const res = {
+        locals: {
+          refreshTokenUser: 'Some refresh token'
+        }
+      } as unknown as Response
       const expectedError = new Error('Refresh token not given')
       const next = jest.fn()
 

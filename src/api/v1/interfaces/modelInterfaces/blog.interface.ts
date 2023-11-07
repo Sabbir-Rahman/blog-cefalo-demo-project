@@ -6,6 +6,7 @@ export interface BlogInterface {
   title: string
   body: string | null
   authorId: string
+  createdAt?: string
 }
 
 export interface BlogUpdateInterface {

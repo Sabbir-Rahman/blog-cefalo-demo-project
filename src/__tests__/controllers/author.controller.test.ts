@@ -69,7 +69,11 @@ describe('Auth Controllert Test', () => {
 
   describe('Testing Author View', () => {
     it('View All Author', async () => {
-      const req = { params: {} } as Request
+      const req = {
+        params: {
+          id: {},
+        },
+      } as unknown as Request
       const res = {} as Response
       const expectedResponse = {
         message: 'Author View Successfull',
@@ -140,7 +144,7 @@ describe('Auth Controllert Test', () => {
       // Assert
 
       // mock service function
-      jest.spyOn(authorService, 'viewAuthor').mockRejectedValue(expectedResponse)
+      jest.spyOn(authorService, 'viewAuthor').mockRejectedValue(expectedResponse as never)
 
       // Assert
       await authorController.viewAuthor(req, res, next)

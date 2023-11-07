@@ -26,7 +26,7 @@ const authRefresh =
     const { decoded } = await jwtUtils.verifyJwt(refreshToken)
 
     if (decoded) {
-      res.locals.user = decoded
+      res.locals.refreshTokenUser = decoded
       return next()
     }
     return res
