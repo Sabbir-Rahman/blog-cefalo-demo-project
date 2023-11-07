@@ -42,7 +42,7 @@ const getSingleBlogById = async (blogId: string) => {
 }
 
 const viewBlogs = async (queryData: BlogQueryDataInterface) => {
- 
+
   const { page, limit, offset, sortBy, sortOrder, searchText } =
     paginationUtils.getPaginationSearchAndSortInfo(queryData)
 
