@@ -1,28 +1,12 @@
 /* eslint-disable import/extensions */
 import { Sequelize, DataTypes, Model, BuildOptions } from 'sequelize'
-import authorSchema from './authorModel'
+import { Author } from './authorModel'
+import { Blog } from './blogModel'
 import logger from '../../../../logger/defaultLogger'
-import blogSchema from './blogModel'
 import { sequlizeConfig } from '../../../helpers/mysql'
 
-let db = {
-  Sequelize: Sequelize,
-  sequelize: sequlizeConfig(),
-  authors: authorSchema(sequlizeConfig()),
-  blogs: blogSchema(sequlizeConfig()),
-}
-
 const initiateSchema = async (sequelize: Sequelize) => {
-  const Blog = blogSchema(sequelize) 
-  const Author = authorSchema(sequelize) 
-  db = {
-    Sequelize: Sequelize,
-    sequelize: sequelize,
-    authors : Author,
-    blogs : Blog
-  }
-
-  db.authors.hasMany(db.blogs, {
+  Author.hasMany(Blog, {
     onDelete: 'CASCADE',
     foreignKey: {
       allowNull: false,
@@ -30,7 +14,7 @@ const initiateSchema = async (sequelize: Sequelize) => {
     },
   })
 
-  db.blogs.belongsTo(db.authors, {
+  Blog.belongsTo(Author, {
     foreignKey: {
       name: 'authorId',
       allowNull: false,
@@ -38,9 +22,9 @@ const initiateSchema = async (sequelize: Sequelize) => {
   })
 
   // true will erase all the data and create table again and again
-  db.sequelize.sync({ force: false }).then(() => {
+  sequelize.sync({ force: false }).then(() => {
     logger.info('Resync done')
   })
 }
 
-export default { db, initiateSchema }
+export default { initiateSchema }

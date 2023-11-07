@@ -1,17 +1,15 @@
-/* eslint-disable import/extensions */
+import { Author } from '../models/authorModel'
 import { AuthorInterface } from '../interfaces/modelInterfaces/author.interface'
 import db from '../models'
 
 const createAuthor = async (queryData: AuthorInterface) => {
-  const AuthorModel = db.db.authors
-  const newAuthor = await AuthorModel.create({ ...queryData })
+  const newAuthor = await Author.create({ ...queryData })
 
   return newAuthor
 }
 
 const authorDuplicateMail = async (authorEmail: string) => {
-  const AuthorModel = db.db.authors
-  const newAuthor = await AuthorModel.findOne({ where: { email: authorEmail } })
+  const newAuthor = await Author.findOne({ where: { email: authorEmail } })
 
   if (newAuthor) {
     return true
@@ -19,9 +17,8 @@ const authorDuplicateMail = async (authorEmail: string) => {
   return false
 }
 
-const getSingleAuthorById = async (authorId: string):Promise<AuthorInterface | null> => {
-  const AuthorModel = db.db.authors
-  const author = await AuthorModel.findOne({
+const getSingleAuthorById = async (authorId: string): Promise<AuthorInterface | null> => {
+  const author = await Author.findOne({
     where: { authorId },
   })
 
@@ -29,19 +26,16 @@ const getSingleAuthorById = async (authorId: string):Promise<AuthorInterface | n
 }
 
 const getSingleAuthorByEmail = async (authorEmail: string): Promise<AuthorInterface | null> => {
-    const AuthorModel = db.db.authors
-    const author = await AuthorModel.findOne({
-      where: { email: authorEmail },
-      attributes: ['authorId', 'name', 'email', 'password'],
-    })
+  const author = await Author.findOne({
+    where: { email: authorEmail },
+    attributes: ['authorId', 'name', 'email', 'password'],
+  })
 
-    return author
-  
+  return author
 }
 
 const viewAuthors = async () => {
-  const AuthorModel = db.db.authors
-  const authors = await AuthorModel.findAll()
+  const authors = await Author.findAll()
 
   return authors
 }

@@ -1,21 +1,12 @@
-import { AuthorInstance } from "../../models/authorModel"
-import { BlogInstance } from "../../models/blogModel"
+import { AuthorInstance } from '../../models/authorModel'
+import { BlogInstance } from '../../models/blogModel'
 
 export interface BlogInterface {
   blogId: string
   title: string
   body: string | null
   authorId: string
-  createdAt?: string
 }
-
-export interface BlogCreateInterface {
-    blogId?: string
-    title?: string
-    body?: string
-    authorId?: string
-    createdAt?: string
-  }
 
 export interface BlogUpdateInterface {
   title?: string
@@ -25,14 +16,6 @@ export interface BlogUpdateInterface {
 export interface BlogQueryInterface {
   authorId?: string
   title?: string
-}
-
-export interface BlogInterfaceModel {
-  blogId: string
-  title: string
-  body: string
-  authorId: string
-  createdAt: string
 }
 
 export interface BlogQueryDataInterface {
@@ -47,9 +30,9 @@ export interface BlogQueryDataInterface {
 
 export interface BlogGeneralViewInterface {
   authorId: string
-  author:{
+  Author: {
     name: string
-  email: string
+    email: string
   }
   blogId: string
   title: string
@@ -57,10 +40,6 @@ export interface BlogGeneralViewInterface {
   createdAt: string
 }
 
-
 export interface BlogsWithAuthor extends BlogInstance {
-    author: AuthorInstance | null
+  author: AuthorInstance | null
 }
-
-
-

@@ -13,7 +13,7 @@ const auth = () => async (
   next: NextFunction,
   // eslint-disable-next-line consistent-return
 ) => {
-  const accessToken = get(req, 'headers.authorization', '').replace(/^Bearer\s/, '')
+  const accessToken = get(req, 'headers.authorization', '').replace(/^Bearer\s/, '') as string
 
   if (!accessToken) {
     return res

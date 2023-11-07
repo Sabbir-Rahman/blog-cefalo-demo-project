@@ -10,8 +10,8 @@ export default class BlogGeneralViewDto {
   time?: string 
   constructor(blog: BlogGeneralViewInterface | null) {
     this.authorId = blog?.authorId
-    this.authorName = blog?.author?.name
-    this.authorEmail = blog?.author?.email
+    this.authorName = blog?.Author?.name
+    this.authorEmail = blog?.Author?.email
     this.blogId = blog?.blogId
     this.title = blog?.title
     this.body = blog?.body

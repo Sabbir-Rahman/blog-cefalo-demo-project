@@ -1,4 +1,6 @@
-/* eslint-disable import/extensions */
+import { Author } from '../models/authorModel'
+import { Blog } from '../models/blogModel'
+
 import { Op } from 'sequelize'
 import BlogQueryAllowDto from '../dto/blogs/blogQueryAllow.dto'
 import db from '../models'
@@ -13,8 +15,7 @@ import {
 import { InternalServerError } from '../errors'
 
 const createBlog = async (queryData: BlogInterface): Promise<BlogInterface> => {
-  const BlogModel = db.db.blogs
-  const newBlog = await BlogModel.create({ queryData })
+  const newBlog = await Blog.create({ ...queryData })
   if (!newBlog) {
     throw new InternalServerError(
       'Something wrong blog not created',
@@ -26,26 +27,21 @@ const createBlog = async (queryData: BlogInterface): Promise<BlogInterface> => {
 }
 
 const getSingleBlogById = async (blogId: string) => {
-  const AuthorModel = db.db.authors
-  const BlogModel = db.db.blogs
-  const blog: BlogGeneralViewInterface = await BlogModel.findOne({
+  const blog: BlogGeneralViewInterface = (await Blog.findOne({
     where: { blogId },
     attributes: ['blogId', 'title', 'body', 'authorId', 'createdAt', 'updatedAt'],
     include: [
       {
-        model: AuthorModel,
+        model: Author,
         attributes: ['name', 'email'],
       },
     ],
-  }) as unknown as BlogGeneralViewInterface
+  })) as unknown as BlogGeneralViewInterface
 
   return blog
 }
 
 const viewBlogs = async (queryData: BlogQueryDataInterface) => {
-  const BlogModel = db.db.blogs
-  const AuthorModel = db.db.authors
-
   const { page, limit, offset, sortBy, sortOrder, searchText } =
     paginationUtils.getPaginationSearchAndSortInfo(queryData)
 
@@ -65,55 +61,50 @@ const viewBlogs = async (queryData: BlogQueryDataInterface) => {
     ]
   }
 
-  const blogs: BlogGeneralViewInterface[] = await BlogModel.findAll({
+  const blogs: BlogGeneralViewInterface[] = (await Blog.findAll({
     limit,
     offset,
     where: whereCondition,
     attributes: ['blogId', 'title', 'body', 'authorId', 'createdAt', 'updatedAt'],
     include: [
       {
-        model: AuthorModel,
+        model: Author,
         attributes: ['name', 'email'],
       },
     ],
     order: [[sortBy, sortOrder]],
-  }) as unknown as Array<BlogGeneralViewInterface>
+  })) as unknown as Array<BlogGeneralViewInterface>
 
   return blogs
 }
 
 const viewBlogsByAuthor = async (queryData: BlogQueryDataInterface) => {
-  const BlogModel = db.db.blogs
-  const AuthorModel = db.db.authors
-
   const { page, limit, offset } = paginationUtils.getPaginationSearchAndSortInfo(queryData)
   const queryObj = BlogQueryAllowDto.createQueryObject(queryData)
 
-  const blogs: BlogGeneralViewInterface[] = await BlogModel.findAll({
+  const blogs: BlogGeneralViewInterface[] = (await Blog.findAll({
     limit,
     offset,
     where: queryObj,
     attributes: ['blogId', 'title', 'body', 'authorId', 'createdAt', 'updatedAt'],
     include: [
       {
-        model: AuthorModel,
+        model: Author,
         attributes: ['name', 'email'],
       },
     ],
-  }) as unknown as Array<BlogGeneralViewInterface>
+  })) as unknown as Array<BlogGeneralViewInterface>
 
   return blogs
 }
 const editBlog = async (updateData: BlogUpdateInterface, blogId: string) => {
-  const BlogModel = db.db.blogs
-  const blog = await BlogModel.update(updateData, { where: { blogId } })
+  const blog = await Blog.update(updateData, { where: { blogId } })
 
   return blog
 }
 
 const isAuthorizedToEditBlog = async (authorId: string, blogId: string) => {
-  const BlogModel = db.db.blogs
-  const blog = await BlogModel.findOne({
+  const blog = await Blog.findOne({
     where: { authorId, blogId },
     plain: true,
   })
@@ -124,8 +115,7 @@ const isAuthorizedToEditBlog = async (authorId: string, blogId: string) => {
 }
 
 const deleteBlog = async (blogId: string) => {
-  const BlogModel = db.db.blogs
-  const blog = await BlogModel.destroy({ where: { blogId } })
+  const blog = await Blog.destroy({ where: { blogId } })
 
   return blog
 }
