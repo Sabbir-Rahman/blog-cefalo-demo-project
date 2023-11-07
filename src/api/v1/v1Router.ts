@@ -1,6 +1,6 @@
 /* eslint-disable import/extensions */
 import { Router } from 'express'
-import { authorRouter, authRouter, blogRouter } from './router/index.js'
+import { authorRouter, authRouter, blogRouter } from './router'
 
 const v1Router = Router()
 

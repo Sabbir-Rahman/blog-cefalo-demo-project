@@ -1,7 +1,7 @@
 /* eslint-disable import/extensions */
 import { Sequelize, Options } from 'sequelize'
-import defaultConfig from '../../config/default.js'
-import logger from '../../logger/defaultLogger.js'
+import defaultConfig from '../../config/default'
+import logger from '../../logger/defaultLogger'
 
 const connectDb = async () => {
   const sequelize = new Sequelize(

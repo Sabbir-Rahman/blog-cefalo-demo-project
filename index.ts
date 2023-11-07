@@ -1,4 +1,3 @@
-/* eslint-disable import/extensions */
 import express from 'express'
 import cors from 'cors'
 import defaultConfig from './config/default'

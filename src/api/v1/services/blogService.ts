@@ -1,9 +1,7 @@
-/* eslint-disable no-param-reassign */
-/* eslint-disable import/extensions */
 import { v4 as uuidv4 } from 'uuid'
 
-import { blogQuery } from '../queries/index.js'
-import { BlogCreateViewDto, BlogGeneralViewDto } from '../dto/blogs/index.js'
+import { blogQuery } from '../queries'
+import { BlogCreateViewDto, BlogGeneralViewDto } from '../dto/blogs'
 import { BlogGeneralViewInterface, BlogInterface, BlogQueryDataInterface, BlogQueryInterface } from '../interfaces/modelInterfaces/blog.interface.js'
 
 const createBlog = async (inputData: BlogInterface) => {

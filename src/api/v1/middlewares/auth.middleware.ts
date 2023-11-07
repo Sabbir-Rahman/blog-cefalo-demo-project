@@ -3,8 +3,8 @@
 import lodash from 'lodash'
 import { NextFunction, Request, Response } from 'express'
 
-import { jwtUtils } from '../utils/index.js'
-import defaultConstant from '../../../../constants/default.js'
+import { jwtUtils } from '../utils'
+import defaultConstant from '../../../../constants/default'
 
 const { get } = lodash
 const auth = () => async (

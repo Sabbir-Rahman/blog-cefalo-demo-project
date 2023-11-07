@@ -1,8 +1,8 @@
 /* eslint-disable import/extensions */
 import { Op } from 'sequelize'
 import BlogQueryAllowDto from '../dto/blogs/blogQueryAllow.dto'
-import db from '../models/index.js'
-import { paginationUtils } from '../utils/index.js'
+import db from '../models'
+import { paginationUtils } from '../utils'
 import {
   BlogGeneralViewInterface,
   BlogInterface,

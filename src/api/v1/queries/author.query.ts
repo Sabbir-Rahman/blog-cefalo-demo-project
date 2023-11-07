@@ -1,9 +1,6 @@
 /* eslint-disable import/extensions */
-import { logQueryError } from '../../../../logger/customLogger'
 import { AuthorInterface } from '../interfaces/modelInterfaces/author.interface'
 import db from '../models'
-
-const FILENAME = 'src/api/v1/queries/author.query.js'
 
 const createAuthor = async (queryData: AuthorInterface) => {
   const AuthorModel = db.db.authors

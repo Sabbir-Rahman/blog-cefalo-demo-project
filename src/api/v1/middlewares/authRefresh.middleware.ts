@@ -2,9 +2,8 @@
 /* eslint-disable import/extensions */
 import lodash from 'lodash'
 
-import { jwtUtils } from '../utils/index.js'
-import defaultConstant from '../../../../constants/default.js'
-import { JwtUserType } from '../interfaces/typesInterfaces/utils.js'
+import { jwtUtils } from '../utils'
+import defaultConstant from '../../../../constants/default'
 import { Request, Response, NextFunction } from 'express'
 
 const { get } = lodash

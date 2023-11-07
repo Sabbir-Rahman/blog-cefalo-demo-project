@@ -1,7 +1,7 @@
 /* eslint-disable import/extensions */
 import { Sequelize, DataTypes, Model, BuildOptions } from 'sequelize'
 import authorSchema from './authorModel'
-import logger from '../../../../logger/defaultLogger.js'
+import logger from '../../../../logger/defaultLogger'
 import blogSchema from './blogModel'
 
 let db = {
