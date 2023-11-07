@@ -1,10 +1,9 @@
-/* eslint-disable import/extensions */
-import { blogController } from '../../api/v1/controller/index.js'
-import blogService from '../../api/v1/services/blog.service.js'
-import CustomResponse from '../../api/v1/utils/customResponse.js'
-import { mockDb } from '../__mocks__/index.js'
+import { Request, Response } from 'express'
+import { blogController } from '../../api/v1/controller'
+import blogService from '../../api/v1/services/blogService'
+import CustomResponse from '../../api/v1/utils/customResponse'
+import { mockDb } from '../__mocks__'
 
-/* eslint-disable no-undef */
 describe('Blog controller test', () => {
   describe('Create blog test', () => {
     it('Create blog successfull', async () => {
@@ -13,11 +12,11 @@ describe('Blog controller test', () => {
           title: 'Hello world',
           body: 'This is a trap',
         },
-        accessToken: {
-          userId: '1ea6c1e5-5649-4591-a813-441d0c840a1b',
-        },
-      }
-      const res = {}
+        // accessToken: {
+        //   userId: '1ea6c1e5-5649-4591-a813-441d0c840a1b',
+        // },
+      } as Request
+      const res = {} as Response
 
       const expectedResponse = {
         isSuccess: true,
@@ -31,7 +30,7 @@ describe('Blog controller test', () => {
       const authorId = '1ea6c1e5-5649-4591-a813-441d0c840a1b'
 
       jest.spyOn(blogService, 'createBlog').mockResolvedValueOnce(expectedResponse.data)
-      jest.spyOn(CustomResponse.prototype, 'sendResponse').mockResolvedValueOnce(expectedResponse)
+      jest.spyOn(CustomResponse.prototype, 'sendResponse').mockResolvedValueOnce(expectedResponse as never)
 
       const response = await blogController.createBlog(req, res, next)
 
@@ -48,8 +47,8 @@ describe('Blog controller test', () => {
           id: {},
         },
         query: {},
-      }
-      const res = {}
+      } as unknown as Request
+      const res = {} as Response
       const expectedResponse = {
         message: '',
         developerMessage: 'Blog View Successfull',
@@ -58,7 +57,7 @@ describe('Blog controller test', () => {
       const next = jest.fn()
 
       jest.spyOn(blogService, 'viewBlog').mockResolvedValueOnce(expectedResponse.data)
-      jest.spyOn(CustomResponse.prototype, 'sendResponse').mockResolvedValueOnce(expectedResponse)
+      jest.spyOn(CustomResponse.prototype, 'sendResponse').mockResolvedValueOnce(expectedResponse as never)
 
       const response = await blogController.viewBlog(req, res, next)
       expect(blogService.viewBlog).toHaveBeenCalledWith(req.params.id, req.query)
@@ -73,8 +72,8 @@ describe('Blog controller test', () => {
           id: '104303d0-0795-42aa-b7bb-31eab3671c26',
         },
         query: {},
-      }
-      const res = {}
+      } as unknown as Request
+      const res = {} as Response
       const expectedResponse = {
         message: '',
         developerMessage: 'Blog View Successfull',
@@ -83,7 +82,7 @@ describe('Blog controller test', () => {
       const next = jest.fn()
 
       jest.spyOn(blogService, 'viewBlog').mockResolvedValueOnce(expectedResponse.data)
-      jest.spyOn(CustomResponse.prototype, 'sendResponse').mockResolvedValueOnce(expectedResponse)
+      jest.spyOn(CustomResponse.prototype, 'sendResponse').mockResolvedValueOnce(expectedResponse as never)
 
       const response = await blogController.viewBlog(req, res, next)
       expect(blogService.viewBlog).toHaveBeenCalledWith(req.params.id, req.query)
@@ -104,8 +103,8 @@ describe('Blog controller test', () => {
         params: {
           id: '104303d0-0795-42aa-b7bb-31eab3671c26',
         },
-      }
-      const res = {}
+      } as unknown as Request
+      const res = {} as Response
 
       const expectedResponse = {
         isSuccess: true,
@@ -126,7 +125,7 @@ describe('Blog controller test', () => {
       const next = jest.fn()
 
       jest.spyOn(blogService, 'editBlog').mockResolvedValueOnce(expectedResponse.data)
-      jest.spyOn(CustomResponse.prototype, 'sendResponse').mockResolvedValueOnce(expectedResponse)
+      jest.spyOn(CustomResponse.prototype, 'sendResponse').mockResolvedValueOnce(expectedResponse as never)
 
       const response = await blogController.editBlog(req, res, next)
 
@@ -143,8 +142,8 @@ describe('Blog controller test', () => {
         params: {
           id: '104303d0-0795-42aa-b7bb-31eab3671c26',
         },
-      }
-      const res = {}
+      } as unknown as Request
+      const res = {} as Response
       const next = jest.fn()
       const expectedResponse = {
         statusCode: 204,
@@ -153,7 +152,7 @@ describe('Blog controller test', () => {
         data: {},
       }
       jest.spyOn(blogService, 'deleteBlog').mockResolvedValueOnce({})
-      jest.spyOn(CustomResponse.prototype, 'sendResponse').mockResolvedValueOnce(expectedResponse)
+      jest.spyOn(CustomResponse.prototype, 'sendResponse').mockResolvedValueOnce(expectedResponse as never)
 
       const response = await blogController.deleteBlog(req, res, next)
 

@@ -1,2 +1,1 @@
-/* eslint-disable import/extensions */
-export { default as mockDb } from './testDB.js'
+export { default as mockDb } from './testDB'

@@ -1,8 +1,8 @@
-/* eslint-disable no-undef */
-/* eslint-disable import/extensions */
-import { authorController } from '../../api/v1/controller/index.js'
-import { authorService } from '../../api/v1/services/index.js'
-import CustomResponse from '../../api/v1/utils/customResponse.js'
+import { authorController } from '../../api/v1/controller'
+import { authorService } from '../../api/v1/services'
+import CustomResponse from '../../api/v1/utils/customResponse'
+
+import { Request, Response } from 'express'
 
 describe('Auth Controllert Test', () => {
   describe('Testing Create Author Method', () => {
@@ -13,8 +13,8 @@ describe('Auth Controllert Test', () => {
           email: 'name@gmail.com',
           password: '12345678',
         },
-      }
-      const res = {}
+      } as Request
+      const res = {} as Response
       const expectedResponse = {
         message: 'Author Created',
         developerMessage: '',
@@ -33,8 +33,10 @@ describe('Auth Controllert Test', () => {
       // Assert
 
       // mock service function
-      jest.spyOn(authorService, 'createAuthor').mockResolvedValueOnce(expectedResponse)
-      jest.spyOn(CustomResponse.prototype, 'sendResponse').mockResolvedValueOnce(expectedResponse)
+      jest.spyOn(authorService, 'createAuthor').mockResolvedValueOnce(expectedResponse as never)
+      jest
+        .spyOn(CustomResponse.prototype, 'sendResponse')
+        .mockResolvedValueOnce(expectedResponse as never)
 
       // Assert
       const response = await authorController.createAuthor(req, res, next)
@@ -49,8 +51,8 @@ describe('Auth Controllert Test', () => {
           email: 'name@gmail.com',
           password: '12345678',
         },
-      }
-      const res = {}
+      } as Request
+      const res = {} as Response
       const expectedError = new Error('Something Went Wrong')
       const next = jest.fn()
 
@@ -67,8 +69,8 @@ describe('Auth Controllert Test', () => {
 
   describe('Testing Author View', () => {
     it('View All Author', async () => {
-      const req = { params: {} }
-      const res = {}
+      const req = { params: {} } as Request
+      const res = {} as Response
       const expectedResponse = {
         message: 'Author View Successfull',
         developerMessage: '',
@@ -90,8 +92,10 @@ describe('Auth Controllert Test', () => {
       // Assert
 
       // mock service function
-      jest.spyOn(authorService, 'viewAuthor').mockResolvedValueOnce(expectedResponse)
-      jest.spyOn(CustomResponse.prototype, 'sendResponse').mockResolvedValueOnce(expectedResponse)
+      jest.spyOn(authorService, 'viewAuthor').mockResolvedValueOnce(expectedResponse as never)
+      jest
+        .spyOn(CustomResponse.prototype, 'sendResponse')
+        .mockResolvedValueOnce(expectedResponse as never)
 
       // Assert
       const result = await authorController.viewAuthor(req, res, next)
@@ -100,8 +104,8 @@ describe('Auth Controllert Test', () => {
       expect(result).toBe(expectedResponse)
     })
     it('View Single Author', async () => {
-      const req = { params: { id: 'id' } }
-      const res = {}
+      const req = { params: { id: 'id' } } as unknown as Request
+      const res = {} as Response
       const expectedResponse = {
         message: 'Author View Successfull',
         developerMessage: '',
@@ -116,8 +120,10 @@ describe('Auth Controllert Test', () => {
       // Assert
 
       // mock service function
-      jest.spyOn(authorService, 'viewAuthor').mockResolvedValueOnce(expectedResponse)
-      jest.spyOn(CustomResponse.prototype, 'sendResponse').mockResolvedValueOnce(expectedResponse)
+      jest.spyOn(authorService, 'viewAuthor').mockResolvedValueOnce(expectedResponse as never)
+      jest
+        .spyOn(CustomResponse.prototype, 'sendResponse')
+        .mockResolvedValueOnce(expectedResponse as never)
 
       // Assert
       const result = await authorController.viewAuthor(req, res, next)
@@ -126,8 +132,8 @@ describe('Auth Controllert Test', () => {
       expect(result).toBe(expectedResponse)
     })
     it('View Author Unsuccessfull', async () => {
-      const req = { params: { id: 'id' } }
-      const res = {}
+      const req = { params: { id: 'id' } } as unknown as Request
+      const res = {} as Response
       const expectedResponse = new Error('Error')
       const next = jest.fn()
 
