@@ -15,7 +15,7 @@ const authRefresh =
     next: NextFunction,
     // eslint-disable-next-line consistent-return
   ) => {
-    const refreshToken = get(req, 'headers.x-refresh')
+    const refreshToken = get(req, 'headers.x-refresh') as string
 
     if (!refreshToken) {
       return res
@@ -23,7 +23,7 @@ const authRefresh =
         .json({ message: defaultConstant.errorMessage.NO_TOKEN })
     }
 
-    const { decoded } = await jwtUtils.verifyJwt(refreshToken[0])
+    const { decoded } = await jwtUtils.verifyJwt(refreshToken)
 
     if (decoded) {
       res.locals.user = decoded

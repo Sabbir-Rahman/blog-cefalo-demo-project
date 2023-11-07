@@ -6,7 +6,7 @@ import v1Router from './src/api/v1/v1Router'
 import logger from './logger/defaultLogger'
 import connectDb from './src/helpers/mysql'
 import dbModel from './src/api/v1/models/index'
-import v1CustomErrorHandler from './src/api/v1/middlewares/error.middleware.js'
+import v1CustomErrorHandler from './src/api/v1/middlewares/error.middleware'
 
 const app = express()
 const { PORT } = defaultConfig.generalConfig

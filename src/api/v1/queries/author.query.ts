@@ -4,7 +4,7 @@ import db from '../models'
 
 const createAuthor = async (queryData: AuthorInterface) => {
   const AuthorModel = db.db.authors
-  const newAuthor = await AuthorModel.create({ queryData })
+  const newAuthor = await AuthorModel.create({ ...queryData })
 
   return newAuthor
 }

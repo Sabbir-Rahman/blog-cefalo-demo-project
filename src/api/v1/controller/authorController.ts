@@ -20,7 +20,11 @@ const createAuthor = async (req: Request, res: Response, next: NextFunction) => 
 
 const viewAuthor = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const author = await authorService.viewAuthor(req.params.id)
+    let author 
+    if(req.params.id)
+      author = await authorService.viewAuthor(req.params.id)
+    else 
+      author = await authorService.viewAuthors()
 
     return new CustomResponse(
       res,

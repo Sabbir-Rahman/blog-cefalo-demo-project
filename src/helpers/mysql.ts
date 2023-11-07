@@ -3,8 +3,8 @@ import { Sequelize, Options } from 'sequelize'
 import defaultConfig from '../../config/default'
 import logger from '../../logger/defaultLogger'
 
-const connectDb = async () => {
-  const sequelize = new Sequelize(
+export const sequlizeConfig =() => {
+  return new Sequelize(
     defaultConfig.DBCONFIG.DB,
     defaultConfig.DBCONFIG.USER,
     defaultConfig.DBCONFIG.PASSWORD,
@@ -19,6 +19,10 @@ const connectDb = async () => {
       },
     } as Options
   )
+}
+
+const connectDb = async () => {
+  const sequelize = sequlizeConfig()
 
   sequelize.authenticate().then(() => {
     logger.info(`${defaultConfig.DBCONFIG.dialect} connected to ${defaultConfig.DBCONFIG.HOST}`)
@@ -26,5 +30,7 @@ const connectDb = async () => {
 
   return sequelize
 }
+
+
 
 export default connectDb

@@ -3,12 +3,13 @@ import { Sequelize, DataTypes, Model, BuildOptions } from 'sequelize'
 import authorSchema from './authorModel'
 import logger from '../../../../logger/defaultLogger'
 import blogSchema from './blogModel'
+import { sequlizeConfig } from '../../../helpers/mysql'
 
 let db = {
   Sequelize: Sequelize,
-  sequelize: new Sequelize(),
-  authors: authorSchema(new Sequelize()),
-  blogs: blogSchema(new Sequelize()),
+  sequelize: sequlizeConfig(),
+  authors: authorSchema(sequlizeConfig()),
+  blogs: blogSchema(sequlizeConfig()),
 }
 
 const initiateSchema = async (sequelize: Sequelize) => {
