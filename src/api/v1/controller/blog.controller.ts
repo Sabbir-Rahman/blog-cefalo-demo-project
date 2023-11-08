@@ -40,7 +40,7 @@ const viewBlog = async (req: Request, res: Response, next: NextFunction) => {
 const viewBlogsOfAuthor = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const authorId = req.params.id
-    const blogs = await blogService.viewBlogsByAuthor({ authorId, ...req.query })
+    const blogs = await blogService.viewBlogsByAuthor(authorId, { ...req.query })
 
     return new CustomResponse(
       res,

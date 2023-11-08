@@ -1,9 +1,9 @@
-/* eslint-disable no-undef */
 import { Http404DataNotFoundError, BadRequestError } from '../../api/v1/errors'
 import { authService } from '../../api/v1/services'
 import { authorQuery } from '../../api/v1/queries'
 import { bcryptUtils, jwtUtils } from '../../api/v1/utils'
 import { AuthorGeneralViewDto } from '../../api/v1/dto/authors'
+import { JwtUserType } from '../../api/v1/interfaces/typesInterfaces/utils'
 
 describe('Auth service test', () => {
   describe('user login test', () => {
@@ -17,7 +17,7 @@ describe('Auth service test', () => {
         'No user is registered for this email, please create account or provide correct email',
       )
       // mocking query function
-      jest.spyOn(authorQuery, 'getSingleAuthorByEmail').mockResolvedValueOnce(false)
+      jest.spyOn(authorQuery, 'getSingleAuthorByEmail').mockResolvedValueOnce(false as never)
 
       await expect(authService.userLogin(inputData)).rejects.toThrow(expectedError)
       expect(authorQuery.getSingleAuthorByEmail).toHaveBeenCalledWith(inputData.email)
@@ -39,7 +39,7 @@ describe('Auth service test', () => {
       'Password not match for the user against the provided email',
     )
     // mocking query function
-    jest.spyOn(authorQuery, 'getSingleAuthorByEmail').mockResolvedValueOnce(user)
+    jest.spyOn(authorQuery, 'getSingleAuthorByEmail').mockResolvedValueOnce(user as never)
     jest.spyOn(bcryptUtils, 'comparePassword').mockResolvedValueOnce(false)
 
     await expect(authService.userLogin(inputData)).rejects.toThrow(expectedError)
@@ -61,7 +61,7 @@ describe('Auth service test', () => {
       refreshToken: 'some refresh token',
     }
     // mocking query function
-    jest.spyOn(authorQuery, 'getSingleAuthorByEmail').mockResolvedValueOnce(user)
+    jest.spyOn(authorQuery, 'getSingleAuthorByEmail').mockResolvedValueOnce(user as never)
     jest.spyOn(bcryptUtils, 'comparePassword').mockResolvedValueOnce(true)
     jest.spyOn(jwtUtils, 'generateAccessTokenRefreshTokenForUser').mockReturnValue({
       accessToken: expectedResponse.accessToken,
@@ -76,10 +76,10 @@ describe('Auth service test', () => {
   describe('refresh token generation', () => {
     it('Generate refresh token successfull', async () => {
       const user = {
+        authorId: '1d6464d8-2151-4147-810a-a3762a60aa3a',
         name: 'name',
-        email: 'name@gmail.com',
-        password: '12345678',
-      }
+        role: ['author'],
+      } as JwtUserType
 
       const expectedResponse = {
         accessToken: 'Some token',

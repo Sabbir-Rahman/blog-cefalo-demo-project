@@ -1,8 +1,7 @@
-/* eslint-disable no-undef */
 import { v4 as uuidv4 } from 'uuid'
 import { blogQuery } from '../../api/v1/queries'
 import { BlogCreateViewDto, BlogGeneralViewDto } from '../../api/v1/dto/blogs'
-import blogService from '../../api/v1/services/blog.service'
+import blogService from '../../api/v1/services/blogService'
 import { mockDb } from '../__mocks__'
 
 jest.mock('uuid')
@@ -16,15 +15,17 @@ describe('blog service test', () => {
         authorId: '68nn890',
         blogId: 'dwqqd221',
       }
-      const expectedResponse = new BlogCreateViewDto(blog)
+      const expectedResponse = new BlogCreateViewDto(blog);
 
-      uuidv4.mockReturnValue('dwqqd221')
+      (uuidv4 as jest.Mock).mockReturnValue('dwqqd221')
       jest.spyOn(blogQuery, 'createBlog').mockResolvedValueOnce(blog)
 
-      const response = await blogService.createBlog(
-        { title: blog.title, body: blog.body },
-        blog.authorId,
-      )
+      const response = await blogService.createBlog({
+        title: blog.title,
+        body: blog.body,
+        authorId: blog.authorId,
+        blogId: 'dwqqd221'
+      })
       expect(blogQuery.createBlog).toHaveBeenCalledWith(blog)
       expect(blogQuery.createBlog).toHaveBeenCalledTimes(1)
 
@@ -53,7 +54,7 @@ describe('blog service test', () => {
 
       jest.spyOn(blogQuery, 'viewBlogs').mockResolvedValueOnce(blogQueryResults)
 
-      const response = await blogService.viewBlog(null, {})
+      const response = await blogService.viewBlog( null, {})
       expect(blogQuery.viewBlogs).toHaveBeenCalledWith({})
       expect(blogQuery.viewBlogs).toHaveBeenCalledTimes(1)
 
@@ -106,7 +107,7 @@ describe('blog service test', () => {
     it('Delete blog successfull', async () => {
       const blogId = '104303d0-0795-42aa-b7bb-31eab3671c26'
 
-      jest.spyOn(blogQuery, 'deleteBlog').mockResolvedValueOnce([1])
+      jest.spyOn(blogQuery, 'deleteBlog').mockResolvedValueOnce([1] as never)
 
       const response = await blogService.deleteBlog(blogId)
 

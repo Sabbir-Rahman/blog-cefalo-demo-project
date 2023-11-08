@@ -1,12 +1,11 @@
-/* eslint-disable no-undef */
-/* eslint-disable import/extensions */
 import { v4 as uuidv4 } from 'uuid'
 import { authorService } from '../../api/v1/services/index.js'
 import { bcryptUtils, jwtUtils } from '../../api/v1/utils/index.js'
-import { authorQuery } from '../../api/v1/queries'
-import { BadRequestError } from '../../api/v1/errors'
+import { authorQuery } from '../../api/v1/queries/index.js'
+import { BadRequestError } from '../../api/v1/errors/index.js'
 import AuthorGeneralViewDto from '../../api/v1/dto/authors/authorGeneralView.dto.js'
 import authorsDB from '../__mocks__/testDB.js'
+import { AuthorInterface } from '../../api/v1/interfaces/modelInterfaces/author.interface.js'
 
 jest.mock('uuid')
 
@@ -17,7 +16,7 @@ describe('Author Service Test', () => {
         name: 'some name',
         email: 'name@gmail.com',
         password: '12345678',
-      }
+      } as AuthorInterface
       const expectedError = new BadRequestError(
         'Email Duplicate',
         'This Email Already Exist try with another one',
@@ -41,16 +40,20 @@ describe('Author Service Test', () => {
         email: 'name@gmail.com',
       }
 
-      const expectedResponse = {
+      const expectedResponse: {
+        authorObj: AuthorGeneralViewDto;
+        accessToken: string;
+        refreshToken: string;
+      } = {
         authorObj: new AuthorGeneralViewDto(expecteduserObj),
         accessToken: 'Some Token',
         refreshToken: 'Refresh Token',
-      }
+      };
 
-      uuidv4.mockReturnValue('dwqqd221')
+      (uuidv4 as jest.Mock).mockReturnValue('dwqqd221')
       jest.spyOn(bcryptUtils, 'hashPassword').mockResolvedValueOnce('12345678')
       jest.spyOn(authorQuery, 'authorDuplicateMail').mockResolvedValueOnce(false)
-      jest.spyOn(authorQuery, 'createAuthor').mockResolvedValueOnce(inputData)
+      jest.spyOn(authorQuery, 'createAuthor').mockResolvedValueOnce(inputData as never)
       jest.spyOn(jwtUtils, 'generateAccessTokenRefreshTokenForUser').mockReturnValue({
         accessToken: expectedResponse.accessToken,
         refreshToken: expectedResponse.refreshToken,
@@ -67,14 +70,14 @@ describe('Author Service Test', () => {
   })
   describe('View Author Method', () => {
     it('View All Authors', async () => {
-      const expectedResponse = [authorsDB]
+      const expectedResponse = [authorsDB.authorsDB]
       const expectedResponseWithDto = expectedResponse.map(
-        (response) => new AuthorGeneralViewDto(response),
+        (response) => new AuthorGeneralViewDto(response as AuthorGeneralViewDto),
       )
       // mocking query function
-      jest.spyOn(authorQuery, 'viewAuthors').mockResolvedValueOnce(expectedResponse)
+      jest.spyOn(authorQuery, 'viewAuthors').mockResolvedValueOnce(expectedResponse as never)
 
-      const response = await authorService.viewAuthor()
+      const response = await authorService.viewAuthors()
 
       expect(response).toStrictEqual(expectedResponseWithDto)
     })
