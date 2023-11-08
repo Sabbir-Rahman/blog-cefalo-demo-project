@@ -1,11 +1,11 @@
 import { v4 as uuidv4 } from 'uuid'
-import { authorService } from '../../api/v1/services/index.js'
-import { bcryptUtils, jwtUtils } from '../../api/v1/utils/index.js'
-import { authorQuery } from '../../api/v1/queries/index.js'
-import { BadRequestError } from '../../api/v1/errors/index.js'
-import AuthorGeneralViewDto from '../../api/v1/dto/authors/authorGeneralView.dto.js'
-import authorsDB from '../__mocks__/testDB.js'
-import { AuthorInterface } from '../../api/v1/interfaces/modelInterfaces/author.interface.js'
+import { authorService } from '../../api/v1/services'
+import { bcryptUtils, jwtUtils } from '../../api/v1/utils'
+import { authorQuery } from '../../api/v1/queries'
+import { BadRequestError } from '../../api/v1/errors'
+import AuthorGeneralViewDto from '../../api/v1/dto/authors/authorGeneralView.dto'
+import authorsDB from '../__mocks__/testDB'
+import { AuthorInterface } from '../../api/v1/interfaces/modelInterfaces/author.interface'
 
 jest.mock('uuid')
 
@@ -83,7 +83,7 @@ describe('Author Service Test', () => {
     })
 
     it('View Single Author', async () => {
-      const expectedResponse = authorsDB[0]
+      const expectedResponse = authorsDB.authorsDB[0]
       const authorId = '1d6464d8-2151-4147-810a-a3762a60aa3a'
       const expectedResponseWithDto = new AuthorGeneralViewDto(expectedResponse)
 

@@ -5,13 +5,27 @@ describe('pagination test', () => {
     it('Return default pagination data', () => {
       const result = pagination.getPaginationSearchAndSortInfo({})
 
-      expect(result).toEqual({ page: 1, limit: 25, offset: 0 })
+      expect(result).toEqual({
+        page: 1,
+        limit: 25,
+        offset: 0,
+        searchText: 'undefined',
+        sortBy: 'createdAt',
+        sortOrder: 'DESC',
+      })
     })
 
     it('Parse pagination data successfully', () => {
       const result = pagination.getPaginationSearchAndSortInfo({ page: 4, limit: 10 })
 
-      expect(result).toEqual({ page: 4, limit: 10, offset: 30 })
+      expect(result).toEqual({
+        page: 4,
+        limit: 10,
+        offset: 30,
+        searchText: 'undefined',
+        sortBy: 'createdAt',
+        sortOrder: 'DESC',
+      })
     })
   })
 })

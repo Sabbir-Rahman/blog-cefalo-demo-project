@@ -3,6 +3,7 @@ import { blogQuery } from '../../api/v1/queries'
 import { BlogCreateViewDto, BlogGeneralViewDto } from '../../api/v1/dto/blogs'
 import blogService from '../../api/v1/services/blogService'
 import { mockDb } from '../__mocks__'
+import { BlogQueryDataInterface } from '../../api/v1/interfaces/modelInterfaces/blog.interface'
 
 jest.mock('uuid')
 
@@ -68,11 +69,15 @@ describe('blog service test', () => {
       const expectedResponse = blogQueryResults.map(
         (singleBlog) => new BlogGeneralViewDto(singleBlog),
       )
+      const querydata: BlogQueryDataInterface = {
+        page: 1,
+        limit: 10
+      }
 
       jest.spyOn(blogQuery, 'viewBlogsByAuthor').mockResolvedValueOnce(blogQueryResults)
 
-      const response = await blogService.viewBlogsByAuthor(authorId, {})
-      expect(blogQuery.viewBlogsByAuthor).toHaveBeenCalledWith(authorId, {})
+      const response = await blogService.viewBlogsByAuthor(authorId, querydata)
+      expect(blogQuery.viewBlogsByAuthor).toHaveBeenCalledWith({...querydata,authorId})
       expect(blogQuery.viewBlogsByAuthor).toHaveBeenCalledTimes(1)
 
       expect(response).toStrictEqual(expectedResponse)
@@ -98,7 +103,7 @@ describe('blog service test', () => {
       expect(blogQuery.editBlog).toHaveBeenCalledTimes(1)
 
       expect(blogQuery.getSingleBlogById).toHaveBeenCalledWith(blogId)
-      expect(blogQuery.getSingleBlogById).toHaveBeenCalledTimes(2)
+      expect(blogQuery.getSingleBlogById).toHaveBeenCalledTimes(1)
 
       expect(response).toStrictEqual(expectedResponse)
     })

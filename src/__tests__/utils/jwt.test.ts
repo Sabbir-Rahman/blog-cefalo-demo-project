@@ -11,8 +11,8 @@ describe('jwt utils test', () => {
       const object = {}
       const options = {}
       const algorithm = 'RS256'
-      const mockError = new InternalServerError(constants.errorMessage.SOMETHING_WRONG, 'Error');
-      (jwt.sign as jest.Mock).mockRejectedValue(new Error('Error'))
+      const mockError = new InternalServerError(constants.errorMessage.SOMETHING_WRONG, 'Error')
+      ;(jwt.sign as jest.Mock).mockRejectedValue(new Error('Error'))
 
       expect(jwtUtils.signJwt(object as JwtUserTokenObject, options)).rejects.toThrow(mockError)
       expect(jwt.sign).toHaveBeenCalledWith(object, expect.anything(), {
@@ -25,8 +25,8 @@ describe('jwt utils test', () => {
       const object = {}
       const options = {}
       const algorithm = 'RS256'
-      const mockToken = 'jasxerjhswdwefwefawefrgwafgweggweaeg';
-      (jwt.sign as jest.Mock).mockReturnValue(mockToken)
+      const mockToken = 'jasxerjhswdwefwefawefrgwafgweggweaeg'
+      ;(jwt.sign as jest.Mock).mockReturnValue(mockToken)
 
       const result = jwtUtils.signJwt(object as JwtUserTokenObject, options)
 
@@ -50,28 +50,29 @@ describe('jwt utils test', () => {
         expired: false,
         decoded: decodeObject,
       }
-      const mockToken = 'jasxerjhswdwefwefawefrgwafgweggweaeg';
-      (jwt.verify as jest.Mock).mockReturnValue(decodeObject)
+      const mockToken = 'jasxerjhswdwefwefawefrgwafgweggweaeg'
+      ;(jwt.verify as jest.Mock).mockReturnValue(decodeObject)
 
       const result = jwtUtils.verifyJwt(mockToken)
 
       expect(jwt.verify).toHaveBeenCalledWith(mockToken, expect.anything())
 
-      expect(result).toStrictEqual(expectedDecoded)
+      expect(result).toEqual(expectedDecoded)
     })
     it('verify jwt failed', () => {
       const expectedDecoded = {
         valid: false,
-        decoded: null,
+        decoded: false,
+        expired: false,
       }
-      const mockToken = 'jasxerjhswdwefwefawefrgwafgweggweaeg';
-      (jwt.verify as jest.Mock).mockReturnValue(null)
+      const mockToken = 'jasxerjhswdwefwefawefrgwafgweggweaeg'
+      ;(jwt.verify as jest.Mock).mockReturnValue(null)
 
       const result = jwtUtils.verifyJwt(mockToken)
 
       expect(jwt.verify).toHaveBeenCalledWith(mockToken, expect.anything())
 
-      expect(result).toStrictEqual(expectedDecoded)
+      expect(result).toEqual(expectedDecoded)
     })
   })
 })

@@ -23,29 +23,20 @@ const signJwt = (object: JwtUserTokenObject, options?: jwt.SignOptions) => {
   }
 }
 
-const verifyJwt = async (token: string) => {
-  try {
-    const decoded = await jwt.verify(token, publicKey)
+const verifyJwt = (token: string) => {
+  const decoded = jwt.verify(token, publicKey)
 
-    if (decoded && (typeof(decoded)!=='string')) {
-      return {
-        valid: true,
-        expired: false,
-        decoded,
-      }
-    }
+  if (decoded && typeof decoded !== 'string') {
     return {
-      valid: false,
+      valid: true,
       expired: false,
-      decoded: false,
+      decoded,
     }
-  } catch (error) {
-    console.log(error)
-    return {
-      valid: false,
-      expired: false,
-      decoded: false,
-    }
+  }
+  return {
+    valid: false,
+    expired: false,
+    decoded: false,
   }
 }
 
